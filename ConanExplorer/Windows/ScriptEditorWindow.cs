@@ -880,7 +880,8 @@ namespace ConanExplorer.Windows
 
         private void richTextBox_ScriptModelView_TextChanged(object sender, EventArgs e)
         {
-
+            if (_changingSelection) return;
+            _timerApply.Enabled = true;
         }
 
         private void toolStripMenuItem_GenerateFont_Click(object sender, EventArgs e)

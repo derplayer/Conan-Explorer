@@ -98,7 +98,7 @@
             this.richTextBox_Script.Location = new System.Drawing.Point(3, 3);
             this.richTextBox_Script.Name = "richTextBox_Script";
             this.richTextBox_Script.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox_Script.Size = new System.Drawing.Size(668, 408);
+            this.richTextBox_Script.Size = new System.Drawing.Size(538, 408);
             this.richTextBox_Script.TabIndex = 0;
             this.richTextBox_Script.Text = "";
             this.richTextBox_Script.WordWrap = false;
@@ -157,7 +157,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(674, 414);
+            this.tabPage1.Size = new System.Drawing.Size(544, 414);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Raw Script";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -331,7 +331,7 @@
             this.richTextBox_ScriptModelView.Size = new System.Drawing.Size(349, 219);
             this.richTextBox_ScriptModelView.TabIndex = 0;
             this.richTextBox_ScriptModelView.Text = "";
-            this.richTextBox_ScriptModelView.TextChanged += new System.EventHandler(this.richTextBox_Script_TextChanged);
+            this.richTextBox_ScriptModelView.TextChanged += new System.EventHandler(this.richTextBox_ScriptModelView_TextChanged);
             this.richTextBox_ScriptModelView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptModelView_KeyDown);
             // 
             // button_Apply
