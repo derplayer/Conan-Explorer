@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{505679CB-0374-4FE8-84E0-24A227541989}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ConanExplorer</RootNamespace>
+    <AssemblyName>Conan Explorer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DiscUtils, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Discutils.0.11.0.2\lib\net40\DiscUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="DiscUtils.Common, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Discutils.0.11.0.2\lib\net40\DiscUtils.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Conan\ConanPath.cs" />
+    <Compile Include="Conan\ConanScriptMessage.cs" />
+    <Compile Include="Conan\CRC.cs" />
+    <Compile Include="Conan\FileDictionary.cs" />
+    <Compile Include="Conan\FileSizeFormatProvider.cs" />
+    <Compile Include="Conan\Filetypes\BGFile.cs" />
+    <Compile Include="Conan\Filetypes\PBFileEntry.cs" />
+    <Compile Include="Conan\Filetypes\SEQFile.cs" />
+    <Compile Include="Conan\Filetypes\STRFile.cs" />
+    <Compile Include="Conan\Filetypes\VBFile.cs" />
+    <Compile Include="Conan\Filetypes\VHFile.cs" />
+    <Compile Include="Conan\Filetypes\XAFile.cs" />
+    <Compile Include="Conan\FontCharacter.cs" />
+    <Compile Include="Conan\Filetypes\FONTFile.cs" />
+    <Compile Include="Conan\FontSymbol.cs" />
+    <Compile Include="Conan\Headers\Header.cs" />
+    <Compile Include="Conan\Headers\LZSSHeader.cs" />
+    <Compile Include="Conan\ApplicationState.cs" />
+    <Compile Include="Conan\CircularBuffer.cs" />
+    <Compile Include="Conan\ConanImage.cs" />
+    <Compile Include="Conan\Filetypes\BaseFile.cs" />
+    <Compile Include="Conan\Filetypes\LZBFile.cs" />
+    <Compile Include="Conan\Filetypes\PBFile.cs" />
+    <Compile Include="Conan\Filetypes\TIMFile.cs" />
+    <Compile Include="Conan\Headers\PACKFileHeader.cs" />
+    <Compile Include="Conan\Headers\TIMHeader.cs" />
+    <Compile Include="Conan\ProjectFile.cs" />
+    <Compile Include="Conan\Headers\HeaderList.cs" />
+    <Compile Include="Conan\Filetypes\PKNFile.cs" />
+    <Compile Include="Conan\PSXImage.cs" />
+    <Compile Include="Conan\Script\Elements\IScriptElement.cs" />
+    <Compile Include="Conan\Script\ScriptCollection.cs" />
+    <Compile Include="Conan\Script\Elements\ScriptCommand.cs" />
+    <Compile Include="Conan\ScriptFile.cs" />
+    <Compile Include="Conan\Script\ScriptDocument.cs" />
+    <Compile Include="Conan\Script\Elements\ScriptMessage.cs" />
+    <Compile Include="Conan\Script\ScriptParser.cs" />
+    <Compile Include="Conan\Script\Elements\ScriptSubCommand.cs" />
+    <Compile Include="Conan\Script\Elements\ScriptText.cs" />
+    <Compile Include="Conan\TaskProgress.cs" />
+    <Compile Include="Controls\CompareControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CompareControl.Designer.cs">
+      <DependentUpon>CompareControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DynamicControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DynamicControl.Designer.cs">
+      <DependentUpon>DynamicControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LZBControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LZBControl.Designer.cs">
+      <DependentUpon>LZBControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PBControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PBControl.Designer.cs">
+      <DependentUpon>PBControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TextControl.Designer.cs">
+      <DependentUpon>TextControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TIMControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TIMControl.Designer.cs">
+      <DependentUpon>TIMControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TriStateTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ExtensionMethods\Filesystem.cs" />
+    <Compile Include="ExtensionMethods\Conversion.cs" />
+    <Compile Include="ExtensionMethods\Graphic.cs" />
+    <Compile Include="ExtensionMethods\Serializae.cs" />
+    <Compile Include="Windows\DebugBmp2Tim.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DebugBmp2Tim.Designer.cs">
+      <DependentUpon>DebugBmp2Tim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DebugTextWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DebugTextWindow.Designer.cs">
+      <DependentUpon>DebugTextWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DebugXaToPCM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DebugXaToPCM.Designer.cs">
+      <DependentUpon>DebugXaToPCM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FileIndexViewerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\FileIndexViewerWindow.Designer.cs">
+      <DependentUpon>FileIndexViewerWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FontEditorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\FontEditorWindow.Designer.cs">
+      <DependentUpon>FontEditorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FontSettingsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\FontSettingsWindow.Designer.cs">
+      <DependentUpon>FontSettingsWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LoadingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\LoadingWindow.Designer.cs">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows\ScriptAnalyseWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ScriptAnalyseWindow.Designer.cs">
+      <DependentUpon>ScriptAnalyseWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScriptEditorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ScriptEditorWindow.Designer.cs">
+      <DependentUpon>ScriptEditorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScriptViewerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ScriptViewerWindow.Designer.cs">
+      <DependentUpon>ScriptViewerWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectModeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\SelectModeWindow.Designer.cs">
+      <DependentUpon>SelectModeWindow.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Controls\CompareControl.resx">
+      <DependentUpon>CompareControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DynamicControl.resx">
+      <DependentUpon>DynamicControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LZBControl.resx">
+      <DependentUpon>LZBControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PBControl.resx">
+      <DependentUpon>PBControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TextControl.resx">
+      <DependentUpon>TextControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TIMControl.resx">
+      <DependentUpon>TIMControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DebugBmp2Tim.resx">
+      <DependentUpon>DebugBmp2Tim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DebugTextWindow.resx">
+      <DependentUpon>DebugTextWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DebugXaToPCM.resx">
+      <DependentUpon>DebugXaToPCM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FileIndexViewerWindow.resx">
+      <DependentUpon>FileIndexViewerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FontEditorWindow.resx">
+      <DependentUpon>FontEditorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FontSettingsWindow.resx">
+      <DependentUpon>FontSettingsWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LoadingWindow.resx">
+      <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Windows\ScriptAnalyseWindow.resx">
+      <DependentUpon>ScriptAnalyseWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ScriptEditorWindow.resx">
+      <DependentUpon>ScriptEditorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ScriptViewerWindow.resx">
+      <DependentUpon>ScriptViewerWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\SelectModeWindow.resx">
+      <DependentUpon>SelectModeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
+    <Resource Include="Resources\WINDOW.bmp" />
+    <None Include="Resources\Font\font1.bmp" />
+    <None Include="Resources\wordlist_long.txt" />
+    <None Include="Resources\Icons\folder.ico" />
+    <None Include="Resources\Icons\package.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)Tools" "$(ProjectDir)$(OutDir)Tools" /E /I /Y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
