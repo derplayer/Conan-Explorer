@@ -38,9 +38,10 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.listBox_ScriptModelList = new System.Windows.Forms.ListBox();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.panel_Preview = new System.Windows.Forms.Panel();
+            this.pictureBox_MessagePreview = new System.Windows.Forms.PictureBox();
             this.comboBox_PreviewColor = new System.Windows.Forms.ComboBox();
             this.comboBox_PreviewType = new System.Windows.Forms.ComboBox();
-            this.pictureBox_MessagePreview = new System.Windows.Forms.PictureBox();
             this.richTextBox_ScriptModelView = new System.Windows.Forms.RichTextBox();
             this.button_Apply = new System.Windows.Forms.Button();
             this.progressBar_Progress = new System.Windows.Forms.ProgressBar();
@@ -62,7 +63,11 @@
             this.generateScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_Row = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panel_Preview = new System.Windows.Forms.Panel();
+            this.TextBox_Search = new System.Windows.Forms.TextBox();
+            this.Button_Search = new System.Windows.Forms.Button();
+            this.searchPanel = new System.Windows.Forms.Panel();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.helpSearchLAbel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -78,10 +83,11 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            this.panel_Preview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreview)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.panel_Preview.SuspendLayout();
+            this.searchPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBox_Script
@@ -91,11 +97,14 @@
             this.richTextBox_Script.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox_Script.Location = new System.Drawing.Point(3, 3);
             this.richTextBox_Script.Name = "richTextBox_Script";
-            this.richTextBox_Script.Size = new System.Drawing.Size(435, 294);
+            this.richTextBox_Script.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBox_Script.Size = new System.Drawing.Size(668, 408);
             this.richTextBox_Script.TabIndex = 0;
             this.richTextBox_Script.Text = "";
             this.richTextBox_Script.WordWrap = false;
             this.richTextBox_Script.SelectionChanged += new System.EventHandler(this.richTextBox_Script_SelectionChanged);
+            this.richTextBox_Script.TextChanged += new System.EventHandler(this.richTextBox_Script_TextChanged);
+            this.richTextBox_Script.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_Script_KeyDown);
             // 
             // listBox_ScriptFiles
             // 
@@ -103,7 +112,7 @@
             this.listBox_ScriptFiles.FormattingEnabled = true;
             this.listBox_ScriptFiles.Location = new System.Drawing.Point(0, 0);
             this.listBox_ScriptFiles.Name = "listBox_ScriptFiles";
-            this.listBox_ScriptFiles.Size = new System.Drawing.Size(158, 326);
+            this.listBox_ScriptFiles.Size = new System.Drawing.Size(239, 440);
             this.listBox_ScriptFiles.TabIndex = 2;
             this.listBox_ScriptFiles.SelectedIndexChanged += new System.EventHandler(this.listBox_ScriptFiles_SelectedIndexChanged);
             this.listBox_ScriptFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_ScriptFiles_MouseDown);
@@ -126,8 +135,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer1.Size = new System.Drawing.Size(611, 326);
-            this.splitContainer1.SplitterDistance = 158;
+            this.splitContainer1.Size = new System.Drawing.Size(925, 440);
+            this.splitContainer1.SplitterDistance = 239;
             this.splitContainer1.TabIndex = 6;
             // 
             // tabControl1
@@ -138,16 +147,17 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(449, 326);
+            this.tabControl1.Size = new System.Drawing.Size(682, 440);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.searchPanel);
             this.tabPage1.Controls.Add(this.richTextBox_Script);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(441, 300);
+            this.tabPage1.Size = new System.Drawing.Size(674, 414);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Raw Script";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -212,6 +222,29 @@
             this.splitContainer4.SplitterDistance = 129;
             this.splitContainer4.TabIndex = 1;
             // 
+            // panel_Preview
+            // 
+            this.panel_Preview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_Preview.AutoScroll = true;
+            this.panel_Preview.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel_Preview.Controls.Add(this.pictureBox_MessagePreview);
+            this.panel_Preview.Location = new System.Drawing.Point(3, 30);
+            this.panel_Preview.Name = "panel_Preview";
+            this.panel_Preview.Size = new System.Drawing.Size(280, 96);
+            this.panel_Preview.TabIndex = 3;
+            // 
+            // pictureBox_MessagePreview
+            // 
+            this.pictureBox_MessagePreview.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pictureBox_MessagePreview.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox_MessagePreview.Name = "pictureBox_MessagePreview";
+            this.pictureBox_MessagePreview.Size = new System.Drawing.Size(280, 95);
+            this.pictureBox_MessagePreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox_MessagePreview.TabIndex = 0;
+            this.pictureBox_MessagePreview.TabStop = false;
+            // 
             // comboBox_PreviewColor
             // 
             this.comboBox_PreviewColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -243,16 +276,6 @@
             this.comboBox_PreviewType.Size = new System.Drawing.Size(176, 21);
             this.comboBox_PreviewType.TabIndex = 1;
             // 
-            // pictureBox_MessagePreview
-            // 
-            this.pictureBox_MessagePreview.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox_MessagePreview.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_MessagePreview.Name = "pictureBox_MessagePreview";
-            this.pictureBox_MessagePreview.Size = new System.Drawing.Size(280, 95);
-            this.pictureBox_MessagePreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox_MessagePreview.TabIndex = 0;
-            this.pictureBox_MessagePreview.TabStop = false;
-            // 
             // richTextBox_ScriptModelView
             // 
             this.richTextBox_ScriptModelView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -282,9 +305,9 @@
             // 
             this.progressBar_Progress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar_Progress.Location = new System.Drawing.Point(12, 368);
+            this.progressBar_Progress.Location = new System.Drawing.Point(12, 482);
             this.progressBar_Progress.Name = "progressBar_Progress";
-            this.progressBar_Progress.Size = new System.Drawing.Size(611, 14);
+            this.progressBar_Progress.Size = new System.Drawing.Size(925, 14);
             this.progressBar_Progress.TabIndex = 7;
             // 
             // menuStrip1
@@ -296,7 +319,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(635, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(949, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip";
             // 
@@ -422,9 +445,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel_Row});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 389);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 503);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(635, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(949, 22);
             this.statusStrip1.TabIndex = 10;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -433,24 +456,54 @@
             this.toolStripStatusLabel_Row.Name = "toolStripStatusLabel_Row";
             this.toolStripStatusLabel_Row.Size = new System.Drawing.Size(0, 17);
             // 
-            // panel_Preview
+            // TextBox_Search
             // 
-            this.panel_Preview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.TextBox_Search.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel_Preview.AutoScroll = true;
-            this.panel_Preview.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panel_Preview.Controls.Add(this.pictureBox_MessagePreview);
-            this.panel_Preview.Location = new System.Drawing.Point(3, 30);
-            this.panel_Preview.Name = "panel_Preview";
-            this.panel_Preview.Size = new System.Drawing.Size(280, 96);
-            this.panel_Preview.TabIndex = 3;
+            this.TextBox_Search.Location = new System.Drawing.Point(5, 9);
+            this.TextBox_Search.Margin = new System.Windows.Forms.Padding(4);
+            this.TextBox_Search.Name = "TextBox_Search";
+            this.TextBox_Search.Size = new System.Drawing.Size(486, 20);
+            this.TextBox_Search.TabIndex = 1;
+            // 
+            // Button_Search
+            // 
+            this.Button_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button_Search.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Button_Search.Location = new System.Drawing.Point(498, 8);
+            this.Button_Search.Name = "Button_Search";
+            this.Button_Search.Size = new System.Drawing.Size(146, 22);
+            this.Button_Search.TabIndex = 2;
+            this.Button_Search.Text = "Search";
+            this.Button_Search.UseVisualStyleBackColor = true;
+            this.Button_Search.Click += new System.EventHandler(this.Button_Search_Click);
+            // 
+            // searchPanel
+            // 
+            this.searchPanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.searchPanel.Controls.Add(this.helpSearchLAbel);
+            this.searchPanel.Controls.Add(this.TextBox_Search);
+            this.searchPanel.Controls.Add(this.Button_Search);
+            this.searchPanel.Location = new System.Drawing.Point(6, 355);
+            this.searchPanel.Name = "searchPanel";
+            this.searchPanel.Size = new System.Drawing.Size(647, 53);
+            this.searchPanel.TabIndex = 3;
+            this.searchPanel.Visible = false;
+            // 
+            // helpSearchLAbel
+            // 
+            this.helpSearchLAbel.AutoSize = true;
+            this.helpSearchLAbel.Location = new System.Drawing.Point(2, 36);
+            this.helpSearchLAbel.Name = "helpSearchLAbel";
+            this.helpSearchLAbel.Size = new System.Drawing.Size(278, 13);
+            this.helpSearchLAbel.TabIndex = 3;
+            this.helpSearchLAbel.Text = "Protip: To close the search formular press \"Strg+F\" again!";
             // 
             // ScriptEditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 411);
+            this.ClientSize = new System.Drawing.Size(949, 525);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.progressBar_Progress);
             this.Controls.Add(this.splitContainer1);
@@ -475,13 +528,15 @@
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
+            this.panel_Preview.ResumeLayout(false);
+            this.panel_Preview.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreview)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.panel_Preview.ResumeLayout(false);
-            this.panel_Preview.PerformLayout();
+            this.searchPanel.ResumeLayout(false);
+            this.searchPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -523,5 +578,10 @@
         private System.Windows.Forms.ComboBox comboBox_PreviewType;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_GenerateFont;
         private System.Windows.Forms.Panel panel_Preview;
+        private System.Windows.Forms.Button Button_Search;
+        private System.Windows.Forms.TextBox TextBox_Search;
+        private System.Windows.Forms.Panel searchPanel;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label helpSearchLAbel;
     }
 }

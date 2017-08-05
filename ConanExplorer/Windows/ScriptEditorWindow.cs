@@ -29,6 +29,8 @@ namespace ConanExplorer.Windows
         private System.Windows.Forms.Timer _timerApply = new System.Windows.Forms.Timer();
         private Bitmap _window;
         private bool _changingSelection = false;
+        private int lastFoundItem = 0;
+        private bool _IsSearch = false;
 
         private Color[] _fontColors = new Color[]
             {
@@ -890,6 +892,61 @@ namespace ConanExplorer.Windows
         private void comboBox_PreviewColor_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSelection();
+        }
+
+        private void richTextBox_Script_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox_Script_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (_IsSearch && e.Control && e.KeyCode == Keys.F)
+            {
+                this.searchPanel.Visible = false;
+                _IsSearch = false;
+                return;
+            }
+
+            if (_IsSearch == false && e.Control && e.KeyCode == Keys.F)
+            {
+                this.searchPanel.Visible = true;
+                _IsSearch = true;
+                return;
+            }
+
+        }
+
+        private void Button_Search_Click(object sender, EventArgs e)
+        {
+            RichTextBoxFinds options = RichTextBoxFinds.None;
+
+            int from = richTextBox_Script.SelectionStart;
+            int to = richTextBox_Script.TextLength - 1;
+
+            int start = 0;
+            start = richTextBox_Script.Find(TextBox_Search.Text, from, to, options);
+
+            if(lastFoundItem == start)
+            {
+                from = lastFoundItem + 1;
+                richTextBox_Script.Find(TextBox_Search.Text, from, to, options);
+            }
+
+            if (start > 0)
+            {
+                richTextBox_Script.SelectionStart = start;
+                richTextBox_Script.SelectionLength = TextBox_Search.TextLength;
+                richTextBox_Script.ScrollToCaret();
+                richTextBox_Script.Refresh();
+                richTextBox_Script.Focus();
+
+                lastFoundItem = start; //update last item index pos
+            }
+            else
+            {
+                MessageBox.Show("No match found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
     }
 }
