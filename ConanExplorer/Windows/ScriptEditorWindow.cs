@@ -880,8 +880,7 @@ namespace ConanExplorer.Windows
 
         private void richTextBox_ScriptModelView_TextChanged(object sender, EventArgs e)
         {
-            if (_changingSelection) return;
-            _timerApply.Enabled = true;
+
         }
 
         private void toolStripMenuItem_GenerateFont_Click(object sender, EventArgs e)
@@ -946,6 +945,15 @@ namespace ConanExplorer.Windows
             else
             {
                 MessageBox.Show("No match found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void richTextBox_ScriptModelView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.W) //New Window Hotkey
+            {
+                richTextBox_ScriptModelView.SelectedText += "Test";
+                return;
             }
         }
     }
