@@ -114,6 +114,9 @@
     <Compile Include="Controls\DynamicControl.Designer.cs">
       <DependentUpon>DynamicControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FixedRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\LZBControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -1,4 +1,6 @@
-﻿namespace ConanExplorer.Windows
+﻿using ConanExplorer.Controls;
+
+namespace ConanExplorer.Windows
 {
     partial class ScriptEditorWindow
     {
@@ -29,7 +31,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptEditorWindow));
-            this.richTextBox_Script = new System.Windows.Forms.RichTextBox();
+            this.richTextBox_Script = new ConanExplorer.Controls.FixedRichTextBox();
             this.listBox_ScriptFiles = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -46,7 +48,7 @@
             this.pictureBox_MessagePreview = new System.Windows.Forms.PictureBox();
             this.comboBox_PreviewColor = new System.Windows.Forms.ComboBox();
             this.comboBox_PreviewType = new System.Windows.Forms.ComboBox();
-            this.richTextBox_ScriptModelView = new System.Windows.Forms.RichTextBox();
+            this.richTextBox_ScriptModelView = new ConanExplorer.Controls.FixedRichTextBox();
             this.button_Apply = new System.Windows.Forms.Button();
             this.progressBar_Progress = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -98,7 +100,7 @@
             this.richTextBox_Script.Location = new System.Drawing.Point(3, 3);
             this.richTextBox_Script.Name = "richTextBox_Script";
             this.richTextBox_Script.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox_Script.Size = new System.Drawing.Size(538, 408);
+            this.richTextBox_Script.Size = new System.Drawing.Size(688, 553);
             this.richTextBox_Script.TabIndex = 0;
             this.richTextBox_Script.Text = "";
             this.richTextBox_Script.WordWrap = false;
@@ -112,7 +114,7 @@
             this.listBox_ScriptFiles.FormattingEnabled = true;
             this.listBox_ScriptFiles.Location = new System.Drawing.Point(0, 0);
             this.listBox_ScriptFiles.Name = "listBox_ScriptFiles";
-            this.listBox_ScriptFiles.Size = new System.Drawing.Size(193, 440);
+            this.listBox_ScriptFiles.Size = new System.Drawing.Size(244, 585);
             this.listBox_ScriptFiles.TabIndex = 2;
             this.listBox_ScriptFiles.SelectedIndexChanged += new System.EventHandler(this.listBox_ScriptFiles_SelectedIndexChanged);
             this.listBox_ScriptFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_ScriptFiles_MouseDown);
@@ -135,8 +137,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer1.Size = new System.Drawing.Size(749, 440);
-            this.splitContainer1.SplitterDistance = 193;
+            this.splitContainer1.Size = new System.Drawing.Size(950, 585);
+            this.splitContainer1.SplitterDistance = 244;
             this.splitContainer1.TabIndex = 6;
             // 
             // tabControl1
@@ -147,7 +149,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(552, 440);
+            this.tabControl1.Size = new System.Drawing.Size(702, 585);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -157,7 +159,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(544, 414);
+            this.tabPage1.Size = new System.Drawing.Size(694, 559);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Raw Script";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -170,9 +172,9 @@
             this.searchPanel.Controls.Add(this.helpSearchLAbel);
             this.searchPanel.Controls.Add(this.TextBox_Search);
             this.searchPanel.Controls.Add(this.Button_Search);
-            this.searchPanel.Location = new System.Drawing.Point(6, 361);
+            this.searchPanel.Location = new System.Drawing.Point(6, 505);
             this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Size = new System.Drawing.Size(647, 49);
+            this.searchPanel.Size = new System.Drawing.Size(667, 49);
             this.searchPanel.TabIndex = 3;
             this.searchPanel.Visible = false;
             // 
@@ -192,14 +194,14 @@
             this.TextBox_Search.Location = new System.Drawing.Point(5, 5);
             this.TextBox_Search.Margin = new System.Windows.Forms.Padding(4);
             this.TextBox_Search.Name = "TextBox_Search";
-            this.TextBox_Search.Size = new System.Drawing.Size(486, 20);
+            this.TextBox_Search.Size = new System.Drawing.Size(506, 20);
             this.TextBox_Search.TabIndex = 1;
             // 
             // Button_Search
             // 
             this.Button_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button_Search.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Button_Search.Location = new System.Drawing.Point(498, 4);
+            this.Button_Search.Location = new System.Drawing.Point(518, 4);
             this.Button_Search.Name = "Button_Search";
             this.Button_Search.Size = new System.Drawing.Size(146, 22);
             this.Button_Search.TabIndex = 2;
@@ -213,7 +215,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(544, 414);
+            this.tabPage2.Size = new System.Drawing.Size(694, 559);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Script Messages";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -231,8 +233,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(538, 408);
-            this.splitContainer3.SplitterDistance = 179;
+            this.splitContainer3.Size = new System.Drawing.Size(688, 553);
+            this.splitContainer3.SplitterDistance = 228;
             this.splitContainer3.TabIndex = 1;
             // 
             // listBox_ScriptModelList
@@ -242,7 +244,7 @@
             this.listBox_ScriptModelList.FormattingEnabled = true;
             this.listBox_ScriptModelList.Location = new System.Drawing.Point(0, 0);
             this.listBox_ScriptModelList.Name = "listBox_ScriptModelList";
-            this.listBox_ScriptModelList.Size = new System.Drawing.Size(179, 408);
+            this.listBox_ScriptModelList.Size = new System.Drawing.Size(228, 553);
             this.listBox_ScriptModelList.TabIndex = 0;
             this.listBox_ScriptModelList.SelectedIndexChanged += new System.EventHandler(this.listBox_ScriptModelList_SelectedIndexChanged);
             // 
@@ -263,8 +265,8 @@
             // 
             this.splitContainer4.Panel2.Controls.Add(this.richTextBox_ScriptModelView);
             this.splitContainer4.Panel2.Controls.Add(this.button_Apply);
-            this.splitContainer4.Size = new System.Drawing.Size(355, 408);
-            this.splitContainer4.SplitterDistance = 179;
+            this.splitContainer4.Size = new System.Drawing.Size(456, 553);
+            this.splitContainer4.SplitterDistance = 242;
             this.splitContainer4.TabIndex = 1;
             // 
             // panel_Preview
@@ -277,7 +279,7 @@
             this.panel_Preview.Controls.Add(this.pictureBox_MessagePreview);
             this.panel_Preview.Location = new System.Drawing.Point(3, 30);
             this.panel_Preview.Name = "panel_Preview";
-            this.panel_Preview.Size = new System.Drawing.Size(349, 146);
+            this.panel_Preview.Size = new System.Drawing.Size(450, 209);
             this.panel_Preview.TabIndex = 3;
             // 
             // pictureBox_MessagePreview
@@ -300,7 +302,7 @@
             "Red",
             "Green",
             "Yellow"});
-            this.comboBox_PreviewColor.Location = new System.Drawing.Point(254, 3);
+            this.comboBox_PreviewColor.Location = new System.Drawing.Point(355, 3);
             this.comboBox_PreviewColor.Name = "comboBox_PreviewColor";
             this.comboBox_PreviewColor.Size = new System.Drawing.Size(98, 21);
             this.comboBox_PreviewColor.TabIndex = 2;
@@ -318,7 +320,7 @@
             "Selection Window"});
             this.comboBox_PreviewType.Location = new System.Drawing.Point(3, 3);
             this.comboBox_PreviewType.Name = "comboBox_PreviewType";
-            this.comboBox_PreviewType.Size = new System.Drawing.Size(245, 21);
+            this.comboBox_PreviewType.Size = new System.Drawing.Size(346, 21);
             this.comboBox_PreviewType.TabIndex = 1;
             // 
             // richTextBox_ScriptModelView
@@ -326,9 +328,10 @@
             this.richTextBox_ScriptModelView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox_ScriptModelView.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox_ScriptModelView.Location = new System.Drawing.Point(3, 3);
             this.richTextBox_ScriptModelView.Name = "richTextBox_ScriptModelView";
-            this.richTextBox_ScriptModelView.Size = new System.Drawing.Size(349, 219);
+            this.richTextBox_ScriptModelView.Size = new System.Drawing.Size(450, 301);
             this.richTextBox_ScriptModelView.TabIndex = 0;
             this.richTextBox_ScriptModelView.Text = "";
             this.richTextBox_ScriptModelView.TextChanged += new System.EventHandler(this.richTextBox_ScriptModelView_TextChanged);
@@ -338,9 +341,9 @@
             // 
             this.button_Apply.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Apply.Location = new System.Drawing.Point(3, 199);
+            this.button_Apply.Location = new System.Drawing.Point(3, 281);
             this.button_Apply.Name = "button_Apply";
-            this.button_Apply.Size = new System.Drawing.Size(349, 23);
+            this.button_Apply.Size = new System.Drawing.Size(450, 23);
             this.button_Apply.TabIndex = 1;
             this.button_Apply.Text = "Apply";
             this.button_Apply.UseVisualStyleBackColor = true;
@@ -351,9 +354,9 @@
             // 
             this.progressBar_Progress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar_Progress.Location = new System.Drawing.Point(12, 482);
+            this.progressBar_Progress.Location = new System.Drawing.Point(12, 627);
             this.progressBar_Progress.Name = "progressBar_Progress";
-            this.progressBar_Progress.Size = new System.Drawing.Size(749, 14);
+            this.progressBar_Progress.Size = new System.Drawing.Size(950, 14);
             this.progressBar_Progress.TabIndex = 7;
             // 
             // menuStrip1
@@ -365,7 +368,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(773, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(974, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip";
             // 
@@ -491,9 +494,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel_Row});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 503);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 648);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(773, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(974, 22);
             this.statusStrip1.TabIndex = 10;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -506,7 +509,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(773, 525);
+            this.ClientSize = new System.Drawing.Size(974, 670);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.progressBar_Progress);
             this.Controls.Add(this.splitContainer1);
@@ -547,7 +550,7 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox_Script;
+        private FixedRichTextBox richTextBox_Script;
         private System.Windows.Forms.ListBox listBox_ScriptFiles;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ProgressBar progressBar_Progress;
@@ -571,7 +574,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.ListBox listBox_ScriptModelList;
-        private System.Windows.Forms.RichTextBox richTextBox_ScriptModelView;
+        private FixedRichTextBox richTextBox_ScriptModelView;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateScriptToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer4;

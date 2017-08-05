@@ -953,7 +953,19 @@ namespace ConanExplorer.Windows
         {
             if (e.Control && e.KeyCode == Keys.W) //New Window Hotkey
             {
-                richTextBox_ScriptModelView.SelectedText += "Test";
+                richTextBox_ScriptModelView.SelectedText += "%KW:" + Environment.NewLine + "%CLR:%COL(5):NAME:%COL(1):";
+                return;
+            }
+
+            if (e.Control && e.KeyCode == Keys.N) //New Window Hotkey
+            {
+                richTextBox_ScriptModelView.SelectedText += "%LF:";
+                return;
+            }
+
+            if (e.Control && e.KeyCode == Keys.K) //New Window Hotkey
+            {
+                richTextBox_ScriptModelView.SelectedText += "%KW:";
                 return;
             }
         }
