@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace ConanExplorer.Conan.Filetypes
 {
+    /// <summary>
+    /// PB file class
+    /// </summary>
     public class PBFile : BaseFile
     {
+        /// <summary>
+        /// Files of the PB file.
+        /// </summary>
         public List<PBFileEntry> Files { get; set; } = new List<PBFileEntry>();
 
         public PBFile() { }
@@ -18,6 +24,9 @@ namespace ConanExplorer.Conan.Filetypes
             Unpack();
         }
 
+        /// <summary>
+        /// Packs all the files back inside the PB file.
+        /// </summary>
         public void Pack()
         {
             using (BinaryWriter writer = new BinaryWriter(new FileStream(FilePath, FileMode.Create)))
@@ -46,6 +55,9 @@ namespace ConanExplorer.Conan.Filetypes
             }
         }
 
+        /// <summary>
+        /// Unpacks all the files inside the PB file into a folder.
+        /// </summary>
         public void Unpack()
         {
             Files.Clear();
@@ -56,7 +68,7 @@ namespace ConanExplorer.Conan.Filetypes
                 while (reader.BaseStream.Length != reader.BaseStream.Position)
                 {
                     byte[] headerBytes = reader.ReadBytes(17);
-                    PACKFileHeader header = new PACKFileHeader(headerBytes);
+                    PBFileHeader header = new PBFileHeader(headerBytes);
                     if (header.Length == 0x00F7FFFF) return;
                     byte[] buffer = reader.ReadBytes(header.Length - 17);
                     string directory = Path.GetDirectoryName(FilePath) + "\\" + Path.GetFileNameWithoutExtension(FilePath);

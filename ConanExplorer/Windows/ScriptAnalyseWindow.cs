@@ -70,7 +70,7 @@ namespace ConanExplorer.Windows
 
                 _fontFile = new FONTFile(fontFile.FilePath);
             }
-            _fontFile.Open();
+            _fontFile.Load();
 
             _fontFile.Generate(unsortedDictionary, new Font("ConanFont", 12));
             _fontFile.Save();

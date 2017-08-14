@@ -55,7 +55,7 @@ namespace ConanExplorer.Windows
 
                 _fontFile = new FONTFile(fontFile.FilePath);
             }
-            _fontFile.Open();
+            _fontFile.Load();
 
             FontList = _fontFile.Characters.Select(character => character.GetBitmap()).ToList();
             pictureBox_CharacterMap.Image = Graphic.CombineBitmaps(FontList, 42);

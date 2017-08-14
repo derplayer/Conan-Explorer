@@ -10,8 +10,14 @@ using System.Threading.Tasks;
 
 namespace ConanExplorer.Conan.Headers
 {
+    /// <summary>
+    /// TIM header class.
+    /// </summary>
     public class TIMHeader
     {
+        /// <summary>
+        /// Header signature.
+        /// </summary>
         public static byte[] Signature = new byte[] { 0x10, 0x00, 0x00, 0x00 };
 
         /// <summary>
@@ -161,6 +167,10 @@ namespace ConanExplorer.Conan.Headers
 
         public TIMHeader() { }
 
+        /// <summary>
+        /// Gets the bytes for writing the TIM header.
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetBytes()
         {
             List<byte> result = new List<byte>();
@@ -190,42 +200,21 @@ namespace ConanExplorer.Conan.Headers
             return result.ToArray();
         }
 
-        public void GenerateClut(Bitmap bitmap, TIMEncodingSettings settings)
-        {
-            if (BPP > 8) return;
-            if (bitmap.Width != ImageWidthPixels || bitmap.Height != ImageHeight)
-                throw new ArgumentOutOfRangeException("bitmap", "The given bitmap has not the correct width or height!");
-
-            if (BPP == 4)
-            {
-                if (bitmap.PixelFormat != PixelFormat.Format4bppIndexed)
-                    throw new ArgumentException("The given bitmap has the wrong pixel format! Needed is 4 BPP.", "bitmap");
-
-                Color[] palette = bitmap.Palette.Entries;
-
-                for (int i = 0; i < 16; i++)
-                {
-                    ClutData[i] = RGB24_To_RGBPSX(bitmap.Palette.Entries[i], settings);
-                }
-            }
-            else if (BPP == 8)
-            {
-                if (bitmap.PixelFormat != PixelFormat.Format8bppIndexed)
-                    throw new ArgumentException("The given bitmap has the wrong pixel format! Needed is 8 BPP", "bitmap");
-
-                for (int i = 0; i < 256; i++)
-                {
-                    ClutData[i] = RGB24_To_RGBPSX(bitmap.Palette.Entries[i], settings);
-                }
-            }
-        }
-
+        /// <summary>
+        /// Writes the header to a stream.
+        /// </summary>
+        /// <param name="stream"></param>
         public void Write(Stream stream)
         {
             byte[] buffer = GetBytes();
             stream.Write(buffer, 0, buffer.Length);
         }
 
+        /// <summary>
+        /// Loads the header from a stream.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         public bool Load(BinaryReader reader)
         {
             byte[] signature = reader.ReadBytes(4);
@@ -259,6 +248,41 @@ namespace ConanExplorer.Conan.Headers
 
             DataOffset = (uint)reader.BaseStream.Position;
             return true;
+        }
+
+        /// <summary>
+        /// Generate CLUT from given bitmap and encoding settings
+        /// </summary>
+        /// <param name="bitmap">Bitmap</param>
+        /// <param name="settings">Encoding Settings</param>
+        public void GenerateClut(Bitmap bitmap, TIMEncodingSettings settings)
+        {
+            if (BPP > 8) return;
+            if (bitmap.Width != ImageWidthPixels || bitmap.Height != ImageHeight)
+                throw new ArgumentOutOfRangeException("bitmap", "The given bitmap has not the correct width or height!");
+
+            if (BPP == 4)
+            {
+                if (bitmap.PixelFormat != PixelFormat.Format4bppIndexed)
+                    throw new ArgumentException("The given bitmap has the wrong pixel format! Needed is 4 BPP.", "bitmap");
+
+                Color[] palette = bitmap.Palette.Entries;
+
+                for (int i = 0; i < 16; i++)
+                {
+                    ClutData[i] = RGB24_To_RGBPSX(bitmap.Palette.Entries[i], settings);
+                }
+            }
+            else if (BPP == 8)
+            {
+                if (bitmap.PixelFormat != PixelFormat.Format8bppIndexed)
+                    throw new ArgumentException("The given bitmap has the wrong pixel format! Needed is 8 BPP", "bitmap");
+
+                for (int i = 0; i < 256; i++)
+                {
+                    ClutData[i] = RGB24_To_RGBPSX(bitmap.Palette.Entries[i], settings);
+                }
+            }
         }
 
         private ushort RGB24_To_RGBPSX(Color color, TIMEncodingSettings settings)

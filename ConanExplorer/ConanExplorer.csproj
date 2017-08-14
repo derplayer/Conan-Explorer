@@ -77,6 +77,7 @@
     <Compile Include="Conan\FontCharacter.cs" />
     <Compile Include="Conan\Filetypes\FONTFile.cs" />
     <Compile Include="Conan\FontSymbol.cs" />
+    <Compile Include="Conan\Headers\BGHeader.cs" />
     <Compile Include="Conan\Headers\Header.cs" />
     <Compile Include="Conan\Headers\LZSSHeader.cs" />
     <Compile Include="Conan\ApplicationState.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Conan\Filetypes\LZBFile.cs" />
     <Compile Include="Conan\Filetypes\PBFile.cs" />
     <Compile Include="Conan\Filetypes\TIMFile.cs" />
-    <Compile Include="Conan\Headers\PACKFileHeader.cs" />
+    <Compile Include="Conan\Headers\PBFileHeader.cs" />
     <Compile Include="Conan\Headers\TIMHeader.cs" />
     <Compile Include="Conan\ProjectFile.cs" />
     <Compile Include="Conan\Headers\HeaderList.cs" />
@@ -123,6 +124,12 @@
     <Compile Include="Controls\LZBControl.Designer.cs">
       <DependentUpon>LZBControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BGControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\BGControl.Designer.cs">
+      <DependentUpon>BGControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PBControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -148,6 +155,7 @@
     <Compile Include="ExtensionMethods\Conversion.cs" />
     <Compile Include="ExtensionMethods\Graphic.cs" />
     <Compile Include="ExtensionMethods\Serializae.cs" />
+    <Compile Include="ExtensionMethods\Win32.cs" />
     <Compile Include="Windows\DebugBmp2Tim.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +230,12 @@
     <Compile Include="Windows\SelectModeWindow.Designer.cs">
       <DependentUpon>SelectModeWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\TIMEncodingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\TIMEncodingWindow.Designer.cs">
+      <DependentUpon>TIMEncodingWindow.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Controls\CompareControl.resx">
       <DependentUpon>CompareControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -230,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LZBControl.resx">
       <DependentUpon>LZBControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\BGControl.resx">
+      <DependentUpon>BGControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PBControl.resx">
       <DependentUpon>PBControl.cs</DependentUpon>
@@ -285,6 +302,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\SelectModeWindow.resx">
       <DependentUpon>SelectModeWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\TIMEncodingWindow.resx">
+      <DependentUpon>TIMEncodingWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

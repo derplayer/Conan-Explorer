@@ -11,21 +11,32 @@ using System.Xml.Serialization;
 
 namespace ConanExplorer.Conan.Filetypes
 {
+    /// <summary>
+    /// FONT.BIN file class
+    /// </summary>
     public class FONTFile : BaseFile
     {
         private readonly int _originalSize = 0x1B800;
 
-        private readonly int _indexLength = 0x19CC; //105664/6604 magic correct count
+        private readonly int _indexLength = 0x19CC;
         private readonly int _startOffset = 0x19D0;
         private readonly int _startLength = 0x19CC0;
 
+        /// <summary>
+        /// List of all the characters inside the FONT file
+        /// </summary>
         [XmlIgnore]
         public List<FontCharacter> Characters = new List<FontCharacter>();
 
         public FONTFile() { }
         public FONTFile(string filePath) : base(filePath) { }
 
-        public bool Open(bool useMetadata = false)
+        /// <summary>
+        /// Loads the characters of the FONT file.
+        /// </summary>
+        /// <param name="useMetadata"></param>
+        /// <returns></returns>
+        public bool Load(bool useMetadata = false)
         {
             if (!File.Exists(FilePath)) return false;
             
@@ -62,6 +73,12 @@ namespace ConanExplorer.Conan.Filetypes
             return true;
         }
 
+        /// <summary>
+        /// Generates characters from the given dictionary and font.
+        /// </summary>
+        /// <param name="dictionary">Dictionary containing max 2 chars per string.</param>
+        /// <param name="font">.NET font</param>
+        /// <returns></returns>
         public bool Generate(string[] dictionary, Font font)
         {
             foreach (FontCharacter fontCharacter in Characters) { fontCharacter.Data = new byte[32]; }
@@ -88,6 +105,11 @@ namespace ConanExplorer.Conan.Filetypes
             return true;
         }
 
+        /// <summary>
+        /// Writes the characters into the FONT file.
+        /// </summary>
+        /// <param name="keepMetadata"></param>
+        /// <returns></returns>
         public bool Save(bool keepMetadata = true)
         {
             using (BinaryWriter writer = new BinaryWriter(new FileStream(FilePath, FileMode.Create)))
@@ -118,11 +140,19 @@ namespace ConanExplorer.Conan.Filetypes
             return true;
         }
 
+        /// <summary>
+        /// Returns a new list of empty characters with the predetermined indices.
+        /// </summary>
+        /// <returns></returns>
         public static List<FontCharacter> EmptyFontCharacters()
         {
             return FontIndices.Select(index => new FontCharacter((short) index)).ToList();
         }
 
+        /// <summary>
+        /// Predetermined indices.
+        /// Those are hardcoded and can not be changed.
+        /// </summary>
         public static ushort[] FontIndices =
         {
             0x4081, 0x4181, 0x4281, 0x4381, 0x4481, 0x4581, 0x4681, 0x4781, 0x4881, 0x4981, 0x4A81, 0x4B81, 0x4C81, 0x4D81, 0x4E81, 0x4F81,

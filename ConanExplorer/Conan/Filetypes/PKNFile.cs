@@ -10,19 +10,39 @@ using System.Xml.Serialization;
 
 namespace ConanExplorer.Conan.Filetypes
 {
+    /// <summary>
+    /// PKN file class
+    /// </summary>
     public class PKNFile : BaseFile
     {
+        /// <summary>
+        /// Name of the PKN file.
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Gets the folder where the PKN got unpacked to.
+        /// </summary>
         [XmlIgnore]
         public string UnpackedFolder
         {
             get { return Path.GetDirectoryName(FilePath) + "\\" + Name + "\\"; }
         }
+        /// <summary>
+        /// Size of the PKN file.
+        /// </summary>
         public UInt32 Size { get; set; }
+        /// <summary>
+        /// File dictionary folder from the PSX executable.
+        /// </summary>
         public FileDictionaryFolder IndexFolder { get; set; }
+        /// <summary>
+        /// Files of the PKN file.
+        /// </summary>
         public List<BaseFile> Files { get; set; } = new List<BaseFile>();
-
+        /// <summary>
+        /// File count of the PKN
+        /// </summary>
         public int ItemCount => Files.Count;
 
         public PKNFile() { }
@@ -35,39 +55,19 @@ namespace ConanExplorer.Conan.Filetypes
             IndexFolder = folder;
         }
 
+        /// <summary>
+        /// Checks all the files that were in the PKN for their checksum
+        /// </summary>
+        /// <returns></returns>
         public bool CheckPKNFiles()
         {
             return Files.All(file => file.Check());
         }
 
-        public bool Unpack()
-        {
-            byte[] buffer;
-            using (BinaryReader reader = new BinaryReader(new FileStream(FilePath, FileMode.Open)))
-            {
-                Size = (uint)reader.BaseStream.Length;
-                buffer = new byte[Size];
-                reader.Read(buffer, 0, buffer.Length);
-            }
-
-            uint startOffset = IndexFolder.Files[0].Offset * 0x800;
-            foreach (FileDictionaryFile fileEntry in IndexFolder.Files)
-            {
-                byte[] file = new byte[fileEntry.Length * 0x800];
-                uint offset = fileEntry.Offset * 0x800 - startOffset;
-                Array.Copy(buffer, offset, file, 0, fileEntry.Length * 0x800);
-
-                string outputPath = Path.Combine(UnpackedFolder, Path.GetFileName(fileEntry.FullPath));
-                Directory.CreateDirectory(UnpackedFolder);
-                using (BinaryWriter writer = new BinaryWriter(new FileStream(outputPath, FileMode.Create)))
-                {
-                    writer.Write(file);
-                }
-                Files.Add(GetFile(outputPath));
-            }
-            return true;
-        }
-
+        /// <summary>
+        /// Packs all the files back inside the PKN file.
+        /// </summary>
+        /// <returns></returns>
         public bool Pack()
         {
             foreach (FileDictionaryFile fileEntry in IndexFolder.Files)
@@ -96,6 +96,42 @@ namespace ConanExplorer.Conan.Filetypes
             return true;
         }
 
+        /// <summary>
+        /// Unpacks all the files inside the PKN file into a folder.
+        /// </summary>
+        /// <returns></returns>
+        public bool Unpack()
+        {
+            byte[] buffer;
+            using (BinaryReader reader = new BinaryReader(new FileStream(FilePath, FileMode.Open)))
+            {
+                Size = (uint)reader.BaseStream.Length;
+                buffer = new byte[Size];
+                reader.Read(buffer, 0, buffer.Length);
+            }
+
+            uint startOffset = IndexFolder.Files[0].Offset * 0x800;
+            foreach (FileDictionaryFile fileEntry in IndexFolder.Files)
+            {
+                byte[] file = new byte[fileEntry.Length * 0x800];
+                uint offset = fileEntry.Offset * 0x800 - startOffset;
+                Array.Copy(buffer, offset, file, 0, fileEntry.Length * 0x800);
+
+                string outputPath = Path.Combine(UnpackedFolder, Path.GetFileName(fileEntry.FullPath));
+                Directory.CreateDirectory(UnpackedFolder);
+                using (BinaryWriter writer = new BinaryWriter(new FileStream(outputPath, FileMode.Create)))
+                {
+                    writer.Write(file);
+                }
+                Files.Add(GetFile(outputPath));
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Deletes the PKN folder from unpacking
+        /// </summary>
+        /// <returns></returns>
         public bool Clear()
         {
             if (!Directory.Exists(UnpackedFolder)) return false;
@@ -115,11 +151,6 @@ namespace ConanExplorer.Conan.Filetypes
                 return new BaseFile(filePath);
             }
             return HeaderList.GetTypeFromFile(filePath);
-        }
-
-        public bool Save(string filePath)
-        {
-            return true;
         }
 
         public override string ToString()

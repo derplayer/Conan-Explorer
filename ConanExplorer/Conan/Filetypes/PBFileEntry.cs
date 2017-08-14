@@ -7,14 +7,24 @@ using System.Threading.Tasks;
 
 namespace ConanExplorer.Conan.Filetypes
 {
+    /// <summary>
+    /// File entry of the PB file format
+    /// </summary>
     public class PBFileEntry
     {
-        public PACKFileHeader Header { get; set; }
+        /// <summary>
+        /// Sub-Header
+        /// </summary>
+        public PBFileHeader Header { get; set; }
+
+        /// <summary>
+        /// Extracted file that belongs to this entry
+        /// </summary>
         public BaseFile File { get; set; }
 
         public PBFileEntry() { }
 
-        public PBFileEntry(PACKFileHeader header, BaseFile file)
+        public PBFileEntry(PBFileHeader header, BaseFile file)
         {
             Header = header;
             File = file;

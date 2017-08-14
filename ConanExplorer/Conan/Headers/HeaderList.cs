@@ -14,6 +14,9 @@ namespace ConanExplorer.Conan.Headers
     /// </summary>
     public static class HeaderList
     {
+        /// <summary>
+        /// Gets a list of all the known headers.
+        /// </summary>
         public static List<Header> Headers
         {
             get
@@ -163,7 +166,7 @@ namespace ConanExplorer.Conan.Headers
             {
                 Header header = new Header();
                 header.Name = "XA";
-                header.Description = "Audio";
+                header.Description = "Audio (XA ADPCM)";
                 header.Extension = "XA";
                 header.Signature = new byte[] { 0x01, 0x00, 0x64, 0x04, 0x01, 0x00, 0x64, 0x04 };
                 header.FileType = typeof(XAFile);
@@ -171,48 +174,28 @@ namespace ConanExplorer.Conan.Headers
             }
         }
 
-
+        /// <summary>
+        /// Gets the file extension by comparing the buffer with the known header signatures.
+        /// </summary>
+        /// <param name="buffer">Buffer containing a header.</param>
+        /// <returns></returns>
         public static string GetExtensionFromBuffer(byte[] buffer)
         {
-            if (BG.Compare(buffer))
+            foreach (Header header in Headers)
             {
-                return "BG";
-            }
-            if (LZB.Compare(buffer))
-            {
-                return "LZB";
-            }
-            if (PACK.Compare(buffer))
-            {
-                return "PB";
-            }
-            if (SEQ.Compare(buffer))
-            {
-                return "SEQ";
-            }
-            if (STR.Compare(buffer))
-            {
-                return "STR";
-            }
-            if (TIM.Compare(buffer))
-            {
-                return "TIM";
-            }
-            if (VB.Compare(buffer))
-            {
-                return "VB";
-            }
-            if (VH.Compare(buffer))
-            {
-                return "VH";
-            }
-            if (XA.Compare(buffer))
-            {
-                return "XA";
+                if (header.Compare(buffer))
+                {
+                    return header.Extension;
+                }
             }
             return "RAW";
         }
 
+        /// <summary>
+        /// Gets the correct BaseFile class by comparing the file with the known header signatures.
+        /// </summary>
+        /// <param name="filePath">Filepath</param>
+        /// <returns></returns>
         public static BaseFile GetTypeFromFile(string filePath)
         {
             byte[] buffer;

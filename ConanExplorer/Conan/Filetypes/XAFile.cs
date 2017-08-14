@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace ConanExplorer.Conan.Filetypes
 {
-
+    /// <summary>
+    /// [WIP]
+    /// </summary>
     public class XAFile : BaseFile
     {
         public XAFile() { }

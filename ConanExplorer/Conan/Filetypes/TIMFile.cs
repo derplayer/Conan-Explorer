@@ -13,9 +13,15 @@ using System.Windows;
 
 namespace ConanExplorer.Conan.Filetypes
 {
+    /// <summary>
+    /// TIM file class.
+    /// 16BPP and 24BPP not tested!
+    /// </summary>
     public class TIMFile : BaseFile
     {
-        //public BaseFile BitmapFile { get; set; }
+        /// <summary>
+        /// TIM header
+        /// </summary>
         public TIMHeader TIMHeader { get; set; } = new TIMHeader();
 
 
@@ -29,26 +35,21 @@ namespace ConanExplorer.Conan.Filetypes
             }
         }
 
+        /// <summary>
+        /// Gets the bitmap from the TIM by converting it.
+        /// </summary>
+        /// <returns></returns>
         public Bitmap GetBitmap()
         {
-            if (true) //do memorystream check or something if changed
-            {
-                if (!File.Exists(FilePath)) return null;
-                return TIM2BMP();
-
-                //string outputPath = FilePath + ".BMP";
-                //using (FileStream fileStream = new FileStream(outputPath, FileMode.Create))
-                //{
-                //    Bitmap bitmap = TIM2BMP();
-                //    bitmap.Save(fileStream, ImageFormat.Bmp); //GDI problem when file is open or already exists?
-                //    bitmap.Dispose();
-                //}
-                //
-                //BitmapFile = new BaseFile(outputPath);
-            }
-            return null;
+            if (!File.Exists(FilePath)) return null;
+            return TIM2BMP();
         }
 
+        /// <summary>
+        /// Sets the TIM to the given bitmap by converting it.
+        /// </summary>
+        /// <param name="bitmap">Bitmap</param>
+        /// <param name="settings">Encoding settings</param>
         public void SetBitmap(Bitmap bitmap, TIMEncodingSettings settings)
         {
             if (TIMHeader.ImageWidthPixels != bitmap.Width || TIMHeader.ImageHeight != bitmap.Height)
@@ -65,18 +66,10 @@ namespace ConanExplorer.Conan.Filetypes
             BMP2TIM(bitmap, settings);
         }
 
-        private ushort GetColorIndex(Bitmap bitmap, Color color)
-        {
-            List<Color> palette = bitmap.Palette.Entries.ToList();
-            return (ushort)palette.IndexOf(color);
-        }
-
-        private Bitmap TIM2BMP2(string fileName)
-        {
-            //TOOD better tim2bmp conversion with Bitmap class or something
-            return null;
-        }
-
+        /// <summary>
+        /// Converts the TIM file into a bitmap.
+        /// </summary>
+        /// <returns></returns>
         private Bitmap TIM2BMP()
         {
             uint y, x;
@@ -92,7 +85,7 @@ namespace ConanExplorer.Conan.Filetypes
 
                 if (TIMHeader.HasClut)
                 {
-                    if (TIMHeader.BPP == 4) // 4bpp
+                    if (TIMHeader.BPP == 4)
                     {
                         for (x = 0; x < 16; x++)
                         {
@@ -103,7 +96,7 @@ namespace ConanExplorer.Conan.Filetypes
                             memoryStream.WriteByte(0);
                         }
                     }
-                    else if (TIMHeader.BPP == 8) // 8 bpp
+                    else if (TIMHeader.BPP == 8)
                     {
                         for (x = 0; x < 256; x++)
                         {
@@ -183,6 +176,11 @@ namespace ConanExplorer.Conan.Filetypes
             return new Bitmap(memoryStream);
         }
 
+        /// <summary>
+        /// Converts a bitmap into a TIM file
+        /// </summary>
+        /// <param name="bitmap">Bitmap</param>
+        /// <param name="settings">Encoding settings</param>
         private void BMP2TIM(Bitmap bitmap, TIMEncodingSettings settings)
         {
             TIMHeader.GenerateClut(bitmap, settings);
@@ -245,8 +243,17 @@ namespace ConanExplorer.Conan.Filetypes
             }
         }
 
+        private ushort GetColorIndex(Bitmap bitmap, Color color)
+        {
+            List<Color> palette = bitmap.Palette.Entries.ToList();
+            return (ushort)palette.IndexOf(color);
+        }
+
     }
 
+    /// <summary>
+    /// PSX RGB class for converting between psx rgb and 24rgb
+    /// </summary>
     public class PS_RGB
     {
         public byte R { get; set; }
@@ -288,6 +295,9 @@ namespace ConanExplorer.Conan.Filetypes
         }
     }
 
+    /// <summary>
+    /// Bitmap header class for creating cheap bitmap fast
+    /// </summary>
     public class PS_BITMAP
     {
         public int w, h;
@@ -369,6 +379,9 @@ namespace ConanExplorer.Conan.Filetypes
         }
     }
 
+    /// <summary>
+    /// TIM encoding settings
+    /// </summary>
     public class TIMEncodingSettings
     {
         /// <summary>

@@ -106,7 +106,7 @@ namespace ConanExplorer.Conan.Script.Elements
         }
 
 
-        public ScriptMessage(Match match, bool linebreak = true) : base(match, linebreak) {}
+        public ScriptMessage(Match match, int lineIndex, bool linebreak = true) : base(match, lineIndex, linebreak) {}
     
 
         public void Format(ScriptFile script, bool ignoreMissing = true)

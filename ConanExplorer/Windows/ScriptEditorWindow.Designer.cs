@@ -31,24 +31,22 @@ namespace ConanExplorer.Windows
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptEditorWindow));
-            this.richTextBox_Script = new ConanExplorer.Controls.FixedRichTextBox();
+            this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
             this.listBox_ScriptFiles = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.listBox_ScriptMessages = new System.Windows.Forms.ListBox();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.searchPanel = new System.Windows.Forms.Panel();
             this.helpSearchLAbel = new System.Windows.Forms.Label();
             this.TextBox_Search = new System.Windows.Forms.TextBox();
             this.Button_Search = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.listBox_ScriptModelList = new System.Windows.Forms.ListBox();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.panel_Preview = new System.Windows.Forms.Panel();
             this.pictureBox_MessagePreview = new System.Windows.Forms.PictureBox();
             this.comboBox_PreviewColor = new System.Windows.Forms.ComboBox();
             this.comboBox_PreviewType = new System.Windows.Forms.ComboBox();
-            this.richTextBox_ScriptModelView = new ConanExplorer.Controls.FixedRichTextBox();
+            this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
             this.button_Apply = new System.Windows.Forms.Button();
             this.progressBar_Progress = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -74,14 +72,15 @@ namespace ConanExplorer.Windows
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.searchPanel.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            this.searchPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
@@ -92,21 +91,22 @@ namespace ConanExplorer.Windows
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // richTextBox_Script
+            // richTextBox_ScriptFile
             // 
-            this.richTextBox_Script.DetectUrls = false;
-            this.richTextBox_Script.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_Script.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox_Script.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox_Script.Name = "richTextBox_Script";
-            this.richTextBox_Script.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox_Script.Size = new System.Drawing.Size(688, 553);
-            this.richTextBox_Script.TabIndex = 0;
-            this.richTextBox_Script.Text = "";
-            this.richTextBox_Script.WordWrap = false;
-            this.richTextBox_Script.SelectionChanged += new System.EventHandler(this.richTextBox_Script_SelectionChanged);
-            this.richTextBox_Script.TextChanged += new System.EventHandler(this.richTextBox_Script_TextChanged);
-            this.richTextBox_Script.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_Script_KeyDown);
+            this.richTextBox_ScriptFile.DetectUrls = false;
+            this.richTextBox_ScriptFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox_ScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_ScriptFile.HideSelection = false;
+            this.richTextBox_ScriptFile.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox_ScriptFile.Name = "richTextBox_ScriptFile";
+            this.richTextBox_ScriptFile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(397, 585);
+            this.richTextBox_ScriptFile.TabIndex = 0;
+            this.richTextBox_ScriptFile.Text = "";
+            this.richTextBox_ScriptFile.WordWrap = false;
+            this.richTextBox_ScriptFile.SelectionChanged += new System.EventHandler(this.richTextBox_ScriptFile_SelectionChanged);
+            this.richTextBox_ScriptFile.TextChanged += new System.EventHandler(this.richTextBox_ScriptFile_TextChanged);
+            this.richTextBox_ScriptFile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptFile_KeyDown);
             // 
             // listBox_ScriptFiles
             // 
@@ -114,7 +114,7 @@ namespace ConanExplorer.Windows
             this.listBox_ScriptFiles.FormattingEnabled = true;
             this.listBox_ScriptFiles.Location = new System.Drawing.Point(0, 0);
             this.listBox_ScriptFiles.Name = "listBox_ScriptFiles";
-            this.listBox_ScriptFiles.Size = new System.Drawing.Size(244, 585);
+            this.listBox_ScriptFiles.Size = new System.Drawing.Size(170, 269);
             this.listBox_ScriptFiles.TabIndex = 2;
             this.listBox_ScriptFiles.SelectedIndexChanged += new System.EventHandler(this.listBox_ScriptFiles_SelectedIndexChanged);
             this.listBox_ScriptFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_ScriptFiles_MouseDown);
@@ -129,40 +129,65 @@ namespace ConanExplorer.Windows
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.listBox_ScriptFiles);
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer1.Size = new System.Drawing.Size(950, 585);
-            this.splitContainer1.SplitterDistance = 244;
+            this.splitContainer1.SplitterDistance = 170;
             this.splitContainer1.TabIndex = 6;
             // 
-            // tabControl1
+            // splitContainer2
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(702, 585);
-            this.tabControl1.TabIndex = 1;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // tabPage1
+            // splitContainer2.Panel1
             // 
-            this.tabPage1.Controls.Add(this.searchPanel);
-            this.tabPage1.Controls.Add(this.richTextBox_Script);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(694, 559);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Raw Script";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.splitContainer2.Panel1.Controls.Add(this.listBox_ScriptFiles);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.listBox_ScriptMessages);
+            this.splitContainer2.Size = new System.Drawing.Size(170, 585);
+            this.splitContainer2.SplitterDistance = 269;
+            this.splitContainer2.TabIndex = 3;
+            // 
+            // listBox_ScriptMessages
+            // 
+            this.listBox_ScriptMessages.DisplayMember = "DisplayName";
+            this.listBox_ScriptMessages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox_ScriptMessages.FormattingEnabled = true;
+            this.listBox_ScriptMessages.Location = new System.Drawing.Point(0, 0);
+            this.listBox_ScriptMessages.Name = "listBox_ScriptMessages";
+            this.listBox_ScriptMessages.Size = new System.Drawing.Size(170, 312);
+            this.listBox_ScriptMessages.TabIndex = 0;
+            this.listBox_ScriptMessages.SelectedIndexChanged += new System.EventHandler(this.listBox_ScriptMessages_SelectedIndexChanged);
+            this.listBox_ScriptMessages.DoubleClick += new System.EventHandler(this.listBox_ScriptMessages_DoubleClick);
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.searchPanel);
+            this.splitContainer3.Panel1.Controls.Add(this.richTextBox_ScriptFile);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
+            this.splitContainer3.Size = new System.Drawing.Size(776, 585);
+            this.splitContainer3.SplitterDistance = 397;
+            this.splitContainer3.TabIndex = 1;
             // 
             // searchPanel
             // 
@@ -172,9 +197,9 @@ namespace ConanExplorer.Windows
             this.searchPanel.Controls.Add(this.helpSearchLAbel);
             this.searchPanel.Controls.Add(this.TextBox_Search);
             this.searchPanel.Controls.Add(this.Button_Search);
-            this.searchPanel.Location = new System.Drawing.Point(6, 505);
+            this.searchPanel.Location = new System.Drawing.Point(2, 534);
             this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Size = new System.Drawing.Size(667, 49);
+            this.searchPanel.Size = new System.Drawing.Size(377, 49);
             this.searchPanel.TabIndex = 3;
             this.searchPanel.Visible = false;
             // 
@@ -194,59 +219,21 @@ namespace ConanExplorer.Windows
             this.TextBox_Search.Location = new System.Drawing.Point(5, 5);
             this.TextBox_Search.Margin = new System.Windows.Forms.Padding(4);
             this.TextBox_Search.Name = "TextBox_Search";
-            this.TextBox_Search.Size = new System.Drawing.Size(506, 20);
+            this.TextBox_Search.Size = new System.Drawing.Size(216, 20);
             this.TextBox_Search.TabIndex = 1;
+            this.TextBox_Search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_Search_KeyDown);
             // 
             // Button_Search
             // 
             this.Button_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button_Search.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Button_Search.Location = new System.Drawing.Point(518, 4);
+            this.Button_Search.Location = new System.Drawing.Point(228, 4);
             this.Button_Search.Name = "Button_Search";
             this.Button_Search.Size = new System.Drawing.Size(146, 22);
             this.Button_Search.TabIndex = 2;
             this.Button_Search.Text = "Search";
             this.Button_Search.UseVisualStyleBackColor = true;
             this.Button_Search.Click += new System.EventHandler(this.Button_Search_Click);
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.splitContainer3);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(694, 559);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Script Messages";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer3.Name = "splitContainer3";
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.listBox_ScriptModelList);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(688, 553);
-            this.splitContainer3.SplitterDistance = 228;
-            this.splitContainer3.TabIndex = 1;
-            // 
-            // listBox_ScriptModelList
-            // 
-            this.listBox_ScriptModelList.DisplayMember = "DisplayName";
-            this.listBox_ScriptModelList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox_ScriptModelList.FormattingEnabled = true;
-            this.listBox_ScriptModelList.Location = new System.Drawing.Point(0, 0);
-            this.listBox_ScriptModelList.Name = "listBox_ScriptModelList";
-            this.listBox_ScriptModelList.Size = new System.Drawing.Size(228, 553);
-            this.listBox_ScriptModelList.TabIndex = 0;
-            this.listBox_ScriptModelList.SelectedIndexChanged += new System.EventHandler(this.listBox_ScriptModelList_SelectedIndexChanged);
             // 
             // splitContainer4
             // 
@@ -263,10 +250,10 @@ namespace ConanExplorer.Windows
             // 
             // splitContainer4.Panel2
             // 
-            this.splitContainer4.Panel2.Controls.Add(this.richTextBox_ScriptModelView);
+            this.splitContainer4.Panel2.Controls.Add(this.richTextBox_ScriptMessage);
             this.splitContainer4.Panel2.Controls.Add(this.button_Apply);
-            this.splitContainer4.Size = new System.Drawing.Size(456, 553);
-            this.splitContainer4.SplitterDistance = 242;
+            this.splitContainer4.Size = new System.Drawing.Size(375, 585);
+            this.splitContainer4.SplitterDistance = 256;
             this.splitContainer4.TabIndex = 1;
             // 
             // panel_Preview
@@ -279,7 +266,7 @@ namespace ConanExplorer.Windows
             this.panel_Preview.Controls.Add(this.pictureBox_MessagePreview);
             this.panel_Preview.Location = new System.Drawing.Point(3, 30);
             this.panel_Preview.Name = "panel_Preview";
-            this.panel_Preview.Size = new System.Drawing.Size(450, 209);
+            this.panel_Preview.Size = new System.Drawing.Size(369, 223);
             this.panel_Preview.TabIndex = 3;
             // 
             // pictureBox_MessagePreview
@@ -302,7 +289,7 @@ namespace ConanExplorer.Windows
             "Red",
             "Green",
             "Yellow"});
-            this.comboBox_PreviewColor.Location = new System.Drawing.Point(355, 3);
+            this.comboBox_PreviewColor.Location = new System.Drawing.Point(274, 3);
             this.comboBox_PreviewColor.Name = "comboBox_PreviewColor";
             this.comboBox_PreviewColor.Size = new System.Drawing.Size(98, 21);
             this.comboBox_PreviewColor.TabIndex = 2;
@@ -320,30 +307,30 @@ namespace ConanExplorer.Windows
             "Selection Window"});
             this.comboBox_PreviewType.Location = new System.Drawing.Point(3, 3);
             this.comboBox_PreviewType.Name = "comboBox_PreviewType";
-            this.comboBox_PreviewType.Size = new System.Drawing.Size(346, 21);
+            this.comboBox_PreviewType.Size = new System.Drawing.Size(265, 21);
             this.comboBox_PreviewType.TabIndex = 1;
             // 
-            // richTextBox_ScriptModelView
+            // richTextBox_ScriptMessage
             // 
-            this.richTextBox_ScriptModelView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.richTextBox_ScriptMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox_ScriptModelView.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox_ScriptModelView.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox_ScriptModelView.Name = "richTextBox_ScriptModelView";
-            this.richTextBox_ScriptModelView.Size = new System.Drawing.Size(450, 301);
-            this.richTextBox_ScriptModelView.TabIndex = 0;
-            this.richTextBox_ScriptModelView.Text = "";
-            this.richTextBox_ScriptModelView.TextChanged += new System.EventHandler(this.richTextBox_ScriptModelView_TextChanged);
-            this.richTextBox_ScriptModelView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptModelView_KeyDown);
+            this.richTextBox_ScriptMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_ScriptMessage.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox_ScriptMessage.Name = "richTextBox_ScriptMessage";
+            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(369, 319);
+            this.richTextBox_ScriptMessage.TabIndex = 0;
+            this.richTextBox_ScriptMessage.Text = "";
+            this.richTextBox_ScriptMessage.TextChanged += new System.EventHandler(this.richTextBox_ScriptMessage_TextChanged);
+            this.richTextBox_ScriptMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptMessage_KeyDown);
             // 
             // button_Apply
             // 
             this.button_Apply.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Apply.Location = new System.Drawing.Point(3, 281);
+            this.button_Apply.Location = new System.Drawing.Point(3, 299);
             this.button_Apply.Name = "button_Apply";
-            this.button_Apply.Size = new System.Drawing.Size(450, 23);
+            this.button_Apply.Size = new System.Drawing.Size(369, 23);
             this.button_Apply.TabIndex = 1;
             this.button_Apply.Text = "Apply";
             this.button_Apply.UseVisualStyleBackColor = true;
@@ -523,15 +510,16 @@ namespace ConanExplorer.Windows
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.searchPanel.ResumeLayout(false);
-            this.searchPanel.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            this.searchPanel.ResumeLayout(false);
+            this.searchPanel.PerformLayout();
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
@@ -550,7 +538,7 @@ namespace ConanExplorer.Windows
 
         #endregion
 
-        private FixedRichTextBox richTextBox_Script;
+        private FixedRichTextBox richTextBox_ScriptFile;
         private System.Windows.Forms.ListBox listBox_ScriptFiles;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ProgressBar progressBar_Progress;
@@ -569,12 +557,9 @@ namespace ConanExplorer.Windows
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Row;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_DeFormat;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.ListBox listBox_ScriptModelList;
-        private FixedRichTextBox richTextBox_ScriptModelView;
+        private System.Windows.Forms.ListBox listBox_ScriptMessages;
+        private FixedRichTextBox richTextBox_ScriptMessage;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateScriptToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer4;
@@ -589,5 +574,6 @@ namespace ConanExplorer.Windows
         private System.Windows.Forms.Panel searchPanel;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label helpSearchLAbel;
+        private System.Windows.Forms.SplitContainer splitContainer2;
     }
 }

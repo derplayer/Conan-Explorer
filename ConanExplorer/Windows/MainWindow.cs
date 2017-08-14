@@ -73,11 +73,19 @@ namespace ConanExplorer.Windows
                                     fileNode.Nodes.Add(entryNode);
                                 }
                             }
-
+                            if (file.GetType() == typeof(BGFile))
+                            {
+                                BGFile bgFile = (BGFile)file;
+                                foreach (BaseFile entry in bgFile.Files)
+                                {
+                                    TreeNode entryNode = new TreeNode(entry.FileName);
+                                    entryNode.Tag = entry;
+                                    fileNode.Nodes.Add(entryNode);
+                                }
+                            }
                             pknNode.Nodes.Add(fileNode);
                         }
                     }
-
                     directoryNode.Nodes.Add(pknNode);
                 }
                 else
@@ -239,6 +247,12 @@ namespace ConanExplorer.Windows
                     cm.MenuItems.Add("Unpack", OnClickPBUnpack);
                     cm.MenuItems.Add("-");
                 }
+                if (e.Node.Tag.GetType() == typeof(BGFile))
+                {
+                    cm.MenuItems.Add("Pack", OnClickBGPack);
+                    cm.MenuItems.Add("Unpack", OnClickBGUnpack);
+                    cm.MenuItems.Add("-");
+                }
 
                 cm.MenuItems.Add("Revert To Original", OnClickRevertToOriginal);
                 cm.Show(treeView1, e.Location);
@@ -290,10 +304,16 @@ namespace ConanExplorer.Windows
                         if (baseFile.GetType() == typeof (LZBFile))
                         {
                             LZBFile lzbFile = (LZBFile) baseFile;
-                            lzbFile.DecompressedFile.Delete();
-                            lzbFile.DecompressedFile = null;
-                            lzbFile.HeaderFile.Delete();
-                            lzbFile.HeaderFile = null;
+                            if (lzbFile.DecompressedFile != null)
+                            {
+                                lzbFile.DecompressedFile.Delete();
+                                lzbFile.DecompressedFile = null;
+                            }
+                            if (lzbFile.HeaderFile != null)
+                            {
+                                lzbFile.HeaderFile.Delete();
+                                lzbFile.HeaderFile = null;
+                            }
                         }
                         return;
                     }
@@ -415,6 +435,27 @@ namespace ConanExplorer.Windows
             _state.SaveProject();
         }
 
+        private void OnClickBGPack(object sender, EventArgs eventArgs)
+        {
+            TreeNode pbNode = treeView1.SelectedNode;
+            BGFile bg = (BGFile)pbNode.Tag;
+
+            Enabled = false;
+            bg.Pack();
+            Enabled = true;
+            _state.SaveProject();
+        }
+
+        private void OnClickBGUnpack(object sender, EventArgs eventArgs)
+        {
+            TreeNode pbNode = treeView1.SelectedNode;
+            BGFile bg = (BGFile)pbNode.Tag;
+
+            Enabled = false;
+            bg.Unpack();
+            Enabled = true;
+            _state.SaveProject();
+        }
 
 
 
@@ -503,6 +544,17 @@ namespace ConanExplorer.Windows
 
         private void fileIndexViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (ApplicationState.Instance.ProjectFile == null)
+            {
+                MessageBox.Show("There is no project maaaan.");
+                return;
+            }
+            FileDictionary fileDirectory = ApplicationState.Instance.ProjectFile.ModifiedImage.FileDictionary;
+            if (fileDirectory == null)
+            {
+                MessageBox.Show("There are no file indices maaaan.");
+                return;
+            }
             FileIndexViewerWindow fileIndexViewerWindow = new FileIndexViewerWindow();
             fileIndexViewerWindow.ShowDialog();
         }
@@ -517,6 +569,11 @@ namespace ConanExplorer.Windows
         {
             DebugXaToPCM bmp2tim = new DebugXaToPCM();
             bmp2tim.ShowDialog();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("TODO", @"¯\_(ツ)_/¯");
         }
     }
 }

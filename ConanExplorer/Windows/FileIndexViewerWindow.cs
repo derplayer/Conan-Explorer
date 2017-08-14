@@ -16,19 +16,7 @@ namespace ConanExplorer.Windows
         public FileIndexViewerWindow()
         {
             InitializeComponent();
-            if (ApplicationState.Instance.ProjectFile == null)
-            {
-                MessageBox.Show("There is no project maaaan.");
-                Close();
-                return;
-            }
             FileDictionary fileDirectory = ApplicationState.Instance.ProjectFile.ModifiedImage.FileDictionary;
-            if (fileDirectory == null)
-            {
-                MessageBox.Show("There are no file indices maaaan.");
-                Close();
-                return;
-            }
             dataGridView1.DataSource = fileDirectory.Files;
         }
     }

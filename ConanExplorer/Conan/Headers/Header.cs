@@ -3,6 +3,9 @@ using System.IO;
 
 namespace ConanExplorer.Conan.Headers
 {
+    /// <summary>
+    /// Header class for the HeaderList
+    /// </summary>
     public class Header
     {
         public string Name;

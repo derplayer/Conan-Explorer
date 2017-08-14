@@ -14,10 +14,22 @@ using ConanExplorer.Windows;
 
 namespace ConanExplorer.Conan.Filetypes
 {
+    /// <summary>
+    /// LZB file class
+    /// </summary>
     public class LZBFile : BaseFile
     {
+        /// <summary>
+        /// Decompressed file that gets created when decompressing
+        /// </summary>
         public BaseFile DecompressedFile { get; set; }
+        /// <summary>
+        /// LZSS header file that gets created when decompressing
+        /// </summary>
         public BaseFile HeaderFile { get; set; }
+        /// <summary>
+        /// LZSS header
+        /// </summary>
         public LZSSHeader LZSSHeader { get; set; } = new LZSSHeader();
 
         public LZBFile() { }
@@ -32,7 +44,10 @@ namespace ConanExplorer.Conan.Filetypes
             }
         }
 
-
+        /// <summary>
+        /// Decompresses the LZB file.
+        /// </summary>
+        /// <returns></returns>
         public bool Decompress()
         {
             byte[] buffer;
@@ -72,6 +87,11 @@ namespace ConanExplorer.Conan.Filetypes
             return true;
         }
 
+        /// <summary>
+        /// Compresses the LZB file.
+        /// </summary>
+        /// <param name="clean">True for cleaning up the remains of the decompression.</param>
+        /// <returns></returns>
         public bool Compress(bool clean = true)
         {
             if (DecompressedFile == null || HeaderFile == null) return false;
@@ -150,7 +170,6 @@ namespace ConanExplorer.Conan.Filetypes
 
                 for (int i = 1; i < buffer.Length; i++)
                 {
-                    writer.Flush(); //Debug
                     bool[] flags = GetFlags(buffer[i]);
 
                     for (int j = 7; j >= 0; j--)
@@ -164,12 +183,10 @@ namespace ConanExplorer.Conan.Filetypes
                             i++;
 
                             writer.Write(result, 0, result.Length);
-                            writer.Flush(); //Debug
                         }
                         else
                         {
                             writer.Write(buffer, ++i, 1);
-                            writer.Flush(); //Debug
                             circularBuffer.AddData(new byte[] { buffer[i] });
                         }
                         if (writer.BaseStream.Length >= LZSSHeader.UncompressedSize) { break; }
@@ -213,7 +230,6 @@ namespace ConanExplorer.Conan.Filetypes
             {
                 writer.Write(LZSSHeader.GetBytes(), 0, 16);
                 writer.Write(buffer[0]);
-                writer.Flush(); //Debug
 
                 byte[] chunk = new byte[17];
                 byte chunkLength = 1;
@@ -224,7 +240,6 @@ namespace ConanExplorer.Conan.Filetypes
                     if (flagpos == -1)
                     {
                         writer.Write(chunk, 0, chunkLength);
-                        writer.Flush(); //Debug
                         flagpos = 7;
                         chunkLength = 1;
                         chunk[0] = 0;
@@ -249,7 +264,7 @@ namespace ConanExplorer.Conan.Filetypes
                         Array.Copy(buffer, 0, window, 0, window.Length);
                     }
 
-                    byte[] nextBytes = new byte[nextBytesSize]; //was 17 on mode2
+                    byte[] nextBytes = new byte[nextBytesSize];
                     if (i + nextBytesSize > buffer.Length)
                     {
                         Array.Copy(buffer, i, nextBytes, 0, buffer.Length - i);
@@ -287,7 +302,6 @@ namespace ConanExplorer.Conan.Filetypes
                 if (flagpos != -1)
                 {
                     writer.Write(chunk, 0, chunkLength);
-                    writer.Flush(); //Debug
                 }
                 long rest = 2048 - writer.BaseStream.Length % 2048;
                 if (rest > 0)
@@ -332,7 +346,7 @@ namespace ConanExplorer.Conan.Filetypes
             return result;
         }
 
-        public bool[] GetFlags(byte data)
+        private bool[] GetFlags(byte data)
         {
             bool[] result = new bool[8];
             for (int i = 0; i < 8; i++)
@@ -343,6 +357,9 @@ namespace ConanExplorer.Conan.Filetypes
         }
     }
 
+    /// <summary>
+    /// This is a LZSS compressed word consisting of the offset inside the window and the length
+    /// </summary>
     class CompressedWord
     {
         public ushort Offset;
@@ -391,6 +408,9 @@ namespace ConanExplorer.Conan.Filetypes
         }
     }
 
+    /// <summary>
+    /// Just a little struct to compare other results easier with eachother
+    /// </summary>
     struct BestResult
     {
         public bool IsCompressed;

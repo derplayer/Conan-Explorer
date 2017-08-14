@@ -10,13 +10,25 @@ using ConanExplorer.Conan.Headers;
 
 namespace ConanExplorer.Conan.Filetypes
 {
+    /// <summary>
+    /// Basic file class that all filetypes inherit from.
+    /// </summary>
     [XmlInclude(typeof(PKNFile)), XmlInclude(typeof(LZBFile)), XmlInclude(typeof(PBFile)), XmlInclude(typeof(TIMFile)), XmlInclude(typeof(BGFile)), XmlInclude(typeof(FONTFile)), XmlInclude(typeof(SEQFile)), XmlInclude(typeof(XAFile)), XmlInclude(typeof(VHFile)), XmlInclude(typeof(VBFile)), XmlInclude(typeof(STRFile))]
     public class BaseFile
     {
+        /// <summary>
+        /// Name of the file.
+        /// </summary>
         public string FileName { get; set; }
 
+        /// <summary>
+        /// Path of the file relative to the project path.
+        /// </summary>
         public string RelativePath { get; set; }
 
+        /// <summary>
+        /// Path of the file.
+        /// </summary>
         [XmlIgnore]
         public string FilePath
         {
@@ -36,10 +48,20 @@ namespace ConanExplorer.Conan.Filetypes
             }
         }
 
+        /// <summary>
+        /// Checksum of the file (MD5).
+        /// </summary>
         public byte[] Checksum { get; set; }
 
+        /// <summary>
+        /// Constructor for serialization.
+        /// </summary>
         public BaseFile() { }
 
+        /// <summary>
+        /// Base Constructor.
+        /// </summary>
+        /// <param name="filePath">Path of the file</param>
         public BaseFile(string filePath)
         {
             FilePath = filePath;
@@ -53,11 +75,19 @@ namespace ConanExplorer.Conan.Filetypes
             }
         }
 
+        /// <summary>
+        /// Checks if the file exists.
+        /// </summary>
+        /// <returns></returns>
         public bool Exists()
         {
             return File.Exists(FilePath);
         }
 
+        /// <summary>
+        /// Checks if the file has the same checksum.
+        /// </summary>
+        /// <returns></returns>
         public bool Check()
         {
             using (MD5 md5 = MD5.Create())
@@ -67,6 +97,10 @@ namespace ConanExplorer.Conan.Filetypes
             }
         }       
 
+        /// <summary>
+        /// Deletes the file.
+        /// </summary>
+        /// <returns></returns>
         public bool Delete()
         {
             File.Delete(FilePath);

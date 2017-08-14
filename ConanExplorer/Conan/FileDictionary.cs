@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ConanExplorer.Conan
 {
     /// <summary>
-    /// This class holds the file indexes of the executable
+    /// File dictionary that hold the file indices of the PSX executable
     /// </summary>
     public class FileDictionary
     {
@@ -33,6 +33,9 @@ namespace ConanExplorer.Conan
         }
     }
 
+    /// <summary>
+    /// File dictionary file entry
+    /// </summary>
     public class FileDictionaryFile
     {
         public string FullPath { get; set; }

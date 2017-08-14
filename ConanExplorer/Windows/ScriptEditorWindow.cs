@@ -17,9 +17,12 @@ using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using ConanExplorer.Conan.Script;
 using ConanExplorer.Conan.Script.Elements;
+using ConanExplorer.ExtensionMethods;
 
 namespace ConanExplorer.Windows
 {
+    
+
     public partial class ScriptEditorWindow : Form
     {
         private PKNFile _scriptPKN;
@@ -27,53 +30,29 @@ namespace ConanExplorer.Windows
         private ScriptDocument _lastScriptFile;
         private List<IScriptElement> _elements = new List<IScriptElement>();
         private System.Windows.Forms.Timer _timerApply = new System.Windows.Forms.Timer();
-        private Bitmap _window;
         private bool _changingSelection = false;
-        private int lastFoundItem = 0;
-        private bool _IsSearch = false;
-
-        private Color[] _fontColors = new Color[]
-            {
-                Color.FromArgb(0, 0, 0, 0),
-                Color.FromArgb(255, 255, 255, 255),
-                Color.FromArgb(255, 0, 0, 248),
-                Color.FromArgb(255, 248, 0, 0),
-                Color.FromArgb(255, 0, 248, 248),
-                Color.FromArgb(255, 255, 255, 0),
-                Color.FromArgb(255, 0, 248, 0),
-                Color.FromArgb(255, 0, 0, 80),
-                Color.FromArgb(255, 96, 0, 0),
-                Color.FromArgb(255, 144, 144, 144),
-                Color.FromArgb(255, 0, 0, 160),
-                Color.FromArgb(255, 192, 168, 0),
-                Color.FromArgb(255, 0, 176, 192),
-                Color.FromArgb(255, 192, 192, 0),
-                Color.FromArgb(255, 0, 160, 0),
-                Color.FromArgb(255, 192, 0, 0)
-            };
+        private bool _updatingMessage = false;
 
         public ScriptFile ScriptFile;
+
+        
 
         public ScriptEditorWindow()
         {
             InitializeComponent();
-            richTextBox_Script.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
-            richTextBox_Script.AutoWordSelection = false;
-            richTextBox_ScriptModelView.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
-            richTextBox_ScriptModelView.AutoWordSelection = false;
+            richTextBox_ScriptFile.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+            richTextBox_ScriptFile.AutoWordSelection = false;
+            richTextBox_ScriptMessage.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+            richTextBox_ScriptMessage.AutoWordSelection = false;
 
             _timerApply.Interval = 200;
             _timerApply.Tick += _timerApply_Tick;
 
-            _window = (Bitmap)Resources.ResourceManager.GetObject("WINDOW");
-
             comboBox_PreviewType.SelectedIndex = 0;
             comboBox_PreviewColor.SelectedIndex = 2;
-            
         }
 
         
-
         private void GenerateFont()
         {
             PKNFile pknFile = ApplicationState.Instance.ProjectFile.ModifiedImage.PKNFiles.FirstOrDefault(p => p.Name == "GRAPH");
@@ -111,9 +90,9 @@ namespace ConanExplorer.Windows
             }
 
             if (listBox_ScriptFiles.SelectedIndex == -1) return;
-            richTextBox_Script.Text = ((ScriptDocument)listBox_ScriptFiles.SelectedItem).TextBuffer;
-            if (listBox_ScriptModelList.SelectedIndex == -1) return;
-            richTextBox_ScriptModelView.Text = ((ScriptMessage)listBox_ScriptModelList.SelectedItem).Content;
+            richTextBox_ScriptFile.Text = ((ScriptDocument)listBox_ScriptFiles.SelectedItem).TextBuffer;
+            if (listBox_ScriptMessages.SelectedIndex == -1) return;
+            richTextBox_ScriptMessage.Text = ((ScriptMessage)listBox_ScriptMessages.SelectedItem).Content;
 
             //if (MessageBox.Show("Do you want to compress the scripts?", "Question!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             //{
@@ -128,10 +107,6 @@ namespace ConanExplorer.Windows
 
         private void UpdatePreview(ScriptMessage message)
         {
-            //(1 unit = 16px)
-            //speech 13x6 
-            //selection 15x?
-
             if (message.IsSelectionWindow)
             {
                 comboBox_PreviewType.SelectedIndex = 1;
@@ -143,8 +118,6 @@ namespace ConanExplorer.Windows
                 comboBox_PreviewColor.Enabled = false;
             }
 
-
-
             if (comboBox_PreviewType.SelectedIndex == 0)
             {
                 if (message.IsSelectionWindow) return;
@@ -152,26 +125,10 @@ namespace ConanExplorer.Windows
                 Bitmap bitmap = new Bitmap(13 * 16, 6 * 16 * messageCount);
                 using (Graphics graphic = Graphics.FromImage(bitmap))
                 {
-                    DrawDialogueWindow(graphic, 13, 6, messageCount);
-                    DrawDialogueText(graphic, message);
+                    Graphic.DrawDialogueWindow(graphic, 13, 6, messageCount);
+                    Graphic.DrawDialogueText(graphic, ScriptFile, message);
                 }
                 pictureBox_MessagePreview.Image = bitmap;
-
-                //Text offset 15x7
-
-                //144;0 - 160;80 sel blue
-                //160;0 - 176;80 speech
-                //176;0 - 192;80 sel red
-                //192;0 - 208;80 sel green
-                //208;0 - 224;80 sel yellow
-
-                //0 - 16 middle
-                //16 - 32 top/bottom
-                //32 - 48 left/right
-                //48 - 64 corner edgy (bottom left/top right)
-                //64 - 80 corner diagonal (bottom right/top left)     
-
-                //_window
             }
             else if (comboBox_PreviewType.SelectedIndex == 1)
             {
@@ -179,401 +136,10 @@ namespace ConanExplorer.Windows
                 Bitmap bitmap = new Bitmap(15 * 16, 11 * 16);
                 using (Graphics graphic = Graphics.FromImage(bitmap))
                 {
-                    DrawSelectionWindow(graphic, 15, 11, comboBox_PreviewColor.SelectedIndex);
-                    DrawSelectionText(graphic, message);
+                    Graphic.DrawSelectionWindow(graphic, 15, 11, comboBox_PreviewColor.SelectedIndex);
+                    Graphic.DrawSelectionText(graphic, ScriptFile, message);
                 };
                 pictureBox_MessagePreview.Image = bitmap;
-            }
-            
-        }
-
-        private void DrawSelectionText(Graphics graphics, ScriptMessage message)
-        {
-            Color fontColor = Color.FromArgb(255, 255, 255);
-            Font font = ScriptFile.Font;
-            int left = 15;
-            int top = 7;
-            string[] lines = ScriptParser.TextToLines(message.Content);
-
-            bool open = false;
-            foreach (string line in lines)
-            {
-                if (line.StartsWith("%SEL:"))
-                {
-                    open = true;
-                    continue;
-                }
-
-                if (line.StartsWith("%END:"))
-                { 
-                    open = false;
-                    continue;
-                }
-
-                if (open)
-                {
-                    string[] splitted = line.Split(',');
-                    string displayText = splitted[2];
-
-                    for (int i = 0; i < displayText.Length; i++)
-                    {
-                        char character = displayText[i];
-                        
-                        if (left >= 223 || top >= 159) continue;
-                        if (ScriptFile.IsValidChar(character))
-                        {
-                            i++;
-                            if (i == displayText.Length)
-                            {
-                                FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
-                                Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                                graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                                left += 16;
-                            }
-                            else if (ScriptFile.IsValidChar(displayText[i]))
-                            {
-                                FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character, displayText[i]), font);
-                                Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                                graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                                left += 16;
-                            }
-                            else
-                            {
-                                FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
-                                Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                                graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                                left += 16;
-                            }
-                        }
-                    }
-                }
-
-                top += 16;
-                left = 15;
-            }
-        }
-
-        private void DrawDialogueText(Graphics graphics, ScriptMessage message)
-        {
-            Color fontColor = Color.FromArgb(255, 255, 255);
-            int line = 0;
-            int left = 15;
-            int top = 7;
-            int windowCount = 1;
-            int matchIndex = 0;
-            MatchCollection matches = message.Matches;
-            for (int i = 0; i < message.Content.Length; i++)
-            {
-                if (message.Content[i] == '\n' || message.Content[i] == '\r') continue;
-                if (matchIndex < matches.Count)
-                {
-                    if (i == matches[matchIndex].Index + 1)
-                    {
-                        Match match = matches[matchIndex];
-                        if (match.Groups[1].Value == "COL")
-                        {
-                            int colorIndex = 0;
-                            int.TryParse(match.Groups[2].Value, out colorIndex);
-                            if (colorIndex > 15)
-                            {
-                                fontColor = _fontColors[0];
-                            }
-                            else
-                            {
-                                fontColor = _fontColors[colorIndex];
-                            }
-                        }
-                        else if (match.Groups[1].Value == "LF")
-                        {
-                            line++;
-                            top += 16;
-                            left = 15;
-                        }
-                        else if (match.Groups[1].Value == "CLR")
-                        {
-                            left = 15;
-                            top = windowCount * 96 + 7;
-                            windowCount++;
-                        }
-                        matchIndex++;
-                        i += match.Length - 2;
-                        continue;
-                    }
-                }
-
-                char character = message.Content[i];
-                Font font = ScriptFile.Font;
-                if (left >= 191) continue;
-                if (ScriptFile.IsValidChar(character))
-                {
-                    i++;
-                    if (i == message.Content.Length)
-                    {
-                        FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
-                        Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                        graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                        left += 16;
-                    }
-                    else if (ScriptFile.IsValidChar(message.Content[i]))
-                    {
-                        FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character, message.Content[i]), font);
-                        Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                        graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                        left += 16;
-                    }
-                    else
-                    {
-                        FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
-                        Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                        graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                        left += 16;
-                    }
-                }
-                else
-                {
-                    continue;
-                }
-            }
-        }
-
-        private void DrawSelectionWindow(Graphics graphics, int width, int height, int color = 0)
-        {
-            int[] offsets = new int[] { 144, 176, 192, 208 };
-            int colorOffset = offsets[color];
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    Rectangle rectangle = new Rectangle(j * 16, i * 16, 16, 16);
-                    if (i == 0)
-                    {
-                        if (j == 0)
-                        {
-                            //corner top left
-                            graphics.DrawImage(_window, rectangle, colorOffset, 64, 16, 16, GraphicsUnit.Pixel);
-                        }
-                        else if (j == width - 1)
-                        {
-                            //corner top right
-                            graphics.DrawImage(_window, rectangle, colorOffset, 48, 16, 16, GraphicsUnit.Pixel);
-                        }
-                        else
-                        {
-                            //top
-                            graphics.DrawImage(_window, rectangle, colorOffset, 16, 16, 16, GraphicsUnit.Pixel);
-                        }
-                    }
-                    else if (i == height - 1)
-                    {
-                        if (j == 0)
-                        {
-                            //corner bottom left
-                            _window.RotateFlip(RotateFlipType.RotateNoneFlipXY);
-                            graphics.DrawImage(_window, rectangle, 240 - colorOffset, 192, 16, 16, GraphicsUnit.Pixel);
-                            _window.RotateFlip(RotateFlipType.RotateNoneFlipXY);
-                        }
-                        else if (j == width - 1)
-                        {
-                            //corner bottom right
-                            _window.RotateFlip(RotateFlipType.RotateNoneFlipXY);
-                            graphics.DrawImage(_window, rectangle, 240 - colorOffset, 176, 16, 16, GraphicsUnit.Pixel);
-                            _window.RotateFlip(RotateFlipType.RotateNoneFlipXY);
-                        }
-                        else
-                        {
-                            //bottom
-                            _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                            graphics.DrawImage(_window, rectangle, colorOffset, 224, 16, 16, GraphicsUnit.Pixel);
-                            _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                        }
-                    }
-                    else
-                    {
-                        if (j == 0)
-                        {
-                            //left
-                            graphics.DrawImage(_window, rectangle, colorOffset, 32, 16, 16, GraphicsUnit.Pixel);
-                        }
-                        else if (j == width - 1)
-                        {
-                            //right
-                            _window.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                            graphics.DrawImage(_window, rectangle, 240 - colorOffset, 32, 16, 16, GraphicsUnit.Pixel);
-                            _window.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                        }
-                        else
-                        {
-                            //middle
-                            graphics.DrawImage(_window, rectangle, colorOffset, 0, 16, 16, GraphicsUnit.Pixel);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void DrawDialogueWindow(Graphics graphics, int width, int height, int count = 1)
-        {
-            int height_offset = 0;
-            for (int c = 0; c < count; c++)
-            {
-                for (int i = 0; i < height; i++)
-                {
-                    for (int j = 0; j < width; j++)
-                    {
-                        Rectangle rectangle = new Rectangle(j * 16, i * 16 + height_offset, 16, 16);
-                        if (i == 0)
-                        {
-                            if (j == 0)
-                            {
-                                //corner left
-                                graphics.DrawImage(_window, rectangle, 160, 64, 16, 16, GraphicsUnit.Pixel);
-                            }
-                            else if (j == width - 1)
-                            {
-                                //corner right
-                                graphics.DrawImage(_window, rectangle, 160, 48, 16, 16, GraphicsUnit.Pixel);
-                            }
-                            else
-                            {
-                                //top
-                                graphics.DrawImage(_window, rectangle, 160, 16, 16, 16, GraphicsUnit.Pixel);
-                            }
-                        }
-                        else if (i == height - 1)
-                        {
-                            if (j == 0)
-                            {
-                                //corner left
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                                graphics.DrawImage(_window, rectangle, 160, 176, 16, 16, GraphicsUnit.Pixel);
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                            }
-                            else if (j == width - 1)
-                            {
-                                //corner right
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                                graphics.DrawImage(_window, rectangle, 160, 192, 16, 16, GraphicsUnit.Pixel);
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                            }
-                            else
-                            {
-                                //bottom
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                                graphics.DrawImage(_window, rectangle, 160, 224, 16, 16, GraphicsUnit.Pixel);
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                            }
-                        }
-                        else
-                        {
-                            if (j == 0)
-                            {
-                                //left
-                                graphics.DrawImage(_window, rectangle, 160, 32, 16, 16, GraphicsUnit.Pixel);
-                            }
-                            else if (j == width - 1)
-                            {
-                                //right
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                                graphics.DrawImage(_window, rectangle, 80, 32, 16, 16, GraphicsUnit.Pixel);
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                            }
-                            else
-                            {
-                                //middle
-                                graphics.DrawImage(_window, rectangle, 160, 0, 16, 16, GraphicsUnit.Pixel);
-                            }
-                        }
-                    }
-                }
-                height_offset += 96;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="graphics"></param>
-        /// <param name="selection">True for drawing selection window</param>
-        /// <param name="width">Width in tiles</param>
-        /// <param name="height">Height in tiles</param>
-        /// <param name="color">0 = blue, 1 = red, 2 = green, 3 = yellow</param>
-        private void DrawWindow(Graphics graphics, bool selection, int width, int height, int color = -1)
-        {
-            if (selection)
-            {
-                //TODO Selection Window Preview
-            }
-            else
-            {
-                for (int i = 0; i < height; i++)
-                {
-                    for (int j = 0; j < width; j++)
-                    {
-                        Rectangle rectangle = new Rectangle(j * 16, i * 16, 16, 16);
-                        if (i == 0)
-                        {
-                            if (j == 0)
-                            {
-                                //corner left
-                                graphics.DrawImage(_window, rectangle, 160, 64, 16, 16, GraphicsUnit.Pixel);
-                            }
-                            else if (j == width - 1)
-                            {
-                                //corner right
-                                graphics.DrawImage(_window, rectangle, 160, 48, 16, 16, GraphicsUnit.Pixel);
-                            }
-                            else
-                            {
-                                //top
-                                graphics.DrawImage(_window, rectangle, 160, 16, 16, 16, GraphicsUnit.Pixel);
-                            }
-                        }
-                        else if (i == height - 1)
-                        {
-                            if (j == 0)
-                            {
-                                //corner left
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                                graphics.DrawImage(_window, rectangle, 160, 176, 16, 16, GraphicsUnit.Pixel);
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                            }
-                            else if (j == width - 1)
-                            {
-                                //corner right
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                                graphics.DrawImage(_window, rectangle, 160, 192, 16, 16, GraphicsUnit.Pixel);
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                            }
-                            else
-                            {
-                                //bottom
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                                graphics.DrawImage(_window, rectangle, 160, 224, 16, 16, GraphicsUnit.Pixel);
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                            }
-                        }
-                        else
-                        {
-                            if (j == 0)
-                            {
-                                //left
-                                graphics.DrawImage(_window, rectangle, 160, 32, 16, 16, GraphicsUnit.Pixel);
-                            }
-                            else if (j == width - 1)
-                            {
-                                //right
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                                graphics.DrawImage(_window, rectangle, 80, 32, 16, 16, GraphicsUnit.Pixel);
-                                _window.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                            }
-                            else
-                            {
-                                //middle
-                                graphics.DrawImage(_window, rectangle, 160, 0, 16, 16, GraphicsUnit.Pixel);
-                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -623,7 +189,7 @@ namespace ConanExplorer.Windows
 
             ScriptFile = new ScriptFile();
 
-            richTextBox_Script.Text = "";
+            richTextBox_ScriptFile.Text = "";
             for (int i = 0; i < _scriptPKN.Files.Count; i++)
             {
                 BaseFile baseFile = _scriptPKN.Files[i];
@@ -647,49 +213,90 @@ namespace ConanExplorer.Windows
 
         }
 
-        public void UpdateSelection()
+
+        public void UpdateScriptMessage()
         {
             if (_changingSelection) return;
-            IScriptElement element = (IScriptElement)listBox_ScriptModelList.SelectedItem;
+            
+            IScriptElement element = (IScriptElement)listBox_ScriptMessages.SelectedItem;
             if (element == null) return;
             if (element.GetType() == typeof(ScriptMessage))
             {
                 ScriptMessage message = (ScriptMessage)element;
-                message.Content = richTextBox_ScriptModelView.Text.Replace("\n", "\r\n");
+                message.Content = richTextBox_ScriptMessage.Text.Replace("\n", "\r\n");
                 UpdatePreview(message);
             }
-
+            
             ScriptDocument script = (ScriptDocument)listBox_ScriptFiles.SelectedItem;
             ScriptParser.Parse(script, _elements);
 
-            richTextBox_Script.Select(0, 0);
-            richTextBox_Script.ScrollToCaret();
-            richTextBox_Script.Text = script.TextBuffer;
+            _updatingMessage = true;
+
+            Win32.LockWindow(this.Handle);
+            int scrollPos = Win32.GetScrollPos(richTextBox_ScriptFile.Handle, 1);
+            int pos = richTextBox_ScriptFile.SelectionStart;
+            int len = richTextBox_ScriptFile.SelectionLength;
+            richTextBox_ScriptFile.Text = script.TextBuffer;
+            richTextBox_ScriptFile.SelectionStart = pos;
+            richTextBox_ScriptFile.SelectionLength = len;
+            Win32.SetScrollPos(richTextBox_ScriptFile.Handle, 1, scrollPos, true);
+            Win32.PostMessage(richTextBox_ScriptFile.Handle, 0x115, 4 + 0x10000 * scrollPos, 0);
+            Win32.LockWindow(IntPtr.Zero);
+
+            _updatingMessage = false;
         }
+
+        private bool FindNext()
+        {
+            int from = richTextBox_ScriptFile.SelectionStart + 1;
+            int to = richTextBox_ScriptFile.TextLength - 1;
+            int start = richTextBox_ScriptFile.Find(TextBox_Search.Text, from, to, RichTextBoxFinds.None);
+
+            if (start == -1) return false;
+
+            richTextBox_ScriptFile.SelectionStart = start;
+            richTextBox_ScriptFile.ScrollToCaret();
+            return true;
+        }
+
+        private bool FindPrevious()
+        {
+            int from = 0;
+            int to = richTextBox_ScriptFile.SelectionStart - 1;
+            int start = richTextBox_ScriptFile.Find(TextBox_Search.Text, from, to, RichTextBoxFinds.Reverse);
+
+            if (start == -1) return false;
+
+            richTextBox_ScriptFile.SelectionStart = start;
+            richTextBox_ScriptFile.ScrollToCaret();
+            return true;
+        }
+
+
 
         private void _timerApply_Tick(object sender, EventArgs e)
         {
             _timerApply.Enabled = false;
-            UpdateSelection();
+            UpdateScriptMessage();
         }
 
         private void listBox_ScriptFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_lastScriptFile != null) _lastScriptFile.TextBuffer = richTextBox_Script.Text.Replace("\n", "\r\n");
+            if (_lastScriptFile != null) _lastScriptFile.TextBuffer = richTextBox_ScriptFile.Text.Replace("\n", "\r\n");
 
             ScriptDocument file = ScriptFile.Scripts[listBox_ScriptFiles.SelectedIndex];
-            richTextBox_Script.Select(0, 0);
-            richTextBox_Script.ScrollToCaret();
-            richTextBox_Script.Text = file.TextBuffer;
+            richTextBox_ScriptFile.Select(0, 0);
+            richTextBox_ScriptFile.ScrollToCaret();
+            richTextBox_ScriptFile.Text = file.TextBuffer;
             _lastScriptFile = file;
 
             _elements.Clear();
-            listBox_ScriptModelList.Items.Clear();
+            listBox_ScriptMessages.Items.Clear();
             foreach (IScriptElement element in ScriptParser.Parse(file))
             {
                 _elements.Add(element);
                 if (element.GetType() != typeof(ScriptMessage)) continue;
-                listBox_ScriptModelList.Items.Add(element);
+                listBox_ScriptMessages.Items.Add(element);
             }
         }
 
@@ -743,7 +350,7 @@ namespace ConanExplorer.Windows
                 MessageBox.Show("Decompress all first!");
                 return;
             }
-            if (_lastScriptFile != null) _lastScriptFile.TextBuffer = richTextBox_Script.Text.Replace("\n", "\r\n");
+            if (_lastScriptFile != null) _lastScriptFile.TextBuffer = richTextBox_ScriptFile.Text.Replace("\n", "\r\n");
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Conan Explorer Script (*.ces)|*.ces";
@@ -758,6 +365,7 @@ namespace ConanExplorer.Windows
                 Text = String.Format("Script Editor - \"{0}\"", saveFileDialog.FileName);
             }
         }
+
         private void listBox_ScriptFiles_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right) return;
@@ -779,7 +387,7 @@ namespace ConanExplorer.Windows
             if (listBox_ScriptFiles.SelectedIndex == -1) return;
             Enabled = false;
             ScriptDocument file = ScriptFile.Scripts[listBox_ScriptFiles.SelectedIndex];
-            file.TextBuffer = richTextBox_Script.Text.Replace("\n", "\r\n");
+            file.TextBuffer = richTextBox_ScriptFile.Text.Replace("\n", "\r\n");
             file.WriteToOriginalFile();
             if (file.BaseFile.GetType() == typeof(LZBFile))
             {
@@ -824,9 +432,29 @@ namespace ConanExplorer.Windows
             //scriptAnalyseWindow.ShowDialog();
         }
 
-        private void richTextBox_Script_SelectionChanged(object sender, EventArgs e)
+        private void richTextBox_ScriptFile_SelectionChanged(object sender, EventArgs e)
         {
-            toolStripStatusLabel_Row.Text = "Row: " + (richTextBox_Script.GetLineFromCharIndex(richTextBox_Script.SelectionStart) + 1);
+            toolStripStatusLabel_Row.Text = "Row: " + (richTextBox_ScriptFile.GetLineFromCharIndex(richTextBox_ScriptFile.SelectionStart) + 1);
+            if (_updatingMessage) return;
+            FindNearestMessage();
+        }
+
+        private void FindNearestMessage()
+        {
+            int lineIndex = richTextBox_ScriptFile.GetLineFromCharIndex(richTextBox_ScriptFile.SelectionStart);
+            int bestIndex = 0;
+            int bestDifference = 999999;
+            for (int i = 0; i < listBox_ScriptMessages.Items.Count; i++)
+            {
+                ScriptMessage message = (ScriptMessage)listBox_ScriptMessages.Items[i];
+                int difference = Math.Abs(message.LineIndex - lineIndex);
+                if (difference < bestDifference)
+                {
+                    bestIndex = i;
+                    bestDifference = difference;
+                }
+            }
+            listBox_ScriptMessages.SelectedIndex = bestIndex;
         }
 
         private void toolStripMenuItem_Format_Click(object sender, EventArgs e)
@@ -839,21 +467,30 @@ namespace ConanExplorer.Windows
             DeFormat();
         }
 
-        private void listBox_ScriptModelList_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBox_ScriptMessages_SelectedIndexChanged(object sender, EventArgs e)
         {
             _changingSelection = true;
+
             _timerApply.Enabled = false;
-            ScriptMessage message = (ScriptMessage)listBox_ScriptModelList.SelectedItem;
+            ScriptMessage message = (ScriptMessage)listBox_ScriptMessages.SelectedItem;
             if (message == null) return;
-            richTextBox_ScriptModelView.Text = message.Content;
+            richTextBox_ScriptMessage.Text = message.Content;
+            UpdatePreview(message);
+
+            if (listBox_ScriptMessages.SelectedIndex != -1)
+            {
+                ScriptMessage scriptMessage = (ScriptMessage)listBox_ScriptMessages.SelectedItem;
+                richTextBox_ScriptFile.SelectionStart = richTextBox_ScriptFile.GetFirstCharIndexFromLine(scriptMessage.LineIndex);
+                richTextBox_ScriptFile.ScrollToCaret();
+            }
+
             _changingSelection = false;
-            UpdateSelection();
         }
 
         private void generateScriptToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            foreach (IScriptElement element in listBox_ScriptModelList.Items)
+            foreach (IScriptElement element in listBox_ScriptMessages.Items)
             {
                 stringBuilder.Append(element.Text);
             }
@@ -863,22 +500,22 @@ namespace ConanExplorer.Windows
 
         private void button_Apply_Click(object sender, EventArgs e)
         {
-            IScriptElement element = (IScriptElement)listBox_ScriptModelList.SelectedItem;
+            IScriptElement element = (IScriptElement)listBox_ScriptMessages.SelectedItem;
             if (element.GetType() == typeof(ScriptMessage))
             {
                 ScriptMessage message = (ScriptMessage)element;
-                message.Content = richTextBox_ScriptModelView.Text.Replace("\n", "\r\n");
+                message.Content = richTextBox_ScriptMessage.Text.Replace("\n", "\r\n");
             }
 
             ScriptDocument script = (ScriptDocument)listBox_ScriptFiles.SelectedItem;
             ScriptParser.Parse(script, _elements);
 
-            richTextBox_Script.Select(0, 0);
-            richTextBox_Script.ScrollToCaret();
-            richTextBox_Script.Text = script.TextBuffer;
+            richTextBox_ScriptFile.Select(0, 0);
+            richTextBox_ScriptFile.ScrollToCaret();
+            richTextBox_ScriptFile.Text = script.TextBuffer;
         }
 
-        private void richTextBox_ScriptModelView_TextChanged(object sender, EventArgs e)
+        private void richTextBox_ScriptMessage_TextChanged(object sender, EventArgs e)
         {
             if (_changingSelection) return;
             _timerApply.Enabled = true;
@@ -891,83 +528,96 @@ namespace ConanExplorer.Windows
 
         private void comboBox_PreviewColor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSelection();
+            UpdateScriptMessage();
         }
 
-        private void richTextBox_Script_TextChanged(object sender, EventArgs e)
+        private void richTextBox_ScriptFile_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void richTextBox_Script_KeyDown(object sender, KeyEventArgs e)
+        private void richTextBox_ScriptFile_KeyDown(object sender, KeyEventArgs e)
         {
-            if (_IsSearch && e.Control && e.KeyCode == Keys.F)
+            if (e.Control && e.KeyCode == Keys.F)
             {
-                this.searchPanel.Visible = false;
-                _IsSearch = false;
+                searchPanel.Visible = !searchPanel.Visible;
+                if (searchPanel.Visible) TextBox_Search.Focus();
                 return;
             }
-
-            if (_IsSearch == false && e.Control && e.KeyCode == Keys.F)
+            if (e.Shift && e.KeyCode == Keys.F3)
             {
-                this.searchPanel.Visible = true;
-                _IsSearch = true;
+                FindPrevious();
                 return;
             }
+            if (e.KeyCode == Keys.F3)
+            {
+                FindNext();
+                return;
+            }
+        }
 
+        private void TextBox_Search_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.F)
+            {
+                searchPanel.Visible = !searchPanel.Visible;
+                if (searchPanel.Visible) TextBox_Search.Focus();
+                return;
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                FindNext();
+                return;
+            }
+            if (e.Shift && e.KeyCode == Keys.F3)
+            {
+                FindPrevious();
+                return;
+            }
+            if (e.KeyCode == Keys.F3)
+            {
+                FindNext();
+                return;
+            }
         }
 
         private void Button_Search_Click(object sender, EventArgs e)
         {
-            RichTextBoxFinds options = RichTextBoxFinds.None;
-
-            int from = richTextBox_Script.SelectionStart;
-            int to = richTextBox_Script.TextLength - 1;
-
-            int start = 0;
-            start = richTextBox_Script.Find(TextBox_Search.Text, from, to, options);
-
-            if(lastFoundItem == start)
-            {
-                from = lastFoundItem + 1;
-                richTextBox_Script.Find(TextBox_Search.Text, from, to, options);
-            }
-
-            if (start > 0)
-            {
-                richTextBox_Script.SelectionStart = start;
-                richTextBox_Script.SelectionLength = TextBox_Search.TextLength;
-                richTextBox_Script.ScrollToCaret();
-                richTextBox_Script.Refresh();
-                richTextBox_Script.Focus();
-
-                lastFoundItem = start; //update last item index pos
-            }
-            else
+            if (!FindNext())
             {
                 MessageBox.Show("No match found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
+            richTextBox_ScriptFile.Focus();
         }
 
-        private void richTextBox_ScriptModelView_KeyDown(object sender, KeyEventArgs e)
+        private void richTextBox_ScriptMessage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.W) //New Window Hotkey
             {
-                richTextBox_ScriptModelView.SelectedText += "%KW:" + Environment.NewLine + "%CLR:%COL(5):NAME:%COL(1):";
+                richTextBox_ScriptMessage.SelectedText += "%KW:" + Environment.NewLine + "%CLR:%COL(5):NAME:%COL(1):";
                 return;
             }
 
             if (e.Control && e.KeyCode == Keys.N) //New Window Hotkey
             {
-                richTextBox_ScriptModelView.SelectedText += "%LF:";
+                richTextBox_ScriptMessage.SelectedText += "%LF:";
                 return;
             }
 
             if (e.Control && e.KeyCode == Keys.K) //New Window Hotkey
             {
-                richTextBox_ScriptModelView.SelectedText += "%KW:";
+                richTextBox_ScriptMessage.SelectedText += "%KW:";
                 return;
             }
+        }
+
+        private void listBox_ScriptMessages_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBox_ScriptMessages.SelectedIndex == -1) return;
+            ScriptMessage scriptMessage = (ScriptMessage)listBox_ScriptMessages.SelectedItem;
+            richTextBox_ScriptFile.SelectionStart = richTextBox_ScriptFile.GetFirstCharIndexFromLine(scriptMessage.LineIndex);
+            richTextBox_ScriptFile.ScrollToCaret();
         }
     }
 }

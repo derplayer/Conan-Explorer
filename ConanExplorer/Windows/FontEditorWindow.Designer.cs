@@ -155,7 +155,7 @@
             this.Controls.Add(this.button_LoadFont);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FontEditorWindow";
-            this.Text = "Font Editor";
+            this.Text = "Font Editor [DEPRECATED]";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_CharacterMap)).EndInit();

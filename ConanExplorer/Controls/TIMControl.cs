@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ConanExplorer.Conan.Filetypes;
 using System.IO;
 using System.Drawing.Imaging;
+using ConanExplorer.Windows;
 
 namespace ConanExplorer.Controls
 {
@@ -33,11 +34,14 @@ namespace ConanExplorer.Controls
 
         private void button_Import_Click(object sender, EventArgs e)
         {
-            TIMEncodingSettings settings = new TIMEncodingSettings();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "*.bmp|*.bmp";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                TIMEncodingSettings settings = new TIMEncodingSettings();
+                TIMEncodingWindow window = new TIMEncodingWindow();
+                if (window.ShowDialog() == DialogResult.OK) settings = window.Settings;
+
                 using (FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open))
                 {
                     Bitmap bitmap = new Bitmap(fileStream);

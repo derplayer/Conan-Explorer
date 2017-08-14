@@ -7,12 +7,21 @@ using System.Xml.Serialization;
 
 namespace ConanExplorer.Conan.Headers
 {
-    public class PACKFileHeader
+    /// <summary>
+    /// PB file sub-header for each file entry.
+    /// </summary>
+    public class PBFileHeader
     {
         private static int _mask = 0x1EFFFFE0;
 
+        /// <summary>
+        /// Data of the sub-header.
+        /// </summary>
         public byte[] Data { get; set; } = new byte[17];
 
+        /// <summary>
+        /// Length of the next file.
+        /// </summary>
         [XmlIgnore]
         public int Length
         {
@@ -29,9 +38,9 @@ namespace ConanExplorer.Conan.Headers
             }
         }
 
-        public PACKFileHeader() { }
+        public PBFileHeader() { }
 
-        public PACKFileHeader(byte[] data)
+        public PBFileHeader(byte[] data)
         {
             Data = data;
         }

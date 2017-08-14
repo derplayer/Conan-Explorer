@@ -22,6 +22,7 @@ namespace ConanExplorer.Conan.Script.Elements
                 return String.Format("#{0}:{1}", Name, String.Join(",", Parameters));
             }
         }
+        public int LineIndex { get; set; }
         public int Length
         {
             get { return Text.Length; }
@@ -30,15 +31,16 @@ namespace ConanExplorer.Conan.Script.Elements
         public string Name { get; }
         public string DisplayName
         {
-            get { return String.Format("#{0}:{1}", Name, String.Join(",", Parameters)); }
+            get { return String.Format("[Line {0}] #{1}:{2}", LineIndex, Name, String.Join(",", Parameters)); }
         }
         public string[] Parameters { get; set; }
 
-        public ScriptCommand(Match match, bool linebreak = true)
+        public ScriptCommand(Match match, int lineIndex, bool linebreak = true)
         {
             _linebreak = linebreak;
             Name = match.Groups[1].Value;
             Parameters = match.Groups[2].Value.Split(',');
+            LineIndex = lineIndex;
         }
     }
 }

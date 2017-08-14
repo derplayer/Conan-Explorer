@@ -106,20 +106,20 @@ namespace ConanExplorer.Conan.Script
                     if (matchCommand.Groups[1].Value == "MESSAGE")
                     {
                         isMessage = true;
-                        message = new ScriptMessage(matchCommand);
+                        message = new ScriptMessage(matchCommand, i);
                         result.Add(message);
                         continue;
                     }
                     
                     if (matchCommand.Index + matchCommand.Length != line.Length)
                     {
-                        result.Add(new ScriptCommand(matchCommand, false));
+                        result.Add(new ScriptCommand(matchCommand, i, false));
                         int index = matchCommand.Index + matchCommand.Length;
                         result.Add(new ScriptText(line.Substring(index, line.Length - index), !eof));
                     }
                     else
                     {
-                        result.Add(new ScriptCommand(matchCommand));
+                        result.Add(new ScriptCommand(matchCommand, i));
                     }
                 }
                 else

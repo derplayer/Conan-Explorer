@@ -1,55 +1,5 @@
-/.vs/ConanExplorer/v14/.suo
-/ConanExplorer/obj/Debug/Conan Explorer.exe
-/ConanExplorer/obj/Debug/Conan Explorer.pdb
-/ConanExplorer/obj/Debug/ConanExplorer.Properties.Resources.resources
-/ConanExplorer/obj/Debug/ConanExplorer.Windows.Debug_ShowSymbol.resources
-/ConanExplorer/obj/Debug/ConanExplorer.Windows.FontEditorWindow.resources
-/ConanExplorer/obj/Debug/ConanExplorer.Windows.MainWindow.resources
-/ConanExplorer/obj/Debug/ConanExplorer.csproj.FileListAbsolute.txt
-/ConanExplorer/obj/Debug/ConanExplorer.csproj.GenerateResource.Cache
-/ConanExplorer/obj/Debug/ConanExplorer.csprojResolveAssemblyReference.cache
-/ConanExplorer/obj/Debug/DesignTimeResolveAssemblyReferences.cache
-/ConanExplorer/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-/ConanExplorer/obj/Debug/TempPE/Properties.Resources.Designer.cs.dll
-/ConanExplorer/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
-/ConanExplorer/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
-/ConanExplorer/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
-/ConanExplorer/bin/Debug/Conan Explorer.exe
-/ConanExplorer/bin/Debug/Conan Explorer.exe.config
-/ConanExplorer/bin/Debug/Conan Explorer.pdb
-/ConanExplorer/bin/Debug/Conan Explorer.vshost.exe
-/ConanExplorer/bin/Debug/Conan Explorer.vshost.exe.config
-/ConanExplorer/bin/Debug/Tools/pcsxr/bios/SCPH1000.BIN
-/ConanExplorer/bin/Debug/Tools/pcsxr/bios/SCPH1001.BIN
-/ConanExplorer/bin/Debug/Tools/pcsxr/langs/fr_FR/LC_MESSAGES/pcsxr.mo
-/ConanExplorer/bin/Debug/Tools/pcsxr/langs/hu_HU/LC_MESSAGES/pcsxr.mo
-/ConanExplorer/bin/Debug/Tools/pcsxr/langs/it/LC_MESSAGES/pcsxr.mo
-/ConanExplorer/bin/Debug/Tools/pcsxr/langs/pt_BR/LC_MESSAGES/pcsxr.mo
-/ConanExplorer/bin/Debug/Tools/pcsxr/langs/ru_RU/LC_MESSAGES/pcsxr.mo
-/ConanExplorer/bin/Debug/Tools/pcsxr/langs/zh_CN/LC_MESSAGES/pcsxr.mo
-/ConanExplorer/bin/Debug/Tools/pcsxr/langs/zh_TW/LC_MESSAGES/pcsxr.mo
-/ConanExplorer/bin/Debug/Tools/pcsxr/memcards/Mcd001.mcr
-/ConanExplorer/bin/Debug/Tools/pcsxr/memcards/Mcd002.mcr
-/ConanExplorer/bin/Debug/Tools/pcsxr/pcsxr.exe
-/ConanExplorer/bin/Debug/Tools/pcsxr/plugins/DFSound.dll
-/ConanExplorer/bin/Debug/Tools/pcsxr/plugins/DFXVideo.dll
-/ConanExplorer/bin/Debug/Tools/pcsxr/plugins/PadSSSPSX.dll
-/ConanExplorer/bin/Debug/Tools/pcsxr/plugins/bladesio1.dll
-/ConanExplorer/bin/Debug/Tools/pcsxr/plugins/gpuPeopsOpenGL.dll
-/ConanExplorer/bin/Debug/Tools/pcsxr/plugins/netSock.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cygboost_filesystem.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cygboost_regex.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cygboost_system.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cygcdio-16.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cyggcc_s-1.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cygiconv-2.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cygiso9660-10.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cygstdc++-6.dll
-/ConanExplorer/bin/Debug/Tools/psximager/cygwin1.dll
-/ConanExplorer/bin/Debug/Tools/psximager/psxbuild.exe
-/ConanExplorer/bin/Debug/Tools/psximager/psxinject.exe
-/ConanExplorer/bin/Debug/Tools/psximager/psxrip.exe
-/ipch/PSXIMAGER-4b881432/PSXIMAGER-5592915c.ipch
+/.vs
+/packages
 /ConanExplorer/obj
 /ConanExplorer/bin
 /Tools/pcsxr/sstates
