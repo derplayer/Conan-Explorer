@@ -18,6 +18,9 @@ using System.Text.RegularExpressions;
 using ConanExplorer.Conan.Script;
 using ConanExplorer.Conan.Script.Elements;
 using ConanExplorer.ExtensionMethods;
+using System.Drawing.Text;
+using System.Net;
+using System.Diagnostics;
 
 namespace ConanExplorer.Windows
 {
@@ -328,6 +331,59 @@ namespace ConanExplorer.Windows
             else
             {
                 return;
+            }
+            
+            bool fontFound = false;
+            if(ScriptFile.FontName == "Quarlow")
+            {
+                //Check for Quarlow Default Font in system
+                InstalledFontCollection fontsCollection = new InstalledFontCollection();
+                foreach (var fontFamiliy in fontsCollection.Families)
+                {
+                    if (fontFamiliy.Name == "Quarlow")
+                        fontFound = true;
+                }
+
+                //When font not found on OS
+                if (fontFound != true)
+                {
+                    string messageText = "Quarlow Font was referenced in loaded file, but not found installed on this OS"
+                        + Environment.NewLine + "Do you want to install the font from the internet?"
+                        + Environment.NewLine + Environment.NewLine
+                        + "WARNING: Application will be closed after this!";
+
+                    DialogResult dialogResult = MessageBox.Show(messageText,
+                        "Font missing..."
+                        , MessageBoxButtons.YesNo);
+
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            string tempPathForZip = Path.GetTempPath() + "\\TempFontF\\";
+                            string zipTempPath = Path.GetTempPath() + "Quarlow.zip";
+
+                            //Delete old try if there
+                            if(Directory.Exists(tempPathForZip))
+                                Directory.Delete(tempPathForZip, true);
+
+                            using (var client = new WebClient())
+                            {
+                                client.DownloadFile("http://chapter731.net/downloads/fonts/Quarlow.zip", zipTempPath);
+                            }
+
+                            System.IO.Compression.ZipFile.ExtractToDirectory(zipTempPath, tempPathForZip);
+                            Process.Start("C:\\Windows\\System32\\fontview.exe" , tempPathForZip + "Quarlow.ttf");
+
+                            Application.Exit();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Download failed...\n\r" + ex);
+                        }
+
+                    }
+                }
             }
 
             Text = String.Format("Script Editor - \"{0}\"", openFileDialog.FileName);
