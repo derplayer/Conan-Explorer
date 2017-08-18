@@ -122,6 +122,8 @@ namespace ConanExplorer.Windows
                 revertModifiedImageToolStripMenuItem.Enabled = true;
                 deleteProjectToolStripMenuItem.Enabled = true;
             });
+
+            toolStripStatusLabel1.Text = String.Empty;
         }
 
         private void _state_EmulatorStarted(object sender, EventArgs e)
@@ -184,7 +186,12 @@ namespace ConanExplorer.Windows
         private void runModifiedImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(ApplicationState.Instance.ProjectFile.ProjectFilePath)) return;
-            ApplicationState.Instance.RunEmulator();
+            bool emulatorStatus = ApplicationState.Instance.RunEmulator();
+
+            if (emulatorStatus)
+                toolStripStatusLabel1.Text = "Emulator running!";
+            else
+                toolStripStatusLabel1.Text = "Error! Emulator not found...";
         }
 
         private void stopModifiedImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -200,7 +207,7 @@ namespace ConanExplorer.Windows
 
         private void deleteProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Are you sure?", "Oy vey!", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Are you sure?", "What are you doing!", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 ApplicationState.Instance.DeleteProject();
@@ -320,7 +327,7 @@ namespace ConanExplorer.Windows
                 }
             }
 
-            MessageBox.Show("Couldn't find the original file", "Hue");
+            MessageBox.Show("Couldn't find the original file", "Error!");
         }
 
         private void OnClickPKNReset(object sender, EventArgs eventArgs)
@@ -367,7 +374,6 @@ namespace ConanExplorer.Windows
             _state.SaveProject();
             Enabled = true;
         }
-
 
         private void OnClickLZBCompress(object sender, EventArgs eventArgs)
         {
@@ -456,8 +462,6 @@ namespace ConanExplorer.Windows
             Enabled = true;
             _state.SaveProject();
         }
-
-
 
         private void lZBDeCompressorToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -574,6 +578,11 @@ namespace ConanExplorer.Windows
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("TODO", @"¯\_(ツ)_/¯");
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

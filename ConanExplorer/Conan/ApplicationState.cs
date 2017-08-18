@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,8 +29,11 @@ namespace ConanExplorer.Conan
             }
         }
 
-        private readonly string _pcsxrExecutable = "Tools\\pcsxr\\pcsxr.exe";
-        private Process _pcsxrProcess;
+        private const string _xebraExecutable = "Tools\\xebra\\xebra.exe";
+        private const string _xebraExecutablePath = "Tools\\xebra\\";
+        private const string _xebraDownload = "http://drhell.web.fc2.com/ps1/xebra170711.zip";
+        private readonly string _zipTempPath = Path.GetTempPath() + "xebra.zip";
+        private Process _xebraProcess;
 
         private static ApplicationState _instance;
         private static readonly object SyncRoot = new object();
@@ -127,33 +131,49 @@ namespace ConanExplorer.Conan
 
         public bool RunEmulator()
         {
-            //options:
-            // -nogui           Don't open the GUI
-            // -psxout          Enable PSX output
-            // -slowboot        Enable BIOS logo
-            // -runcd           Runs CD-ROM (requires -nogui)
-            // -cdfile FILE     Runs a CD image file (requires -nogui)
+            //Check for xebra instance to download from the internet if not there
+            if (File.Exists(_xebraExecutable) == false)
+            {
+                DialogResult dialogResult = MessageBox.Show(
+                    "PSX Emulator (XEBRA) missing.\r\n\nDo you want to download it?",
+                    "XEBRA not found!",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Asterisk
+                );
 
+                if (dialogResult == DialogResult.Yes)
+                {
+                    using (var client = new WebClient())
+                    {
+                        //TODO: Use DownloadFileAsync for UX feedback & fallback when offline?
+                        client.DownloadFile(_xebraDownload, _zipTempPath);
+                        System.IO.Compression.ZipFile.ExtractToDirectory(_zipTempPath, _xebraExecutablePath);  
+                    }
+                }
+                else
+                    return false;
+            }
+            //Run xebra emlator instance with game cue/bin path as parameter
             ProcessStartInfo info = new ProcessStartInfo
             {
-                FileName = _pcsxrExecutable,
-                Arguments = String.Format("-nogui -cdfile \"{0}\"", ProjectFile.ModifiedImage.ImageBinPath)
+                FileName = _xebraExecutable,
+                Arguments = String.Format("\"{0}\"", ProjectFile.ModifiedImage.ImageBinPath)
             };
-            _pcsxrProcess = new Process { StartInfo = info };
-            _pcsxrProcess.EnableRaisingEvents = true;
-            _pcsxrProcess.Exited += _pcsxrProcess_Exited;
-            _pcsxrProcess.Start();            
+            _xebraProcess = new Process { StartInfo = info };
+            _xebraProcess.EnableRaisingEvents = true;
+            _xebraProcess.Exited += _xebraProcess_Exited;
+            _xebraProcess.Start();            
             OnEmulatorStarted();
             return true;
         }
 
         public bool StopEmulator()
         {
-            _pcsxrProcess.Kill();
+            _xebraProcess.Kill();
             return true;
         }
 
-        private void _pcsxrProcess_Exited(object sender, EventArgs e)
+        private void _xebraProcess_Exited(object sender, EventArgs e)
         {
             OnEmulatorStopped();
         }

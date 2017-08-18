@@ -60,13 +60,13 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new ConanExplorer.Controls.TriStateTreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.compareControl = new ConanExplorer.Controls.CompareControl();
-            this.dynamicControl = new ConanExplorer.Controls.DynamicControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.treeView1 = new ConanExplorer.Controls.TriStateTreeView();
+            this.compareControl = new ConanExplorer.Controls.CompareControl();
+            this.dynamicControl = new ConanExplorer.Controls.DynamicControl();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -258,53 +258,53 @@
             this.settingsToolStripMenuItem,
             this.debugToolStripMenuItem1});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.debugToolStripMenuItem.Text = "Tools";
             // 
             // fileIndexViewerToolStripMenuItem
             // 
             this.fileIndexViewerToolStripMenuItem.Name = "fileIndexViewerToolStripMenuItem";
-            this.fileIndexViewerToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.fileIndexViewerToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.fileIndexViewerToolStripMenuItem.Text = "File Index Viewer...";
             this.fileIndexViewerToolStripMenuItem.Click += new System.EventHandler(this.fileIndexViewerToolStripMenuItem_Click);
             // 
             // fontEditorToolStripMenuItem
             // 
             this.fontEditorToolStripMenuItem.Name = "fontEditorToolStripMenuItem";
-            this.fontEditorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.fontEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.fontEditorToolStripMenuItem.Text = "Font Editor... [DEPRECATED]";
             this.fontEditorToolStripMenuItem.Click += new System.EventHandler(this.fontEditorToolStripMenuItem_Click);
             // 
             // scriptEditorToolStripMenuItem
             // 
             this.scriptEditorToolStripMenuItem.Name = "scriptEditorToolStripMenuItem";
-            this.scriptEditorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.scriptEditorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.scriptEditorToolStripMenuItem.Text = "Script Editor...";
             this.scriptEditorToolStripMenuItem.Click += new System.EventHandler(this.scriptEditorToolStripMenuItem_Click);
             // 
             // lZBDeCompressorToolStripMenuItem
             // 
             this.lZBDeCompressorToolStripMenuItem.Name = "lZBDeCompressorToolStripMenuItem";
-            this.lZBDeCompressorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.lZBDeCompressorToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.lZBDeCompressorToolStripMenuItem.Text = "LZB De/Compressor...";
             this.lZBDeCompressorToolStripMenuItem.Click += new System.EventHandler(this.lZBDeCompressorToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(219, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(220, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.settingsToolStripMenuItem.Text = "Settings...";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // debugToolStripMenuItem1
             // 
             this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
-            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(222, 22);
+            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(223, 22);
             this.debugToolStripMenuItem1.Text = "_Debug";
             this.debugToolStripMenuItem1.Click += new System.EventHandler(this.debugToolStripMenuItem1_Click);
             // 
@@ -328,18 +328,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(784, 512);
             this.splitContainer1.SplitterDistance = 302;
             this.splitContainer1.TabIndex = 2;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(302, 512);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.TriStateStyleProperty = ConanExplorer.Controls.TriStateTreeView.TriStateStyles.Standard;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
             // splitContainer2
             // 
@@ -371,6 +359,34 @@
             this.panel1.Size = new System.Drawing.Size(473, 123);
             this.panel1.TabIndex = 0;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.TabIndex = 3;
+            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(302, 512);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.TriStateStyleProperty = ConanExplorer.Controls.TriStateTreeView.TriStateStyles.Standard;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
+            // 
             // compareControl
             // 
             this.compareControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -392,21 +408,6 @@
             this.dynamicControl.Name = "dynamicControl";
             this.dynamicControl.Size = new System.Drawing.Size(473, 381);
             this.dynamicControl.TabIndex = 0;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // MainWindow
             // 
