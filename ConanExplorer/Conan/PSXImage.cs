@@ -160,7 +160,23 @@ namespace ConanExplorer.Conan
 
                     if (fileInfo.Length % 2048 != 0)
                     {
-                        MessageBox.Show(String.Format("The file \"{0}\" does not have the correct size.", fileInfo.FullName));
+                        if (MessageBox.Show(String.Format("The file \"{0}\" does not have the correct size.\n Do you want to add zero padding?", fileInfo.FullName), "Incorrect Size!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                        {
+                            long rest = 2336 - fileInfo.Length % 2336;
+                            using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.Append, FileAccess.Write)))
+                            {
+                                for (int i = 0; i < rest; i++)
+                                {
+                                    writer.Write('\0');
+                                }
+                            }
+                            fileInfo = new FileInfo(fileName);
+                        }
+                        else
+                        {
+                            MessageBox.Show("The build process was cancelled!", "Build process cancelled!");
+                            return;
+                        }
                         return;
                     }
 
@@ -172,16 +188,14 @@ namespace ConanExplorer.Conan
                 {
                     string fileName = RippedDirectory + file.FullPath;
                     FileInfo fileInfo = new FileInfo(fileName);
-                    int rest = (int)fileInfo.Length % 2336;
-
-                    if (rest != 0)
+                    if (fileInfo.Length % 2336 != 0)
                     {
-                        int padding = 2336 - rest;
                         if (MessageBox.Show(String.Format("The file \"{0}\" does not have the correct size.\n Do you want to add zero padding?", fileInfo.FullName), "Incorrect Size!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                         {
+                            long rest = 2336 - fileInfo.Length % 2336;
                             using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.Append, FileAccess.Write)))
                             {
-                                for (int i = 0; i < padding; i++)
+                                for (int i = 0; i < rest; i++)
                                 {
                                     writer.Write('\0');
                                 }
@@ -190,7 +204,7 @@ namespace ConanExplorer.Conan
                         }
                         else
                         {
-                            MessageBox.Show("The build process was canceld!", "Build process cancled!");
+                            MessageBox.Show("The build process was cancelled!", "Build process cancelled!");
                             return;
                         }
                         //MessageBox.Show(String.Format("The file \"{0}\" does not have the correct size.", fileInfo.FullName));

@@ -3703,15 +3703,15 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Phil-NB\\.nuget\\packages\\": {}
+    "C:\\Users\\Phil\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Phil-NB\\Dropbox\\Gemeinsame Hobbyprojekte\\Detective Conan (PSX)\\Tools\\ConanExplorer\\PSXImager\\PSXImager.csproj",
+      "projectUniqueName": "H:\\Projects\\Git\\Conan-Explorer\\PSXImager\\PSXImager.csproj",
       "projectName": "PSXImager",
-      "projectPath": "C:\\Users\\Phil-NB\\Dropbox\\Gemeinsame Hobbyprojekte\\Detective Conan (PSX)\\Tools\\ConanExplorer\\PSXImager\\PSXImager.csproj",
-      "outputPath": "C:\\Users\\Phil-NB\\Dropbox\\Gemeinsame Hobbyprojekte\\Detective Conan (PSX)\\Tools\\ConanExplorer\\PSXImager\\obj\\",
+      "projectPath": "H:\\Projects\\Git\\Conan-Explorer\\PSXImager\\PSXImager.csproj",
+      "outputPath": "H:\\Projects\\Git\\Conan-Explorer\\PSXImager\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netstandard1.4"
