@@ -247,6 +247,7 @@ namespace ConanExplorer.Windows
             Win32.LockWindow(IntPtr.Zero);
 
             _updatingMessage = false;
+            switchRawEditorToolStripMenuItem.Enabled = false; //everything is broken after edit so... heh
         }
 
         private bool FindNext()
@@ -274,8 +275,6 @@ namespace ConanExplorer.Windows
             richTextBox_ScriptFile.ScrollToCaret();
             return true;
         }
-
-
 
         private void _timerApply_Tick(object sender, EventArgs e)
         {
@@ -381,7 +380,6 @@ namespace ConanExplorer.Windows
                         {
                             MessageBox.Show("Download failed...\n\r" + ex);
                         }
-
                     }
                 }
             }
@@ -674,6 +672,33 @@ namespace ConanExplorer.Windows
             ScriptMessage scriptMessage = (ScriptMessage)listBox_ScriptMessages.SelectedItem;
             richTextBox_ScriptFile.SelectionStart = richTextBox_ScriptFile.GetFirstCharIndexFromLine(scriptMessage.LineIndex);
             richTextBox_ScriptFile.ScrollToCaret();
+        }
+
+        private void switchRawEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            listBox_ScriptMessages.Items.Clear();
+            _elements.Clear();
+
+            ScriptDocument mergeDocument = new ScriptDocument();
+            foreach (var scriptFile in ScriptFile.Scripts)
+            {
+                mergeDocument.TextBuffer += scriptFile.TextBuffer;
+            }
+
+            ScriptDocument file = mergeDocument;
+            richTextBox_ScriptFile.Select(0, 0);
+            richTextBox_ScriptFile.ScrollToCaret();
+            richTextBox_ScriptFile.Text = file.TextBuffer;
+            _lastScriptFile = file;
+            
+            foreach (IScriptElement element in ScriptParser.Parse(file))
+            {
+                _elements.Add(element);
+                if (element.GetType() != typeof(ScriptMessage)) continue;
+                listBox_ScriptMessages.Items.Add(element);
+            }
+
+            listBox_ScriptMessages.SetSelected(0, true);
         }
     }
 }
