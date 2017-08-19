@@ -90,6 +90,12 @@ namespace ConanExplorer.Conan.Filetypes
                     {
                         byte[] buffer = reader.ReadBytes((int)fileInfo.Length);
                         writer.Write(buffer, 0, (int)fileInfo.Length);
+
+                        long rest = 2048 - writer.BaseStream.Length % 2048;
+                        for (int i = 0; i < rest; i++)
+                        {
+                            writer.Write('\0');
+                        }
                     }
                 }
             }
