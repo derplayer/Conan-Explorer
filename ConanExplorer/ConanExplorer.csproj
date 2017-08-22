@@ -95,6 +95,7 @@
     <Compile Include="Conan\Filetypes\PKNFile.cs" />
     <Compile Include="Conan\PSXImage.cs" />
     <Compile Include="Conan\Script\Elements\IScriptElement.cs" />
+    <Compile Include="Conan\Script\Elements\ScriptGmap.cs" />
     <Compile Include="Conan\Script\ScriptCollection.cs" />
     <Compile Include="Conan\Script\Elements\ScriptCommand.cs" />
     <Compile Include="Conan\ScriptFile.cs" />

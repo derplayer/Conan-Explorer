@@ -297,8 +297,10 @@ namespace ConanExplorer.Windows
             foreach (IScriptElement element in ScriptParser.Parse(file))
             {
                 _elements.Add(element);
-                if (element.GetType() != typeof(ScriptMessage)) continue;
-                listBox_ScriptMessages.Items.Add(element);
+                if (element.GetType() == typeof(ScriptMessage))
+                {
+                    listBox_ScriptMessages.Items.Add(element);
+                }
             }
         }
 

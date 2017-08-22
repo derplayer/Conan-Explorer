@@ -59,9 +59,16 @@ namespace ConanExplorer.Conan
                 List<IScriptElement> elements = ScriptParser.Parse(script);
                 foreach (IScriptElement element in elements)
                 {
-                    if (element.GetType() != typeof(ScriptMessage)) continue;
-                    ScriptMessage message = (ScriptMessage)element;
-                    stringBuilder.Append(message.ContentText);
+                    if (element.GetType() == typeof(ScriptMessage))
+                    {
+                        ScriptMessage message = (ScriptMessage)element;
+                        stringBuilder.Append(message.ContentText);
+                    }
+                    else if (element.GetType() == typeof(ScriptGmap))
+                    {
+                        ScriptGmap gmap = (ScriptGmap)element;
+                        stringBuilder.Append(gmap.ContentText);
+                    }
                 }
             }
             HashSet<string> dictionary = CreateDictionary(ScriptParser.TextToLines(stringBuilder.ToString()));
@@ -114,9 +121,16 @@ namespace ConanExplorer.Conan
                 List<IScriptElement> elements = ScriptParser.Parse(script);
                 foreach (IScriptElement element in elements)
                 {
-                    if (element.GetType() != typeof(ScriptMessage)) continue;
-                    ScriptMessage message = (ScriptMessage)element;
-                    message.Format(this);
+                    if (element.GetType() == typeof(ScriptMessage))
+                    {
+                        ScriptMessage message = (ScriptMessage)element;
+                        message.Format(this);
+                    }
+                    else if (element.GetType() == typeof(ScriptGmap))
+                    {
+                        ScriptGmap gmap = (ScriptGmap)element;
+                        gmap.Format(this);
+                    }
                 }
                 ScriptParser.Parse(script, elements);
                 if (save) script.WriteToOriginalFile();

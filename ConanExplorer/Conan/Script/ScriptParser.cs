@@ -56,7 +56,9 @@ namespace ConanExplorer.Conan.Script
             //last line linebreak only works with scripttext for now
 
             bool isMessage = false;
+            bool isGmap = false;
             ScriptMessage message = null;
+            ScriptGmap gmap = null;
 
             string[] lines;
             if (script.TextBuffer.Contains("\r"))
@@ -67,12 +69,21 @@ namespace ConanExplorer.Conan.Script
             {
                 lines = script.TextBuffer.Split('\n'); //fix for XML serialization fucking up CR LF
             }
+
             for (int i = 0; i < lines.Length; i++)
             {
                 bool eof = (i == lines.Length - 1);
                 string line = lines[i];
                 if (String.IsNullOrEmpty(line))
                 {
+                    //DEBUG
+                    if (gmap != null)
+                    {
+                        Console.WriteLine(gmap.Text);
+                    }
+
+
+                    isGmap = false;
                     isMessage = false;
                     message = null;
 
@@ -95,6 +106,12 @@ namespace ConanExplorer.Conan.Script
                     continue;
                 }
 
+                if (isGmap)
+                {
+                    gmap.Content += line + "\r\n";
+                    continue;
+                }
+
                 Match matchCommand = _regexCommand.Match(line);
                 if (matchCommand.Success)
                 {
@@ -103,11 +120,20 @@ namespace ConanExplorer.Conan.Script
                         result.Add(new ScriptText(line.Substring(0, matchCommand.Index)));
                         //add flag to command for not doing line break
                     }
+
                     if (matchCommand.Groups[1].Value == "MESSAGE")
                     {
                         isMessage = true;
                         message = new ScriptMessage(matchCommand, i);
                         result.Add(message);
+                        continue;
+                    }
+
+                    if (matchCommand.Groups[1].Value == "END" && matchCommand.Groups[2].Value == "GLOBALSET")
+                    {
+                        isGmap = true;
+                        gmap = new ScriptGmap(matchCommand, i);
+                        result.Add(gmap);
                         continue;
                     }
                     
