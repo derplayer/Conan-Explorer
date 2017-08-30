@@ -9,7 +9,7 @@ namespace ConanExplorer.ExtensionMethods
 {
     public static class Win32
     {
-        [DllImport("user32.dll", EntryPoint = "LockWindowUpdate", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport("User32.dll", EntryPoint = "LockWindowUpdate", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr LockWindow(IntPtr Handle);
 
         [DllImport("User32.dll")]
@@ -18,7 +18,10 @@ namespace ConanExplorer.ExtensionMethods
         [DllImport("user32.dll")]
         public static extern int SetScrollPos(IntPtr hWnd, int nBar, int nPos, bool bRedraw);
 
-        [DllImport("User32.Dll", EntryPoint = "PostMessageA")]
+        [DllImport("User32.dll", EntryPoint = "PostMessageA")]
         public static extern bool PostMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        public static extern int SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
     }
 }

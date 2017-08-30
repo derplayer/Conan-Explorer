@@ -78,6 +78,7 @@
     <Compile Include="Conan\FontCharacter.cs" />
     <Compile Include="Conan\Filetypes\FONTFile.cs" />
     <Compile Include="Conan\FontSymbol.cs" />
+    <Compile Include="Conan\HardCodedText.cs" />
     <Compile Include="Conan\Headers\BGHeader.cs" />
     <Compile Include="Conan\Headers\Header.cs" />
     <Compile Include="Conan\Headers\LZSSHeader.cs" />
@@ -194,11 +195,23 @@
     <Compile Include="Windows\FontSettingsWindow.Designer.cs">
       <DependentUpon>FontSettingsWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\HardcodedTextWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\HardcodedTextWindow.Designer.cs">
+      <DependentUpon>HardcodedTextWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoadingWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\LoadingWindow.Designer.cs">
       <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\LockedCharactersWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\LockedCharactersWindow.Designer.cs">
+      <DependentUpon>LockedCharactersWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.cs">
       <SubType>Form</SubType>
@@ -277,8 +290,14 @@
     <EmbeddedResource Include="Windows\FontSettingsWindow.resx">
       <DependentUpon>FontSettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\HardcodedTextWindow.resx">
+      <DependentUpon>HardcodedTextWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\LoadingWindow.resx">
       <DependentUpon>LoadingWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\LockedCharactersWindow.resx">
+      <DependentUpon>LockedCharactersWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

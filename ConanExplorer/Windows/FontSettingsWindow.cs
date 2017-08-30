@@ -31,10 +31,20 @@ namespace ConanExplorer.Windows
             comboBox_Font.DisplayMember = "Name";
 
             if (_scriptFile == null) return;
+            SelectFont(_scriptFile.FontName);
+            numericUpDown_FontSize.Value = _scriptFile.FontSize;
+            textBox_AllowedSymbols.Text = new String(_scriptFile.AllowedSymbols.ToArray());
+            textBox_AllowedSplittedSymbols.Text = new String(_scriptFile.AllowedSplittedSymbols.ToArray());
+
+            UpdatePreview();
+        }
+
+        private void SelectFont(string fontName)
+        {
             for (int i = 0; i < _installedFontCollection.Families.Length; i++)
             {
                 FontFamily fontFamily = _installedFontCollection.Families[i];
-                if (fontFamily.Name == _scriptFile.FontName)
+                if (fontFamily.Name == fontName)
                 {
                     comboBox_Font.SelectedIndex = i;
                     break;
@@ -126,6 +136,15 @@ namespace ConanExplorer.Windows
         private void textBox_AllowedSplittedSymbols_TextChanged(object sender, EventArgs e)
         {
             UpdateAllowedSymbols();
+        }
+
+        private void button_FontDialog_Click(object sender, EventArgs e)
+        {
+            FontDialog fontDialog = new FontDialog();
+            fontDialog.ShowDialog();
+
+            SelectFont(fontDialog.Font.Name);
+            numericUpDown_FontSize.Value = (decimal)fontDialog.Font.Size;
         }
     }
 }

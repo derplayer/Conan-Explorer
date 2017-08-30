@@ -37,38 +37,42 @@ namespace ConanExplorer.Windows
             this.listBox_ScriptMessages = new System.Windows.Forms.ListBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.searchPanel = new System.Windows.Forms.Panel();
-            this.helpSearchLAbel = new System.Windows.Forms.Label();
-            this.TextBox_Search = new System.Windows.Forms.TextBox();
-            this.Button_Search = new System.Windows.Forms.Button();
+            this.button_SearchUp = new System.Windows.Forms.Button();
+            this.checkBox_SearchGlobal = new System.Windows.Forms.CheckBox();
+            this.textBox_Search = new System.Windows.Forms.TextBox();
+            this.button_SearchDown = new System.Windows.Forms.Button();
+            this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.panel_Preview = new System.Windows.Forms.Panel();
             this.pictureBox_MessagePreview = new System.Windows.Forms.PictureBox();
             this.comboBox_PreviewColor = new System.Windows.Forms.ComboBox();
             this.comboBox_PreviewType = new System.Windows.Forms.ComboBox();
+            this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
             this.button_Apply = new System.Windows.Forms.Button();
             this.progressBar_Progress = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_File = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Open = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.decompressAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compressAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_DecompressAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_CompressAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem_Clear = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Tools = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_FontSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem_GenerateFont = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_HardcodedText = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_LockedCharacters = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem_Format = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_DeFormat = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.viewScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generateScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_ViewScript = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_Debug = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_GenerateScript = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_Row = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.switchRawEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
-            this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -96,6 +100,7 @@ namespace ConanExplorer.Windows
             // 
             this.listBox_ScriptFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox_ScriptFiles.FormattingEnabled = true;
+            this.listBox_ScriptFiles.IntegralHeight = false;
             this.listBox_ScriptFiles.Location = new System.Drawing.Point(0, 0);
             this.listBox_ScriptFiles.Name = "listBox_ScriptFiles";
             this.listBox_ScriptFiles.Size = new System.Drawing.Size(170, 269);
@@ -148,6 +153,7 @@ namespace ConanExplorer.Windows
             this.listBox_ScriptMessages.DisplayMember = "DisplayName";
             this.listBox_ScriptMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox_ScriptMessages.FormattingEnabled = true;
+            this.listBox_ScriptMessages.IntegralHeight = false;
             this.listBox_ScriptMessages.Location = new System.Drawing.Point(0, 0);
             this.listBox_ScriptMessages.Name = "listBox_ScriptMessages";
             this.listBox_ScriptMessages.Size = new System.Drawing.Size(170, 312);
@@ -178,46 +184,77 @@ namespace ConanExplorer.Windows
             this.searchPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.searchPanel.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.searchPanel.Controls.Add(this.helpSearchLAbel);
-            this.searchPanel.Controls.Add(this.TextBox_Search);
-            this.searchPanel.Controls.Add(this.Button_Search);
-            this.searchPanel.Location = new System.Drawing.Point(2, 534);
+            this.searchPanel.Controls.Add(this.button_SearchUp);
+            this.searchPanel.Controls.Add(this.checkBox_SearchGlobal);
+            this.searchPanel.Controls.Add(this.textBox_Search);
+            this.searchPanel.Controls.Add(this.button_SearchDown);
+            this.searchPanel.Location = new System.Drawing.Point(2, 523);
             this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Size = new System.Drawing.Size(377, 49);
+            this.searchPanel.Size = new System.Drawing.Size(377, 60);
             this.searchPanel.TabIndex = 3;
             this.searchPanel.Visible = false;
             // 
-            // helpSearchLAbel
+            // button_SearchUp
             // 
-            this.helpSearchLAbel.AutoSize = true;
-            this.helpSearchLAbel.Location = new System.Drawing.Point(2, 30);
-            this.helpSearchLAbel.Name = "helpSearchLAbel";
-            this.helpSearchLAbel.Size = new System.Drawing.Size(278, 13);
-            this.helpSearchLAbel.TabIndex = 3;
-            this.helpSearchLAbel.Text = "Protip: To close the search formular press \"Strg+F\" again!";
+            this.button_SearchUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_SearchUp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_SearchUp.Location = new System.Drawing.Point(291, 33);
+            this.button_SearchUp.Name = "button_SearchUp";
+            this.button_SearchUp.Size = new System.Drawing.Size(82, 22);
+            this.button_SearchUp.TabIndex = 5;
+            this.button_SearchUp.Text = "Search Up";
+            this.button_SearchUp.UseVisualStyleBackColor = true;
+            this.button_SearchUp.Click += new System.EventHandler(this.button_SearchUp_Click);
             // 
-            // TextBox_Search
+            // checkBox_SearchGlobal
             // 
-            this.TextBox_Search.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.checkBox_SearchGlobal.AutoSize = true;
+            this.checkBox_SearchGlobal.Location = new System.Drawing.Point(6, 35);
+            this.checkBox_SearchGlobal.Name = "checkBox_SearchGlobal";
+            this.checkBox_SearchGlobal.Size = new System.Drawing.Size(122, 17);
+            this.checkBox_SearchGlobal.TabIndex = 4;
+            this.checkBox_SearchGlobal.Text = "Search all script files";
+            this.checkBox_SearchGlobal.UseVisualStyleBackColor = true;
+            // 
+            // textBox_Search
+            // 
+            this.textBox_Search.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox_Search.Location = new System.Drawing.Point(5, 5);
-            this.TextBox_Search.Margin = new System.Windows.Forms.Padding(4);
-            this.TextBox_Search.Name = "TextBox_Search";
-            this.TextBox_Search.Size = new System.Drawing.Size(216, 20);
-            this.TextBox_Search.TabIndex = 1;
-            this.TextBox_Search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_Search_KeyDown);
+            this.textBox_Search.Location = new System.Drawing.Point(5, 6);
+            this.textBox_Search.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox_Search.Name = "textBox_Search";
+            this.textBox_Search.Size = new System.Drawing.Size(279, 20);
+            this.textBox_Search.TabIndex = 1;
+            this.textBox_Search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_Search_KeyDown);
             // 
-            // Button_Search
+            // button_SearchDown
             // 
-            this.Button_Search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_Search.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Button_Search.Location = new System.Drawing.Point(228, 4);
-            this.Button_Search.Name = "Button_Search";
-            this.Button_Search.Size = new System.Drawing.Size(146, 22);
-            this.Button_Search.TabIndex = 2;
-            this.Button_Search.Text = "Search";
-            this.Button_Search.UseVisualStyleBackColor = true;
-            this.Button_Search.Click += new System.EventHandler(this.Button_Search_Click);
+            this.button_SearchDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_SearchDown.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_SearchDown.Location = new System.Drawing.Point(291, 5);
+            this.button_SearchDown.Name = "button_SearchDown";
+            this.button_SearchDown.Size = new System.Drawing.Size(82, 22);
+            this.button_SearchDown.TabIndex = 2;
+            this.button_SearchDown.Text = "Search Down";
+            this.button_SearchDown.UseVisualStyleBackColor = true;
+            this.button_SearchDown.Click += new System.EventHandler(this.button_SearchDown_Click);
+            // 
+            // richTextBox_ScriptFile
+            // 
+            this.richTextBox_ScriptFile.DetectUrls = false;
+            this.richTextBox_ScriptFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox_ScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_ScriptFile.HideSelection = false;
+            this.richTextBox_ScriptFile.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox_ScriptFile.Name = "richTextBox_ScriptFile";
+            this.richTextBox_ScriptFile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(397, 585);
+            this.richTextBox_ScriptFile.TabIndex = 0;
+            this.richTextBox_ScriptFile.Text = "";
+            this.richTextBox_ScriptFile.WordWrap = false;
+            this.richTextBox_ScriptFile.SelectionChanged += new System.EventHandler(this.richTextBox_ScriptFile_SelectionChanged);
+            this.richTextBox_ScriptFile.TextChanged += new System.EventHandler(this.richTextBox_ScriptFile_TextChanged);
+            this.richTextBox_ScriptFile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptFile_KeyDown);
             // 
             // splitContainer4
             // 
@@ -294,6 +331,20 @@ namespace ConanExplorer.Windows
             this.comboBox_PreviewType.Size = new System.Drawing.Size(265, 21);
             this.comboBox_PreviewType.TabIndex = 1;
             // 
+            // richTextBox_ScriptMessage
+            // 
+            this.richTextBox_ScriptMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox_ScriptMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_ScriptMessage.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox_ScriptMessage.Name = "richTextBox_ScriptMessage";
+            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(369, 319);
+            this.richTextBox_ScriptMessage.TabIndex = 0;
+            this.richTextBox_ScriptMessage.Text = "";
+            this.richTextBox_ScriptMessage.TextChanged += new System.EventHandler(this.richTextBox_ScriptMessage_TextChanged);
+            this.richTextBox_ScriptMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptMessage_KeyDown);
+            // 
             // button_Apply
             // 
             this.button_Apply.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -319,9 +370,9 @@ namespace ConanExplorer.Windows
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.debugToolStripMenuItem});
+            this.toolStripMenuItem_File,
+            this.toolStripMenuItem_Tools,
+            this.toolStripMenuItem_Debug});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -329,86 +380,114 @@ namespace ConanExplorer.Windows
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip";
             // 
-            // fileToolStripMenuItem
+            // toolStripMenuItem_File
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
+            this.toolStripMenuItem_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem_Open,
+            this.toolStripMenuItem_Save,
             this.toolStripMenuItem1,
-            this.decompressAllToolStripMenuItem,
-            this.compressAllToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.toolStripMenuItem_DecompressAll,
+            this.toolStripMenuItem_CompressAll,
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem_Clear});
+            this.toolStripMenuItem_File.Name = "toolStripMenuItem_File";
+            this.toolStripMenuItem_File.Size = new System.Drawing.Size(37, 20);
+            this.toolStripMenuItem_File.Text = "File";
             // 
-            // openToolStripMenuItem
+            // toolStripMenuItem_Open
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.openToolStripMenuItem.Text = "Open...";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.toolStripMenuItem_Open.Name = "toolStripMenuItem_Open";
+            this.toolStripMenuItem_Open.Size = new System.Drawing.Size(156, 22);
+            this.toolStripMenuItem_Open.Text = "Open...";
+            this.toolStripMenuItem_Open.Click += new System.EventHandler(this.toolStripMenuItem_Open_Click);
             // 
-            // saveToolStripMenuItem
+            // toolStripMenuItem_Save
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.saveToolStripMenuItem.Text = "Save...";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.toolStripMenuItem_Save.Name = "toolStripMenuItem_Save";
+            this.toolStripMenuItem_Save.Size = new System.Drawing.Size(156, 22);
+            this.toolStripMenuItem_Save.Text = "Save...";
+            this.toolStripMenuItem_Save.Click += new System.EventHandler(this.toolStripMenuItem_Save_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(153, 6);
             // 
-            // decompressAllToolStripMenuItem
+            // toolStripMenuItem_DecompressAll
             // 
-            this.decompressAllToolStripMenuItem.Name = "decompressAllToolStripMenuItem";
-            this.decompressAllToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.decompressAllToolStripMenuItem.Text = "Decompress All";
-            this.decompressAllToolStripMenuItem.Click += new System.EventHandler(this.decompressAllToolStripMenuItem_Click);
+            this.toolStripMenuItem_DecompressAll.Name = "toolStripMenuItem_DecompressAll";
+            this.toolStripMenuItem_DecompressAll.Size = new System.Drawing.Size(156, 22);
+            this.toolStripMenuItem_DecompressAll.Text = "Decompress All";
+            this.toolStripMenuItem_DecompressAll.Click += new System.EventHandler(this.toolStripMenuItem_DecompressAll_Click);
             // 
-            // compressAllToolStripMenuItem
+            // toolStripMenuItem_CompressAll
             // 
-            this.compressAllToolStripMenuItem.Name = "compressAllToolStripMenuItem";
-            this.compressAllToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.compressAllToolStripMenuItem.Text = "Compress All";
-            this.compressAllToolStripMenuItem.Click += new System.EventHandler(this.compressAllToolStripMenuItem_Click);
+            this.toolStripMenuItem_CompressAll.Name = "toolStripMenuItem_CompressAll";
+            this.toolStripMenuItem_CompressAll.Size = new System.Drawing.Size(156, 22);
+            this.toolStripMenuItem_CompressAll.Text = "Compress All";
+            this.toolStripMenuItem_CompressAll.Click += new System.EventHandler(this.toolStripMenuItem_CompressAll_Click);
             // 
-            // toolsToolStripMenuItem
+            // toolStripMenuItem4
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(153, 6);
+            // 
+            // toolStripMenuItem_Clear
+            // 
+            this.toolStripMenuItem_Clear.Name = "toolStripMenuItem_Clear";
+            this.toolStripMenuItem_Clear.Size = new System.Drawing.Size(156, 22);
+            this.toolStripMenuItem_Clear.Text = "Clear";
+            this.toolStripMenuItem_Clear.Click += new System.EventHandler(this.toolStripMenuItem_Clear_Click);
+            // 
+            // toolStripMenuItem_Tools
+            // 
+            this.toolStripMenuItem_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem_FontSettings,
-            this.toolStripMenuItem_GenerateFont,
+            this.toolStripMenuItem_HardcodedText,
+            this.toolStripMenuItem_LockedCharacters,
+            this.toolStripMenuItem2,
             this.toolStripMenuItem_Format,
             this.toolStripMenuItem_DeFormat,
             this.toolStripMenuItem3,
-            this.viewScriptToolStripMenuItem,
-            this.switchRawEditorToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
+            this.toolStripMenuItem_ViewScript});
+            this.toolStripMenuItem_Tools.Name = "toolStripMenuItem_Tools";
+            this.toolStripMenuItem_Tools.Size = new System.Drawing.Size(47, 20);
+            this.toolStripMenuItem_Tools.Text = "Tools";
             // 
             // toolStripMenuItem_FontSettings
             // 
             this.toolStripMenuItem_FontSettings.Enabled = false;
             this.toolStripMenuItem_FontSettings.Name = "toolStripMenuItem_FontSettings";
-            this.toolStripMenuItem_FontSettings.Size = new System.Drawing.Size(220, 22);
+            this.toolStripMenuItem_FontSettings.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem_FontSettings.Text = "Font Settings...";
             this.toolStripMenuItem_FontSettings.Click += new System.EventHandler(this.toolStripMenuItem_FontSettings_Click);
             // 
-            // toolStripMenuItem_GenerateFont
+            // toolStripMenuItem_HardcodedText
             // 
-            this.toolStripMenuItem_GenerateFont.Name = "toolStripMenuItem_GenerateFont";
-            this.toolStripMenuItem_GenerateFont.Size = new System.Drawing.Size(220, 22);
-            this.toolStripMenuItem_GenerateFont.Text = "Generate Font...";
-            this.toolStripMenuItem_GenerateFont.Visible = false;
-            this.toolStripMenuItem_GenerateFont.Click += new System.EventHandler(this.toolStripMenuItem_GenerateFont_Click);
+            this.toolStripMenuItem_HardcodedText.Enabled = false;
+            this.toolStripMenuItem_HardcodedText.Name = "toolStripMenuItem_HardcodedText";
+            this.toolStripMenuItem_HardcodedText.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_HardcodedText.Text = "Hardcoded Text...";
+            this.toolStripMenuItem_HardcodedText.Click += new System.EventHandler(this.toolStripMenuItem_HardcodedText_Click);
+            // 
+            // toolStripMenuItem_LockedCharacters
+            // 
+            this.toolStripMenuItem_LockedCharacters.Enabled = false;
+            this.toolStripMenuItem_LockedCharacters.Name = "toolStripMenuItem_LockedCharacters";
+            this.toolStripMenuItem_LockedCharacters.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_LockedCharacters.Text = "Locked Characters...";
+            this.toolStripMenuItem_LockedCharacters.Click += new System.EventHandler(this.toolStripMenuItem_LockedCharacters_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuItem_Format
             // 
             this.toolStripMenuItem_Format.Enabled = false;
             this.toolStripMenuItem_Format.Name = "toolStripMenuItem_Format";
-            this.toolStripMenuItem_Format.Size = new System.Drawing.Size(220, 22);
+            this.toolStripMenuItem_Format.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem_Format.Text = "Format";
             this.toolStripMenuItem_Format.Click += new System.EventHandler(this.toolStripMenuItem_Format_Click);
             // 
@@ -416,37 +495,37 @@ namespace ConanExplorer.Windows
             // 
             this.toolStripMenuItem_DeFormat.Enabled = false;
             this.toolStripMenuItem_DeFormat.Name = "toolStripMenuItem_DeFormat";
-            this.toolStripMenuItem_DeFormat.Size = new System.Drawing.Size(220, 22);
+            this.toolStripMenuItem_DeFormat.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem_DeFormat.Text = "De-Format";
             this.toolStripMenuItem_DeFormat.Click += new System.EventHandler(this.toolStripMenuItem_DeFormat_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(217, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
             // 
-            // viewScriptToolStripMenuItem
+            // toolStripMenuItem_ViewScript
             // 
-            this.viewScriptToolStripMenuItem.Name = "viewScriptToolStripMenuItem";
-            this.viewScriptToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.viewScriptToolStripMenuItem.Text = "View Script...";
-            this.viewScriptToolStripMenuItem.Click += new System.EventHandler(this.viewScriptToolStripMenuItem_Click);
+            this.toolStripMenuItem_ViewScript.Name = "toolStripMenuItem_ViewScript";
+            this.toolStripMenuItem_ViewScript.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_ViewScript.Text = "View Script...";
+            this.toolStripMenuItem_ViewScript.Click += new System.EventHandler(this.toolStripMenuItem_ViewScript_Click);
             // 
-            // debugToolStripMenuItem
+            // toolStripMenuItem_Debug
             // 
-            this.debugToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.generateScriptToolStripMenuItem});
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.debugToolStripMenuItem.Text = "_Debug";
-            this.debugToolStripMenuItem.Visible = false;
+            this.toolStripMenuItem_Debug.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem_GenerateScript});
+            this.toolStripMenuItem_Debug.Name = "toolStripMenuItem_Debug";
+            this.toolStripMenuItem_Debug.Size = new System.Drawing.Size(59, 20);
+            this.toolStripMenuItem_Debug.Text = "_Debug";
+            this.toolStripMenuItem_Debug.Visible = false;
             // 
-            // generateScriptToolStripMenuItem
+            // toolStripMenuItem_GenerateScript
             // 
-            this.generateScriptToolStripMenuItem.Name = "generateScriptToolStripMenuItem";
-            this.generateScriptToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.generateScriptToolStripMenuItem.Text = "Generate Script...";
-            this.generateScriptToolStripMenuItem.Click += new System.EventHandler(this.generateScriptToolStripMenuItem_Click);
+            this.toolStripMenuItem_GenerateScript.Name = "toolStripMenuItem_GenerateScript";
+            this.toolStripMenuItem_GenerateScript.Size = new System.Drawing.Size(163, 22);
+            this.toolStripMenuItem_GenerateScript.Text = "Generate Script...";
+            this.toolStripMenuItem_GenerateScript.Click += new System.EventHandler(this.toolStripMenuItem_GenerateScript_Click);
             // 
             // statusStrip1
             // 
@@ -462,44 +541,6 @@ namespace ConanExplorer.Windows
             // 
             this.toolStripStatusLabel_Row.Name = "toolStripStatusLabel_Row";
             this.toolStripStatusLabel_Row.Size = new System.Drawing.Size(0, 17);
-            // 
-            // switchRawEditorToolStripMenuItem
-            // 
-            this.switchRawEditorToolStripMenuItem.Name = "switchRawEditorToolStripMenuItem";
-            this.switchRawEditorToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.switchRawEditorToolStripMenuItem.Text = "Switch to Global Edit [TEST]";
-            this.switchRawEditorToolStripMenuItem.Click += new System.EventHandler(this.switchRawEditorToolStripMenuItem_Click);
-            // 
-            // richTextBox_ScriptFile
-            // 
-            this.richTextBox_ScriptFile.DetectUrls = false;
-            this.richTextBox_ScriptFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_ScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox_ScriptFile.HideSelection = false;
-            this.richTextBox_ScriptFile.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox_ScriptFile.Name = "richTextBox_ScriptFile";
-            this.richTextBox_ScriptFile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(397, 585);
-            this.richTextBox_ScriptFile.TabIndex = 0;
-            this.richTextBox_ScriptFile.Text = "";
-            this.richTextBox_ScriptFile.WordWrap = false;
-            this.richTextBox_ScriptFile.SelectionChanged += new System.EventHandler(this.richTextBox_ScriptFile_SelectionChanged);
-            this.richTextBox_ScriptFile.TextChanged += new System.EventHandler(this.richTextBox_ScriptFile_TextChanged);
-            this.richTextBox_ScriptFile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptFile_KeyDown);
-            // 
-            // richTextBox_ScriptMessage
-            // 
-            this.richTextBox_ScriptMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox_ScriptMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox_ScriptMessage.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox_ScriptMessage.Name = "richTextBox_ScriptMessage";
-            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(369, 319);
-            this.richTextBox_ScriptMessage.TabIndex = 0;
-            this.richTextBox_ScriptMessage.Text = "";
-            this.richTextBox_ScriptMessage.TextChanged += new System.EventHandler(this.richTextBox_ScriptMessage_TextChanged);
-            this.richTextBox_ScriptMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptMessage_KeyDown);
             // 
             // ScriptEditorWindow
             // 
@@ -552,16 +593,16 @@ namespace ConanExplorer.Windows
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ProgressBar progressBar_Progress;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_File;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Open;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Save;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem decompressAllToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem compressAllToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_DecompressAll;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_CompressAll;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Tools;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_FontSettings;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Format;
-        private System.Windows.Forms.ToolStripMenuItem viewScriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_ViewScript;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_Row;
@@ -569,21 +610,25 @@ namespace ConanExplorer.Windows
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.ListBox listBox_ScriptMessages;
         private FixedRichTextBox richTextBox_ScriptMessage;
-        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem generateScriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Debug;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_GenerateScript;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.Button button_Apply;
         private System.Windows.Forms.PictureBox pictureBox_MessagePreview;
         private System.Windows.Forms.ComboBox comboBox_PreviewColor;
         private System.Windows.Forms.ComboBox comboBox_PreviewType;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_GenerateFont;
         private System.Windows.Forms.Panel panel_Preview;
-        private System.Windows.Forms.Button Button_Search;
-        private System.Windows.Forms.TextBox TextBox_Search;
+        private System.Windows.Forms.Button button_SearchDown;
+        private System.Windows.Forms.TextBox textBox_Search;
         private System.Windows.Forms.Panel searchPanel;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Label helpSearchLAbel;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ToolStripMenuItem switchRawEditorToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBox_SearchGlobal;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_HardcodedText;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_LockedCharacters;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Clear;
+        private System.Windows.Forms.Button button_SearchUp;
     }
 }

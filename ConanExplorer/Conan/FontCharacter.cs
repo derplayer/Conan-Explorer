@@ -11,6 +11,13 @@ namespace ConanExplorer.Conan
         public byte[] Data { get; set; } = new byte[32];
         public short Index { get; set; } = -1;
         public string Symbol { get; set; } = "";
+        public string IndexString
+        {
+            get
+            {
+                return (((Index & 0xFF00) >> 8) | ((Index & 0x00FF) << 8)).ToString("X");
+            }
+        }
 
 
         public FontCharacter() { }

@@ -57,6 +57,14 @@ namespace ConanExplorer.Conan.Script.Elements
             }
         }
 
+        public int ContentLineCount
+        {
+            get
+            {
+                return ScriptParser.TextToLines(_content).Length;
+            }
+        }
+
         public string ContentText
         {
             get

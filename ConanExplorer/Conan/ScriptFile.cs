@@ -28,7 +28,8 @@ namespace ConanExplorer.Conan
         public Font Font => new Font(FontName, FontSize);
         public List<FontCharacter> GeneratedFont { get; set; } = new List<FontCharacter>(3304);
         public List<ScriptDocument> Scripts { get; set; } = new List<ScriptDocument>();
-
+        public List<HardCodedText> HardCodedTexts { get; set; } = new List<HardCodedText>();
+        public List<FontCharacter> LockedCharacters { get; set; } = new List<FontCharacter>();
 
         public ScriptFile() { }
 
@@ -51,6 +52,9 @@ namespace ConanExplorer.Conan
             return false;
         }
 
+        /// <summary>
+        /// Generates the font characters for the current script file.
+        /// </summary>
         public void GenerateFont()
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -62,15 +66,20 @@ namespace ConanExplorer.Conan
                     if (element.GetType() == typeof(ScriptMessage))
                     {
                         ScriptMessage message = (ScriptMessage)element;
-                        stringBuilder.Append(message.ContentText);
+                        stringBuilder.AppendLine(message.ContentText);
                     }
                     else if (element.GetType() == typeof(ScriptGmap))
                     {
                         ScriptGmap gmap = (ScriptGmap)element;
-                        stringBuilder.Append(gmap.ContentText);
+                        stringBuilder.AppendLine(gmap.ContentText);
                     }
                 }
             }
+            foreach (HardCodedText text in HardCodedTexts)
+            {
+                stringBuilder.AppendLine(text.NewString);
+            }
+
             HashSet<string> dictionary = CreateDictionary(ScriptParser.TextToLines(stringBuilder.ToString()));
 
             //DEBUG OUTPUT START
@@ -85,15 +94,33 @@ namespace ConanExplorer.Conan
             GenerateFont(dictionary, Font);
         }
 
+        /// <summary>
+        /// Generates the font characters for the given 2 char dictionary and font.
+        /// </summary>
+        /// <param name="dictionary"></param>
+        /// <param name="font"></param>
         public void GenerateFont(HashSet<string> dictionary, Font font)
         {
-            GeneratedFont = FONTFile.EmptyFontCharacters();
+            FONTFile fontFile = ApplicationState.Instance.ProjectFile.ModifiedImage.FONTFile;
+            fontFile.Load();
+            GeneratedFont = fontFile.Characters;
+
+            //GeneratedFont = FONTFile.EmptyFontCharacters();
+            //foreach (FontCharacter fontCharacter in GeneratedFont) { fontCharacter.Data = new byte[32]; }
+
+            int fontOffset = 1;
             string[] unsortedDictionary = dictionary.ToArray();
             string[] sortedDictionary = dictionary.OrderBy(e => e).ToArray();
-            foreach (FontCharacter fontCharacter in GeneratedFont) { fontCharacter.Data = new byte[32]; }
             for (int i = 0; i < unsortedDictionary.Length; i++)
             {
-                FontCharacter fontCharacter = GeneratedFont[i + 1];
+                FontCharacter fontCharacter = GeneratedFont[i + fontOffset];
+                while (LockedCharacters.Any(c => c.Index == fontCharacter.Index))
+                {
+                    fontOffset++;
+                    fontCharacter = GeneratedFont[i + fontOffset];
+                }
+
+                fontCharacter.Data = new byte[32];
                 fontCharacter.Symbol = unsortedDictionary[i];
 
                 Bitmap bitmap = fontCharacter.GetBitmap();
@@ -113,6 +140,10 @@ namespace ConanExplorer.Conan
             }
         }
 
+        /// <summary>
+        /// Formats the messages with the generated font by replacing the text with shift-jis characters.
+        /// </summary>
+        /// <param name="save"></param>
         public void Format(bool save = true)
         {
             foreach (ScriptDocument script in Scripts)
@@ -135,16 +166,24 @@ namespace ConanExplorer.Conan
                 ScriptParser.Parse(script, elements);
                 if (save) script.WriteToOriginalFile();
             }
+            foreach (HardCodedText text in HardCodedTexts)
+            {
+                text.Format(this);
+            }
         }
 
-        public void DeFormat()
-        {
+        /// <summary>
+        /// [UNUSED] Will not be used because makes not alot of sense.
+        /// </summary>
+        public void DeFormat() { }
 
-        }
-
+        /// <summary>
+        /// Chops up the lines into 2 char entries.
+        /// </summary>
+        /// <param name="lines"></param>
+        /// <returns></returns>
         public HashSet<string> CreateDictionary(string[] lines) 
         {
-            //chop up the lines into 2 char entries
             HashSet<string> result = new HashSet<string>();
             foreach (string line in lines)
             {

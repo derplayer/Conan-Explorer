@@ -76,13 +76,6 @@ namespace ConanExplorer.Conan.Script
                 string line = lines[i];
                 if (String.IsNullOrEmpty(line))
                 {
-                    //DEBUG
-                    if (gmap != null)
-                    {
-                        Console.WriteLine(gmap.Text);
-                    }
-
-
                     isGmap = false;
                     isMessage = false;
                     message = null;

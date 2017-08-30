@@ -43,6 +43,7 @@
             this.label_PreviewText = new System.Windows.Forms.Label();
             this.textBox_PreviewText = new System.Windows.Forms.TextBox();
             this.button_UpdatePreview = new System.Windows.Forms.Button();
+            this.button_FontDialog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -84,7 +85,7 @@
             this.comboBox_Font.FormattingEnabled = true;
             this.comboBox_Font.Location = new System.Drawing.Point(3, 16);
             this.comboBox_Font.Name = "comboBox_Font";
-            this.comboBox_Font.Size = new System.Drawing.Size(230, 21);
+            this.comboBox_Font.Size = new System.Drawing.Size(183, 21);
             this.comboBox_Font.TabIndex = 2;
             this.comboBox_Font.SelectedIndexChanged += new System.EventHandler(this.comboBox_Font_SelectedIndexChanged);
             // 
@@ -129,6 +130,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.button_FontDialog);
             this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel1.Controls.Add(this.numericUpDown_FontSize);
             this.splitContainer1.Panel1.Controls.Add(this.label_Font);
@@ -191,7 +193,7 @@
             // numericUpDown_FontSize
             // 
             this.numericUpDown_FontSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown_FontSize.Location = new System.Drawing.Point(239, 17);
+            this.numericUpDown_FontSize.Location = new System.Drawing.Point(192, 17);
             this.numericUpDown_FontSize.Maximum = new decimal(new int[] {
             16,
             0,
@@ -241,7 +243,17 @@
             this.button_UpdatePreview.UseVisualStyleBackColor = true;
             this.button_UpdatePreview.Click += new System.EventHandler(this.button_UpdatePreview_Click);
             // 
-            // EditFontWindow
+            // button_FontDialog
+            // 
+            this.button_FontDialog.Location = new System.Drawing.Point(242, 15);
+            this.button_FontDialog.Name = "button_FontDialog";
+            this.button_FontDialog.Size = new System.Drawing.Size(38, 23);
+            this.button_FontDialog.TabIndex = 8;
+            this.button_FontDialog.Text = "...";
+            this.button_FontDialog.UseVisualStyleBackColor = true;
+            this.button_FontDialog.Click += new System.EventHandler(this.button_FontDialog_Click);
+            // 
+            // FontSettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -249,7 +261,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(600, 450);
-            this.Name = "EditFontWindow";
+            this.Name = "FontSettingsWindow";
             this.Text = "Font Settings";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Preview)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -285,5 +297,6 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Label label_PreviewText;
         private System.Windows.Forms.TextBox textBox_PreviewText;
+        private System.Windows.Forms.Button button_FontDialog;
     }
 }

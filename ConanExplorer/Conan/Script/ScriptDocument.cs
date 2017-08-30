@@ -73,6 +73,14 @@ namespace ConanExplorer.Conan.Script
             }
         }
 
+        public string Name
+        {
+            get
+            {
+                return ToString();
+            }
+        }
+
         public override string ToString()
         {
             return BaseFile.FileName;

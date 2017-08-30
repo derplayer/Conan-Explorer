@@ -64,6 +64,15 @@ namespace ConanExplorer.Conan
 
         public FileDictionary FileDictionary { get; set; }
         public List<PKNFile> PKNFiles { get; set; } = new List<PKNFile>();
+        [XmlIgnore]
+        public FONTFile FONTFile
+        {
+            get
+            {
+                PKNFile pknFile = PKNFiles.FirstOrDefault(p => p.Name == "GRAPH");
+                return (FONTFile)pknFile.Files.FirstOrDefault(f => f.FileName == "FONT.BIN");
+            }
+        }
 
         /// <summary>
         /// Default constructor for serialization use only

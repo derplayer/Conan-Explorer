@@ -44,14 +44,6 @@ namespace ConanExplorer.Conan
             return true;
         }
 
-        public static readonly ConanImageDialogue[] Dialogues =
-        {
-            new ConanImageDialogue(0x00000C9C, 0x12, "最初から始めます。"),
-            new ConanImageDialogue(0x00000CB0, 0x10, "よろしいですか？"),
-            new ConanImageDialogue(0x000A6E90, 0x4, "はい"),
-            new ConanImageDialogue(0x000A6E98, 0x6, "いいえ")
-        };
-
         public static readonly string[] Directories =
         {
             "BG",
@@ -218,17 +210,4 @@ namespace ConanExplorer.Conan
         }
     }
 
-    public class ConanImageDialogue
-    {
-        public int Offset;
-        public int Length;
-        public string OriginalString;
-
-        public ConanImageDialogue(int offset, int length, string originalString)
-        {
-            Offset = offset;
-            Length = length;
-            OriginalString = originalString;
-        }
-    }
 }

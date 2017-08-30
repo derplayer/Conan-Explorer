@@ -24,7 +24,6 @@ using System.Diagnostics;
 
 namespace ConanExplorer.Windows
 {
-    
 
     public partial class ScriptEditorWindow : Form
     {
@@ -32,9 +31,12 @@ namespace ConanExplorer.Windows
         private Encoding _shiftJis = Encoding.GetEncoding("shift_jis");
         private ScriptDocument _lastScriptFile;
         private List<IScriptElement> _elements = new List<IScriptElement>();
-        private System.Windows.Forms.Timer _timerApply = new System.Windows.Forms.Timer();
-        private bool _changingSelection = false;
+        private System.Windows.Forms.Timer _timerMessageApply = new System.Windows.Forms.Timer();
+        private System.Windows.Forms.Timer _timerFileApply = new System.Windows.Forms.Timer();
+        private bool _changingMessageSelection = false;
         private bool _updatingMessage = false;
+        private bool _changingSelection = false;
+        private bool _updatingScript = false;
 
         public ScriptFile ScriptFile;
 
@@ -48,14 +50,51 @@ namespace ConanExplorer.Windows
             richTextBox_ScriptMessage.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
             richTextBox_ScriptMessage.AutoWordSelection = false;
 
-            _timerApply.Interval = 200;
-            _timerApply.Tick += _timerApply_Tick;
+            _timerMessageApply.Interval = 200;
+            _timerMessageApply.Tick += _timerApply_Tick;
+
+            _timerFileApply.Interval = 500;
+            _timerFileApply.Tick += _timerFileApply_Tick;
 
             comboBox_PreviewType.SelectedIndex = 0;
             comboBox_PreviewColor.SelectedIndex = 2;
         }
 
-        
+        private void UpdateScriptFile()
+        {
+            if (listBox_ScriptFiles.SelectedIndex == -1) return;
+            ScriptDocument script = ScriptFile.Scripts[listBox_ScriptFiles.SelectedIndex];
+            script.TextBuffer = richTextBox_ScriptFile.Text.Replace("\n", "\r\n");
+
+            _updatingScript = true;
+
+            Win32.LockWindow(this.Handle);
+            int scrollPos = Win32.GetScrollPos(richTextBox_ScriptFile.Handle, 1);
+            int pos = richTextBox_ScriptFile.SelectionStart;
+            int len = richTextBox_ScriptFile.SelectionLength;
+            richTextBox_ScriptFile.Text = script.TextBuffer;
+            richTextBox_ScriptFile.SelectionStart = pos;
+            richTextBox_ScriptFile.SelectionLength = len;
+            Win32.SetScrollPos(richTextBox_ScriptFile.Handle, 1, scrollPos, true);
+            Win32.PostMessage(richTextBox_ScriptFile.Handle, 0x115, 4 + 0x10000 * scrollPos, 0);
+            Win32.LockWindow(IntPtr.Zero);
+
+            int lastIndex = listBox_ScriptMessages.SelectedIndex;
+            _elements.Clear();
+            listBox_ScriptMessages.Items.Clear();
+            foreach (IScriptElement element in ScriptParser.Parse(script))
+            {
+                _elements.Add(element);
+                if (element.GetType() == typeof(ScriptMessage))
+                {
+                    listBox_ScriptMessages.Items.Add(element);
+                }
+            }
+            listBox_ScriptMessages.SelectedIndex = lastIndex;
+
+            _updatingScript = false;
+        }
+
         private void GenerateFont()
         {
             PKNFile pknFile = ApplicationState.Instance.ProjectFile.ModifiedImage.PKNFiles.FirstOrDefault(p => p.Name == "GRAPH");
@@ -146,6 +185,7 @@ namespace ConanExplorer.Windows
             }
         }
 
+
         private void CompressScripts()
         {
             if (ApplicationState.Instance.ProjectFile == null)
@@ -153,13 +193,14 @@ namespace ConanExplorer.Windows
                 MessageBox.Show("Open a project file before compressing!", "Project file not found!");
                 return;
             }
+
             for (int i = 0; i < ScriptFile.Scripts.Count; i++)
             {
                 ScriptDocument scriptFile = ScriptFile.Scripts[i];
                 scriptFile.WriteToOriginalFile();
-                if (scriptFile.BaseFile.GetType() == typeof (LZBFile))
+                if (scriptFile.BaseFile.GetType() == typeof(LZBFile))
                 {
-                    LZBFile lzbFile = (LZBFile) scriptFile.BaseFile;
+                    LZBFile lzbFile = (LZBFile)scriptFile.BaseFile;
                     lzbFile.Compress(false);
                 }
                 Invoke((MethodInvoker)delegate
@@ -167,6 +208,7 @@ namespace ConanExplorer.Windows
                     progressBar_Progress.Value = (int)((double)i / ScriptFile.Scripts.Count * 100);
                 });
             }
+
             Invoke((MethodInvoker)delegate
             {
                 progressBar_Progress.Value = 0;
@@ -219,7 +261,7 @@ namespace ConanExplorer.Windows
 
         public void UpdateScriptMessage()
         {
-            if (_changingSelection) return;
+            if (_changingMessageSelection) return;
             
             IScriptElement element = (IScriptElement)listBox_ScriptMessages.SelectedItem;
             if (element == null) return;
@@ -247,39 +289,117 @@ namespace ConanExplorer.Windows
             Win32.LockWindow(IntPtr.Zero);
 
             _updatingMessage = false;
-            switchRawEditorToolStripMenuItem.Enabled = false; //everything is broken after edit so... heh
         }
 
         private bool FindNext()
         {
-            int from = richTextBox_ScriptFile.SelectionStart + 1;
-            int to = richTextBox_ScriptFile.TextLength - 1;
-            int start = richTextBox_ScriptFile.Find(TextBox_Search.Text, from, to, RichTextBoxFinds.None);
+            if (checkBox_SearchGlobal.Checked)
+            {
+                int from = richTextBox_ScriptFile.SelectionStart + 1;
+                int to = richTextBox_ScriptFile.TextLength - 1;
+                int start = richTextBox_ScriptFile.Find(textBox_Search.Text, from, to, RichTextBoxFinds.None);
 
-            if (start == -1) return false;
+                if (start == -1)
+                {
+                    while (start == -1)
+                    {
+                        if (listBox_ScriptFiles.SelectedIndex == listBox_ScriptFiles.Items.Count - 1)
+                        {
+                            return false;
+                        }
+                        listBox_ScriptFiles.SelectedIndex = listBox_ScriptFiles.SelectedIndex + 1;
 
-            richTextBox_ScriptFile.SelectionStart = start;
-            richTextBox_ScriptFile.ScrollToCaret();
-            return true;
+                        from = richTextBox_ScriptFile.SelectionStart + 1;
+                        to = richTextBox_ScriptFile.TextLength - 1;
+                        start = richTextBox_ScriptFile.Find(textBox_Search.Text, from, to, RichTextBoxFinds.None);
+                    }
+                }
+                richTextBox_ScriptFile.SelectionStart = start;
+                richTextBox_ScriptFile.ScrollToCaret();
+                return true;
+            }
+            else
+            {
+                int from = richTextBox_ScriptFile.SelectionStart + 1;
+                int to = richTextBox_ScriptFile.TextLength - 1;
+                int start = richTextBox_ScriptFile.Find(textBox_Search.Text, from, to, RichTextBoxFinds.None);
+
+                if (start == -1) return false;
+
+                richTextBox_ScriptFile.SelectionStart = start;
+                richTextBox_ScriptFile.ScrollToCaret();
+                return true;
+            }
         }
 
         private bool FindPrevious()
         {
-            int from = 0;
-            int to = richTextBox_ScriptFile.SelectionStart - 1;
-            int start = richTextBox_ScriptFile.Find(TextBox_Search.Text, from, to, RichTextBoxFinds.Reverse);
+            if (checkBox_SearchGlobal.Checked)
+            {
+                int from = 0;
+                int to = richTextBox_ScriptFile.SelectionStart - 1;
+                int start = richTextBox_ScriptFile.Find(textBox_Search.Text, from, to, RichTextBoxFinds.Reverse);
 
-            if (start == -1) return false;
+                if (start == -1)
+                {
+                    while (start == -1)
+                    {
+                        if (listBox_ScriptFiles.SelectedIndex == 0)
+                        {
+                            return false;
+                        }
+                        listBox_ScriptFiles.SelectedIndex = listBox_ScriptFiles.SelectedIndex - 1;
 
-            richTextBox_ScriptFile.SelectionStart = start;
-            richTextBox_ScriptFile.ScrollToCaret();
-            return true;
+                        to = richTextBox_ScriptFile.SelectionStart - 1;
+                        start = richTextBox_ScriptFile.Find(textBox_Search.Text, from, to, RichTextBoxFinds.Reverse);
+                    }
+                }
+                richTextBox_ScriptFile.SelectionStart = start;
+                richTextBox_ScriptFile.ScrollToCaret();
+                return true;
+            }
+            else
+            {
+                int from = 0;
+                int to = richTextBox_ScriptFile.SelectionStart - 1;
+                int start = richTextBox_ScriptFile.Find(textBox_Search.Text, from, to, RichTextBoxFinds.Reverse);
+
+                if (start == -1) return false;
+
+                richTextBox_ScriptFile.SelectionStart = start;
+                richTextBox_ScriptFile.ScrollToCaret();
+                return true;
+            }
+        }
+
+        private void EnableTools()
+        {
+            toolStripMenuItem_LockedCharacters.Enabled = true;
+            toolStripMenuItem_HardcodedText.Enabled = true;
+            toolStripMenuItem_FontSettings.Enabled = true;
+            toolStripMenuItem_Format.Enabled = true;
+            toolStripMenuItem_DeFormat.Enabled = true;
+        }
+
+        private void DisableTools()
+        {
+            toolStripMenuItem_LockedCharacters.Enabled = false;
+            toolStripMenuItem_HardcodedText.Enabled = false;
+            toolStripMenuItem_FontSettings.Enabled = false;
+            toolStripMenuItem_Format.Enabled = false;
+            toolStripMenuItem_DeFormat.Enabled = false;
         }
 
         private void _timerApply_Tick(object sender, EventArgs e)
         {
-            _timerApply.Enabled = false;
+            _timerMessageApply.Enabled = false;
             UpdateScriptMessage();
+        }
+
+        private void _timerFileApply_Tick(object sender, EventArgs e)
+        {
+            _timerFileApply.Enabled = false;
+            UpdateScriptFile();
         }
 
         private void listBox_ScriptFiles_SelectedIndexChanged(object sender, EventArgs e)
@@ -304,19 +424,19 @@ namespace ConanExplorer.Windows
             }
         }
 
-        private void decompressAllToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem_DecompressAll_Click(object sender, EventArgs e)
         {
             DecompressScripts();
         }
 
-        private void compressAllToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem_CompressAll_Click(object sender, EventArgs e)
         {
             Thread thread = new Thread(CompressScripts);
             Enabled = false;
             thread.Start();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem_Open_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Conan Explorer Script (*.ces)|*.ces";
@@ -382,6 +502,7 @@ namespace ConanExplorer.Windows
                         {
                             MessageBox.Show("Download failed...\n\r" + ex);
                         }
+
                     }
                 }
             }
@@ -394,12 +515,10 @@ namespace ConanExplorer.Windows
                 listBox_ScriptFiles.Items.Add(scriptFile);
             }
 
-            toolStripMenuItem_FontSettings.Enabled = true;
-            toolStripMenuItem_Format.Enabled = true;
-            toolStripMenuItem_DeFormat.Enabled = true;
+            EnableTools();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem_Save_Click(object sender, EventArgs e)
         {
             if (ScriptFile.Scripts.Count == 0)
             {
@@ -468,7 +587,7 @@ namespace ConanExplorer.Windows
             Enabled = true;
         }
 
-        private void viewScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem_ViewScript_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -483,16 +602,15 @@ namespace ConanExplorer.Windows
         {
             FontSettingsWindow generateFontWindow = new FontSettingsWindow(ScriptFile);
             generateFontWindow.ShowDialog();
-
-            //ScriptAnalyseWindow scriptAnalyseWindow = new ScriptAnalyseWindow(ScriptFileCollection);
-            //scriptAnalyseWindow.ShowDialog();
         }
 
         private void richTextBox_ScriptFile_SelectionChanged(object sender, EventArgs e)
         {
             toolStripStatusLabel_Row.Text = "Row: " + (richTextBox_ScriptFile.GetLineFromCharIndex(richTextBox_ScriptFile.SelectionStart) + 1);
             if (_updatingMessage) return;
+            _changingSelection = true;
             FindNearestMessage();
+            _changingSelection = false;
         }
 
         private void FindNearestMessage()
@@ -509,7 +627,19 @@ namespace ConanExplorer.Windows
                     bestIndex = i;
                     bestDifference = difference;
                 }
+                else if (difference > bestDifference) break;
             }
+            if (bestIndex > 0)
+            {
+                ScriptMessage message = (ScriptMessage)listBox_ScriptMessages.Items[bestIndex - 1];
+                int difference = Math.Abs((message.LineIndex + message.ContentLineCount) - lineIndex);
+                if (difference < bestDifference)
+                {
+                    bestIndex--;
+                }
+            }
+
+            if (listBox_ScriptMessages.Items.Count == 0) return;
             listBox_ScriptMessages.SelectedIndex = bestIndex;
         }
 
@@ -525,9 +655,9 @@ namespace ConanExplorer.Windows
 
         private void listBox_ScriptMessages_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _changingSelection = true;
+            _changingMessageSelection = true;
 
-            _timerApply.Enabled = false;
+            _timerMessageApply.Enabled = false;
             ScriptMessage message = (ScriptMessage)listBox_ScriptMessages.SelectedItem;
             if (message == null) return;
             richTextBox_ScriptMessage.Text = message.Content;
@@ -536,14 +666,20 @@ namespace ConanExplorer.Windows
             if (listBox_ScriptMessages.SelectedIndex != -1)
             {
                 ScriptMessage scriptMessage = (ScriptMessage)listBox_ScriptMessages.SelectedItem;
-                richTextBox_ScriptFile.SelectionStart = richTextBox_ScriptFile.GetFirstCharIndexFromLine(scriptMessage.LineIndex);
-                richTextBox_ScriptFile.ScrollToCaret();
+                if (!(_changingSelection || _updatingScript))
+                {
+                    if (richTextBox_ScriptFile.Lines.Length > scriptMessage.LineIndex)
+                    {
+                        richTextBox_ScriptFile.SelectionStart = richTextBox_ScriptFile.GetFirstCharIndexFromLine(scriptMessage.LineIndex);
+                        richTextBox_ScriptFile.ScrollToCaret();
+                    }
+                }
             }
 
-            _changingSelection = false;
+            _changingMessageSelection = false;
         }
 
-        private void generateScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem_GenerateScript_Click(object sender, EventArgs e)
         {
             StringBuilder stringBuilder = new StringBuilder();
             foreach (IScriptElement element in listBox_ScriptMessages.Items)
@@ -573,13 +709,9 @@ namespace ConanExplorer.Windows
 
         private void richTextBox_ScriptMessage_TextChanged(object sender, EventArgs e)
         {
-            if (_changingSelection) return;
-            _timerApply.Enabled = true;
-        }
-
-        private void toolStripMenuItem_GenerateFont_Click(object sender, EventArgs e)
-        {
-
+            if (_changingMessageSelection) return;
+            _timerMessageApply.Enabled = false;
+            _timerMessageApply.Enabled = true;
         }
 
         private void comboBox_PreviewColor_SelectedIndexChanged(object sender, EventArgs e)
@@ -589,7 +721,9 @@ namespace ConanExplorer.Windows
 
         private void richTextBox_ScriptFile_TextChanged(object sender, EventArgs e)
         {
-
+            if (_updatingScript) return;
+            _timerFileApply.Enabled = false;
+            _timerFileApply.Enabled = true;
         }
 
         private void richTextBox_ScriptFile_KeyDown(object sender, KeyEventArgs e)
@@ -597,7 +731,7 @@ namespace ConanExplorer.Windows
             if (e.Control && e.KeyCode == Keys.F)
             {
                 searchPanel.Visible = !searchPanel.Visible;
-                if (searchPanel.Visible) TextBox_Search.Focus();
+                if (searchPanel.Visible) textBox_Search.Focus();
                 return;
             }
             if (e.Shift && e.KeyCode == Keys.F3)
@@ -612,12 +746,12 @@ namespace ConanExplorer.Windows
             }
         }
 
-        private void TextBox_Search_KeyDown(object sender, KeyEventArgs e)
+        private void textBox_Search_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.F)
             {
                 searchPanel.Visible = !searchPanel.Visible;
-                if (searchPanel.Visible) TextBox_Search.Focus();
+                if (searchPanel.Visible) textBox_Search.Focus();
                 return;
             }
             if (e.KeyCode == Keys.Enter)
@@ -635,16 +769,6 @@ namespace ConanExplorer.Windows
                 FindNext();
                 return;
             }
-        }
-
-        private void Button_Search_Click(object sender, EventArgs e)
-        {
-            if (!FindNext())
-            {
-                MessageBox.Show("No match found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            richTextBox_ScriptFile.Focus();
         }
 
         private void richTextBox_ScriptMessage_KeyDown(object sender, KeyEventArgs e)
@@ -676,31 +800,36 @@ namespace ConanExplorer.Windows
             richTextBox_ScriptFile.ScrollToCaret();
         }
 
-        private void switchRawEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem_HardcodedText_Click(object sender, EventArgs e)
         {
+            HardcodedTextWindow hardcodedTestWindow = new HardcodedTextWindow(ScriptFile);
+            hardcodedTestWindow.ShowDialog();
+        }
+
+        private void toolStripMenuItem_LockedCharacters_Click(object sender, EventArgs e)
+        {
+            LockedCharactersWindow lockedCharactersWindow = new LockedCharactersWindow(ScriptFile);
+            lockedCharactersWindow.ShowDialog();
+        }
+
+        private void toolStripMenuItem_Clear_Click(object sender, EventArgs e)
+        {
+            DisableTools();
+            ScriptFile = null;
+            listBox_ScriptFiles.Items.Clear();
             listBox_ScriptMessages.Items.Clear();
-            _elements.Clear();
+            richTextBox_ScriptFile.Clear();
+            richTextBox_ScriptMessage.Clear();
+        }
 
-            ScriptDocument mergeDocument = new ScriptDocument();
-            foreach (var scriptFile in ScriptFile.Scripts)
-            {
-                mergeDocument.TextBuffer += scriptFile.TextBuffer;
-            }
+        private void button_SearchUp_Click(object sender, EventArgs e)
+        {
+            FindPrevious();
+        }
 
-            ScriptDocument file = mergeDocument;
-            richTextBox_ScriptFile.Select(0, 0);
-            richTextBox_ScriptFile.ScrollToCaret();
-            richTextBox_ScriptFile.Text = file.TextBuffer;
-            _lastScriptFile = file;
-            
-            foreach (IScriptElement element in ScriptParser.Parse(file))
-            {
-                _elements.Add(element);
-                if (element.GetType() != typeof(ScriptMessage)) continue;
-                listBox_ScriptMessages.Items.Add(element);
-            }
-
-            listBox_ScriptMessages.SetSelected(0, true);
+        private void button_SearchDown_Click(object sender, EventArgs e)
+        {
+            FindNext();
         }
     }
 }
