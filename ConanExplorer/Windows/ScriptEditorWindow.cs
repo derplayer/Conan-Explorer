@@ -50,10 +50,10 @@ namespace ConanExplorer.Windows
             richTextBox_ScriptMessage.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
             richTextBox_ScriptMessage.AutoWordSelection = false;
 
-            _timerMessageApply.Interval = 200;
+            _timerMessageApply.Interval = 1;
             _timerMessageApply.Tick += _timerApply_Tick;
 
-            _timerFileApply.Interval = 500;
+            _timerFileApply.Interval = 2;
             _timerFileApply.Tick += _timerFileApply_Tick;
 
             comboBox_PreviewType.SelectedIndex = 0;
