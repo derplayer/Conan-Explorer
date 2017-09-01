@@ -67,7 +67,9 @@ namespace ConanExplorer.Windows
             script.TextBuffer = richTextBox_ScriptFile.Text.Replace("\n", "\r\n");
 
             _updatingScript = true;
-
+            int messagePos = richTextBox_ScriptMessage.SelectionStart;
+            int messageLen = richTextBox_ScriptMessage.SelectionLength;
+            
             Win32.LockWindow(this.Handle);
             int scrollPos = Win32.GetScrollPos(richTextBox_ScriptFile.Handle, 1);
             int pos = richTextBox_ScriptFile.SelectionStart;
@@ -91,7 +93,9 @@ namespace ConanExplorer.Windows
                 }
             }
             listBox_ScriptMessages.SelectedIndex = lastIndex;
-
+            richTextBox_ScriptMessage.SelectionStart = messagePos;
+            richTextBox_ScriptMessage.SelectionLength = messageLen;
+            
             _updatingScript = false;
         }
 
