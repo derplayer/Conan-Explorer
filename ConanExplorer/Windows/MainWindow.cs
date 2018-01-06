@@ -544,6 +544,9 @@ namespace ConanExplorer.Windows
             modifiedImage.Clear(false);
             modifiedImage.Rip(modifiedImage.RippedDirectory);
             UpdateTreeNodes();
+
+            //Decompress Scripts (throw away instance)
+            new ScriptEditorWindow().DecompressScripts();
         }
 
         private void fileIndexViewerToolStripMenuItem_Click(object sender, EventArgs e)

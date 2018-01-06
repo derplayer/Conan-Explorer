@@ -37,10 +37,9 @@ namespace ConanExplorer.Windows
         private bool _updatingMessage = false;
         private bool _changingSelection = false;
         private bool _updatingScript = false;
+        private string _actualEditorScript;
 
         public ScriptFile ScriptFile;
-
-        
 
         public ScriptEditorWindow()
         {
@@ -58,6 +57,8 @@ namespace ConanExplorer.Windows
 
             comboBox_PreviewType.SelectedIndex = 0;
             comboBox_PreviewColor.SelectedIndex = 2;
+
+            DisableTools();
         }
 
         private void UpdateScriptFile()
@@ -130,10 +131,11 @@ namespace ConanExplorer.Windows
             ScriptFile.GenerateFont();
             ScriptFile.Format();
 
-            if (MessageBox.Show("Do you want to generate the \"FONT.BIN\"?", "Question!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                GenerateFont();
-            }
+            //Unnecessary check (generation fast enough)
+            //if (MessageBox.Show("Do you want to generate the \"FONT.BIN\"?", "Question!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //{
+            GenerateFont();
+            //}
 
             if (listBox_ScriptFiles.SelectedIndex == -1) return;
             richTextBox_ScriptFile.Text = ((ScriptDocument)listBox_ScriptFiles.SelectedItem).TextBuffer;
@@ -190,7 +192,7 @@ namespace ConanExplorer.Windows
         }
 
 
-        private void CompressScripts()
+        public void CompressScripts()
         {
             if (ApplicationState.Instance.ProjectFile == null)
             {
@@ -222,7 +224,7 @@ namespace ConanExplorer.Windows
             });
         }
 
-        private void DecompressScripts()
+        public void DecompressScripts()
         {
             if (ApplicationState.Instance.ProjectFile == null)
             {
@@ -378,17 +380,30 @@ namespace ConanExplorer.Windows
             }
         }
 
-        private void EnableTools()
+        private void EnableTools(bool skipCheck = false)
         {
-            toolStripMenuItem_LockedCharacters.Enabled = true;
-            toolStripMenuItem_HardcodedText.Enabled = true;
-            toolStripMenuItem_FontSettings.Enabled = true;
-            toolStripMenuItem_Format.Enabled = true;
-            toolStripMenuItem_DeFormat.Enabled = true;
+            if (ApplicationState.Instance.ProjectFile != null || skipCheck)
+            {
+                toolStripMenuItem_Save.Enabled = true;
+                toolStripMenuItem_SaveNormal.Enabled = true;
+                toolStripMenuItem_CompressAll.Enabled = true;
+                toolStripMenuItem_MultiCompress.Enabled = true;
+
+                toolStripMenuItem_LockedCharacters.Enabled = true;
+                toolStripMenuItem_HardcodedText.Enabled = true;
+                toolStripMenuItem_FontSettings.Enabled = true;
+                toolStripMenuItem_Format.Enabled = true;
+                toolStripMenuItem_DeFormat.Enabled = true;
+            }
         }
 
         private void DisableTools()
         {
+            toolStripMenuItem_Save.Enabled = false;
+            toolStripMenuItem_SaveNormal.Enabled = false;
+            toolStripMenuItem_CompressAll.Enabled = false;
+            toolStripMenuItem_MultiCompress.Enabled = false;
+
             toolStripMenuItem_LockedCharacters.Enabled = false;
             toolStripMenuItem_HardcodedText.Enabled = false;
             toolStripMenuItem_FontSettings.Enabled = false;
@@ -433,9 +448,15 @@ namespace ConanExplorer.Windows
         private void toolStripMenuItem_DecompressAll_Click(object sender, EventArgs e)
         {
             DecompressScripts();
+            EnableTools();
         }
 
         private void toolStripMenuItem_CompressAll_Click(object sender, EventArgs e)
+        {
+            CompressAllThread();
+        }
+
+        private void CompressAllThread()
         {
             Thread thread = new Thread(CompressScripts);
             Enabled = false;
@@ -449,6 +470,7 @@ namespace ConanExplorer.Windows
 
             if (openFileDialog.ShowDialog() == DialogResult.OK && File.Exists(openFileDialog.FileName))
             {
+                _actualEditorScript = openFileDialog.FileName;
                 XmlSerializer serializer = new XmlSerializer(typeof(ScriptFile));
                 using (StreamReader reader = new StreamReader(openFileDialog.FileName))
                 {
@@ -521,10 +543,21 @@ namespace ConanExplorer.Windows
                 listBox_ScriptFiles.Items.Add(scriptFile);
             }
 
-            EnableTools();
+            EnableTools(true);
         }
 
         private void toolStripMenuItem_Save_Click(object sender, EventArgs e)
+        {
+            SaveData(true);
+        }
+
+
+        private void toolStripMenuItem_SaveNormal_Click(object sender, EventArgs e)
+        {
+            SaveData();
+        }
+
+        private void SaveData(bool mode = false)
         {
             if (ScriptFile.Scripts.Count == 0)
             {
@@ -533,18 +566,30 @@ namespace ConanExplorer.Windows
             }
             if (_lastScriptFile != null) _lastScriptFile.TextBuffer = richTextBox_ScriptFile.Text.Replace("\n", "\r\n");
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Conan Explorer Script (*.ces)|*.ces";
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (mode)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(ScriptFile));
-                using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Conan Explorer Script (*.ces)|*.ces";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    serializer.Serialize(writer, ScriptFile);
+                    _actualEditorScript = saveFileDialog.FileName;
                 }
-                Text = String.Format("Script Editor - \"{0}\"", saveFileDialog.FileName);
             }
+
+            if (_actualEditorScript == null)
+            {
+                MessageBox.Show("Open or Save as... the Script Project!");
+                return;
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(ScriptFile));
+            using (StreamWriter writer = new StreamWriter(_actualEditorScript))
+            {
+                serializer.Serialize(writer, ScriptFile);
+            }
+            Text = String.Format("Script Editor - \"{0}\"", _actualEditorScript);
+
         }
 
         private void listBox_ScriptFiles_MouseDown(object sender, MouseEventArgs e)
@@ -837,5 +882,13 @@ namespace ConanExplorer.Windows
         {
             FindNext();
         }
+
+        private void toolStripMenuItem_MultiCompress_Click(object sender, EventArgs e)
+        {
+            SaveData();
+            Format();
+            CompressAllThread();
+        }
+
     }
 }
