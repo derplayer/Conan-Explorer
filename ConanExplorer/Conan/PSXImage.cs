@@ -167,11 +167,12 @@ namespace ConanExplorer.Conan
                     string fileName = RippedDirectory + "\\" + file.Folder + "\\" + file.FullPath;
                     FileInfo fileInfo = new FileInfo(fileName);
 
+                    //TODO: @Phil - The rest padding killed the game before (Especially at FLAG.TXT) Refactor?
                     if (fileInfo.Length % 2048 != 0)
                     {
                         if (MessageBox.Show(String.Format("The file \"{0}\" does not have the correct size.\n Do you want to add zero padding?", fileInfo.FullName), "Incorrect Size!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                         {
-                            long rest = 2336 - fileInfo.Length % 2336;
+                            long rest = 2048 - fileInfo.Length % 2048;
                             using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.Append, FileAccess.Write)))
                             {
                                 for (int i = 0; i < rest; i++)

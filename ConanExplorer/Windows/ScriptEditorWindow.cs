@@ -201,6 +201,8 @@ namespace ConanExplorer.Windows
             for (int i = 0; i < ScriptFile.Scripts.Count; i++)
             {
                 ScriptDocument scriptFile = ScriptFile.Scripts[i];
+                //if (scriptFile.Name == "FLAG.TXT") continue; //dirty hotfix (will destory the game...) TODO: Refactor in future...
+
                 scriptFile.WriteToOriginalFile();
                 if (scriptFile.BaseFile.GetType() == typeof(LZBFile))
                 {

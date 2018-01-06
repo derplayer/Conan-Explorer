@@ -62,7 +62,7 @@ namespace ConanExplorer.Conan.Script
             using (BinaryWriter writer = new BinaryWriter(new FileStream(outputPath, FileMode.Create)))
             {
                 writer.Write(_shiftJist.GetBytes(TextBuffer));
-                if (BaseFile.GetType() != typeof(LZBFile))
+                if (BaseFile.GetType() != typeof(LZBFile)) //will always trigger/fix flags.txt...
                 {
                     long rest = 2048 - writer.BaseStream.Length % 2048;
                     for (int i = 0; i < rest; i++)
