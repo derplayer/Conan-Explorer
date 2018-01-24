@@ -1,4 +1,7 @@
 # Conan-Explorer
+
+![](https://github.com/derplayer/Conan-Explorer/blob/master/wiki/images/translation_preview.png)
+
 Translation-supporting Software for "Detective Conan" on PS1 ( for masochists and also sadists)
 
 Supported File Formats:
