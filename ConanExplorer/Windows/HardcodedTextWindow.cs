@@ -47,6 +47,7 @@ namespace ConanExplorer.Windows
             textBox_NewString.Text = text.NewString;
             textBox_NewString.MaxLength = text.Length;
             textBox_CurrentString.Text = text.CurrentString;
+            textBox_Translation.Text = text.Translation;
         }
 
         private void textBox_NewString_TextChanged(object sender, EventArgs e)
