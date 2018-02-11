@@ -29,7 +29,14 @@ namespace ConanExplorer.Conan
         public List<FontCharacter> GeneratedFont { get; set; } = new List<FontCharacter>(3304);
         public List<ScriptDocument> Scripts { get; set; } = new List<ScriptDocument>();
         public List<HardCodedText> HardCodedTexts { get; set; } = new List<HardCodedText>();
-        public List<FontCharacter> LockedCharacters { get; set; } = new List<FontCharacter>();
+        public List<FontCharacter> LockedCharacters { get; set; } = new List<FontCharacter>()
+        {
+            new FontCharacter(new byte[32], 16513, ""),
+            new FontCharacter(new byte[32], 32385, ""),
+            new FontCharacter(new byte[32], -25727, ""),
+            new FontCharacter(new byte[32], -24447, ""),
+            new FontCharacter(new byte[32], -23935, "")
+        };
 
         public ScriptFile() { }
 
