@@ -17,6 +17,6 @@ Unsupported File Formats:
 
 * XA - XA ADPCM
 * STR - STR(MDEC) + XA ADPCM Streams
-* VH  - Unknown
-* VB  - Unknown
-* SEQ - Unknown
+* VH  - VAB Header
+* VB  - VAB Body (Contains all the waveform data in VAG format)
+* SEQ - Midi data for music
