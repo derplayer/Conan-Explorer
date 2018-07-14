@@ -34,7 +34,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.button_ClearP3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -51,6 +50,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(0, 31);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(136, 230);
             this.dataGridView1.TabIndex = 0;
             // 
@@ -67,7 +67,6 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.button_ClearP3);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView2);
             this.splitContainer1.Size = new System.Drawing.Size(284, 261);
@@ -103,16 +102,6 @@
             this.dataGridView2.Size = new System.Drawing.Size(139, 230);
             this.dataGridView2.TabIndex = 1;
             // 
-            // button_ClearP3
-            // 
-            this.button_ClearP3.Location = new System.Drawing.Point(107, 3);
-            this.button_ClearP3.Name = "button_ClearP3";
-            this.button_ClearP3.Size = new System.Drawing.Size(32, 22);
-            this.button_ClearP3.TabIndex = 3;
-            this.button_ClearP3.Text = "p3";
-            this.button_ClearP3.UseVisualStyleBackColor = true;
-            this.button_ClearP3.Click += new System.EventHandler(this.button_ClearP3_Click);
-            // 
             // FileIndexViewerWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,6 +130,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.Button button_ClearP3;
     }
 }

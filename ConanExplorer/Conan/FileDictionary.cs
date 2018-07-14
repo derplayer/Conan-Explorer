@@ -42,19 +42,22 @@ namespace ConanExplorer.Conan
         public string Name { get; set; }
         public string Extension { get; set; }
         public string Folder { get; set; }
+
+        /// <summary>
+        /// Offset of the file in 2048 sector count
+        /// </summary>
         public uint Offset { get; set; }
+
+        /// <summary>
+        /// Length of the file in 2048 sector count
+        /// </summary>
         public uint Length { get; set; }
-        public uint Param3
-        {
-            get; set;
-            //get
-            //{
-            //    if (IsInsidePkn)
-            //        return 450;
-            //    return 0;
-            //}
-            //set { }
-        }
+
+        /// <summary>
+        /// Sector overhead in bytes divided by 4 (without zero padding)
+        /// </summary>
+        public uint SectorOverhead { get; set; }
+
         public bool IsInsidePkn { get; set; }
 
 
@@ -68,8 +71,8 @@ namespace ConanExplorer.Conan
             Folder = Path.GetDirectoryName(FullPath)?.Remove(0, 1);
             Offset = BitConverter.ToUInt32(data, 0x18);
             Length = BitConverter.ToUInt32(data, 0x1C);
-            Param3 = BitConverter.ToUInt32(data, 0x20);
-            IsInsidePkn = Param3 != 0;
+            SectorOverhead = BitConverter.ToUInt32(data, 0x20);
+            IsInsidePkn = SectorOverhead != 0;
         }
 
         public byte[] GetBytes()
@@ -79,7 +82,7 @@ namespace ConanExplorer.Conan
             byte[] name = Encoding.ASCII.GetBytes(FullPath);
             byte[] offset = BitConverter.GetBytes(Offset);
             byte[] length = BitConverter.GetBytes(Length);
-            byte[] param3 = BitConverter.GetBytes(Param3);
+            byte[] param3 = BitConverter.GetBytes(SectorOverhead);
 
             Array.Copy(name, 0, result, 0, name.Length);
             Array.Copy(offset, 0, result, 24, 4);

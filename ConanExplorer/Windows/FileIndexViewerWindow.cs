@@ -27,7 +27,7 @@ namespace ConanExplorer.Windows
         {
             foreach (FileDictionaryFile File in ApplicationState.Instance.ProjectFile.ModifiedImage.FileDictionary.Files)
             {
-                File.Param3 = 0;
+                File.SectorOverhead = 0;
             }
             
         }
