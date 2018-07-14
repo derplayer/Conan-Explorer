@@ -16,8 +16,20 @@ namespace ConanExplorer.Windows
         public FileIndexViewerWindow()
         {
             InitializeComponent();
-            FileDictionary fileDirectory = ApplicationState.Instance.ProjectFile.ModifiedImage.FileDictionary;
-            dataGridView1.DataSource = fileDirectory.Files;
+            FileDictionary fileDirectoryOriginal = ApplicationState.Instance.ProjectFile.OriginalImage.FileDictionary;
+            dataGridView1.DataSource = fileDirectoryOriginal.Files;
+
+            FileDictionary fileDirectoryModified = ApplicationState.Instance.ProjectFile.ModifiedImage.FileDictionary;
+            dataGridView2.DataSource = fileDirectoryModified.Files;
+        }
+
+        private void button_ClearP3_Click(object sender, EventArgs e)
+        {
+            foreach (FileDictionaryFile File in ApplicationState.Instance.ProjectFile.ModifiedImage.FileDictionary.Files)
+            {
+                File.Param3 = 0;
+            }
+            
         }
     }
 }

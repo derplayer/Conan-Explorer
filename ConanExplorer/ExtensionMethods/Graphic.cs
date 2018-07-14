@@ -305,6 +305,8 @@ namespace ConanExplorer.ExtensionMethods
                 if (open)
                 {
                     string[] splitted = line.Split(',');
+                    if (splitted.Length < 3) continue;
+
                     string displayText = splitted[2];
 
                     for (int i = 0; i < displayText.Length; i++)

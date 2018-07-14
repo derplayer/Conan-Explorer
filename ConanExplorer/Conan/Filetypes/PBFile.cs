@@ -82,6 +82,14 @@ namespace ConanExplorer.Conan.Filetypes
                     index++;
                 }
             }
+            foreach(PBFileEntry file in Files)
+            {
+                if (file.File.GetType() == typeof(LZBFile))
+                {
+                    LZBFile lzb = (LZBFile)file.File;
+                    lzb.Decompress();
+                }
+            }
         }
     }
 

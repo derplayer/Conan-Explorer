@@ -35,6 +35,11 @@ namespace ConanExplorer.Conan.Script.Elements
         }
         public string[] Parameters { get; set; }
 
+        public string DisplayParameters
+        {
+            get { return String.Join(",", Parameters); }
+        }
+
         public ScriptCommand(Match match, int lineIndex, bool linebreak = true)
         {
             _linebreak = linebreak;

@@ -27,6 +27,7 @@ namespace ConanExplorer.Windows
 
     public partial class ScriptEditorWindow : Form
     {
+        private SearchCommandWindow _searchCommandWindow;
         private PKNFile _scriptPKN;
         private Encoding _shiftJis = Encoding.GetEncoding("shift_jis");
         private ScriptDocument _lastScriptFile;
@@ -93,10 +94,17 @@ namespace ConanExplorer.Windows
                     listBox_ScriptMessages.Items.Add(element);
                 }
             }
-            listBox_ScriptMessages.SelectedIndex = lastIndex;
-            richTextBox_ScriptMessage.SelectionStart = messagePos;
-            richTextBox_ScriptMessage.SelectionLength = messageLen;
-            
+
+            try
+            {
+                listBox_ScriptMessages.SelectedIndex = lastIndex;
+                richTextBox_ScriptMessage.SelectionStart = messagePos;
+                richTextBox_ScriptMessage.SelectionLength = messageLen;
+            }
+            catch(Exception e)
+            {
+
+            }
             _updatingScript = false;
         }
 
@@ -263,7 +271,6 @@ namespace ConanExplorer.Windows
 
             progressBar_Progress.Value = 0;
             Enabled = true;
-
         }
 
 
@@ -890,5 +897,19 @@ namespace ConanExplorer.Windows
             CompressAllThread();
         }
 
+        private void searchCommandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_searchCommandWindow == null)
+            {
+                _searchCommandWindow = new SearchCommandWindow(ScriptFile);
+                _searchCommandWindow.FormClosed += _searchCommandWindow_FormClosed;
+            }
+            _searchCommandWindow.Show();
+        }
+
+        private void _searchCommandWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _searchCommandWindow = null;
+        }
     }
 }
