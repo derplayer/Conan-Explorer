@@ -18,6 +18,7 @@ namespace ConanExplorer.Windows
         public TIMEncodingWindow()
         {
             InitializeComponent();
+            DialogResult = DialogResult.Cancel;
         }
 
         private void button_Apply_Click(object sender, EventArgs e)
@@ -25,8 +26,12 @@ namespace ConanExplorer.Windows
             Settings.SetSemiTransparencyBit = checkBox_SetSemiTransparencyBit.Checked;
             Settings.BlackTransparent = checkBox_BlackTransparent.Checked;
             Settings.MagicPinkTransparent = checkBox_MagicPinkTransparent.Checked;
+            Settings.UseOriginalTransparency = checkBox_UseOriginalTransparencyBits.Checked;
+            Settings.UseOriginalColor = checkBox_UseOriginalColor.Checked;
+            Settings.UseOriginalCLUT = checkBox_UseOriginalCLUT.Checked;
             DialogResult = DialogResult.OK;
             Close();
         }
+
     }
 }

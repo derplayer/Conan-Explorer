@@ -1,18 +1,22 @@
 ﻿using ConanExplorer.Conan.Filetypes;
+using ConanExplorer.ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ConanExplorer.Conan.Headers
 {
     /// <summary>
     /// TIM header class.
     /// </summary>
+    [Serializable]
     public class TIMHeader
     {
         /// <summary>
@@ -71,7 +75,8 @@ namespace ConanExplorer.Conan.Headers
         public ushort ClutY { get; set; }
         public ushort ClutWidth { get; set; }
         public ushort ClutHeight { get; set; }
-        public ushort[] ClutData { get; set; }
+        public CLUTEntry[] ClutEntries { get; set; }
+
         public uint ImageBlockSize
         {
             get
@@ -167,6 +172,18 @@ namespace ConanExplorer.Conan.Headers
 
         public TIMHeader() { }
 
+        public TIMHeader DeepClone()
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, this);
+                ms.Position = 0;
+
+                return (TIMHeader)formatter.Deserialize(ms);
+            }
+        }
+
         /// <summary>
         /// Gets the bytes for writing the TIM header.
         /// </summary>
@@ -188,7 +205,7 @@ namespace ConanExplorer.Conan.Headers
 
                 for (int i = 0; i < ClutWidth * ClutHeight; i++)
                 {
-                    result.AddRange(BitConverter.GetBytes(ClutData[i]));
+                    result.AddRange(BitConverter.GetBytes(ClutEntries[i].Data));
                 }
 
                 result.AddRange(BitConverter.GetBytes(ImageBlockSize));
@@ -232,10 +249,10 @@ namespace ConanExplorer.Conan.Headers
                 ClutWidth = reader.ReadUInt16();
                 ClutHeight = reader.ReadUInt16();
 
-                ClutData = new ushort[ClutWidth * ClutHeight];
+                ClutEntries = new CLUTEntry[ClutWidth * ClutHeight];
                 for (int i = 0; i < ClutWidth * ClutHeight; i++)
                 {
-                    ClutData[i] = reader.ReadUInt16();
+                    ClutEntries[i] = new CLUTEntry(reader.ReadUInt16());
                 }
             }
             //Skipping ImageBlockSize cause it will be generated
@@ -249,6 +266,42 @@ namespace ConanExplorer.Conan.Headers
             DataOffset = (uint)reader.BaseStream.Position;
             return true;
         }
+
+        public void SetSemiTransparentBits(CLUTEntry[] clutEntries)
+        {
+            foreach (CLUTEntry entry in ClutEntries)
+            {
+                foreach (CLUTEntry e in clutEntries)
+                {
+                    if (entry.Color == e.Color)
+                    {
+                        entry.SemiTransparentBit = e.SemiTransparentBit;
+                    }
+                }
+            }
+        }
+
+        public void SetOriginalColor(CLUTEntry[] clutEntries)
+        {
+            foreach (CLUTEntry entry in ClutEntries)
+            {
+                CLUTEntry nearest = new CLUTEntry();
+                int difference = 765;
+                foreach(CLUTEntry e in clutEntries)
+                {
+                    int diff = Graphic.ColorDifference(entry.Color, e.Color);
+                    if (diff < difference)
+                    {
+                        nearest = e;
+                        difference = diff;
+                    }
+                }
+                entry.Color = nearest.Color;
+                entry.SemiTransparentBit = nearest.SemiTransparentBit;
+            }
+        }
+
+        
 
         /// <summary>
         /// Generate CLUT from given bitmap and encoding settings
@@ -270,7 +323,7 @@ namespace ConanExplorer.Conan.Headers
 
                 for (int i = 0; i < 16; i++)
                 {
-                    ClutData[i] = RGB24_To_RGBPSX(bitmap.Palette.Entries[i], settings);
+                    ClutEntries[i] = new CLUTEntry(bitmap.Palette.Entries[i], settings);
                 }
             }
             else if (BPP == 8)
@@ -280,9 +333,113 @@ namespace ConanExplorer.Conan.Headers
 
                 for (int i = 0; i < 256; i++)
                 {
-                    ClutData[i] = RGB24_To_RGBPSX(bitmap.Palette.Entries[i], settings);
+                    ClutEntries[i] = new CLUTEntry(bitmap.Palette.Entries[i], settings);
                 }
             }
+        }
+
+        private ushort RGB24_To_RGBPSX(Color color, TIMEncodingSettings settings)
+        {
+            ushort result;
+
+            result = (ushort)(color.R >> 3);
+            result |= (ushort)((color.G >> 3) << 5);
+            result |= (ushort)((color.B >> 3) << 10);
+
+            if (result == 0 && settings.BlackTransparent) result |= 0x8000;
+            if (result == ((31) | (31 << 10)) && settings.MagicPinkTransparent) result = 0;
+
+            if (settings.SetSemiTransparencyBit)
+            {
+                if (settings.BlackTransparent && result == 0) return result;
+                if (settings.MagicPinkTransparent && result == ((31) | (31 << 10))) return result;
+                result |= 0x8000;
+            }
+            return result;
+        }
+
+    }
+
+    [Serializable]
+    public class CLUTEntry
+    {
+        public ushort Data { get; set; }
+
+        [XmlIgnore]
+        public bool SemiTransparentBit
+        {
+            get
+            {
+                return (Data & 0x8000) == 0x8000;
+            }
+            set
+            {
+                if (value)
+                {
+                    Data |= 0x8000; 
+                }
+                else
+                {
+                    Data &= 0x7FFF;
+                }
+            }
+        }
+
+        [XmlIgnore]
+        public Color Color
+        {
+            get
+            {
+                byte R = (byte)((Data & 31) << 3);
+                byte G = (byte)(((Data >> 5) & 31) << 3);
+                byte B = (byte)(((Data >> 10) & 31) << 3);
+                return Color.FromArgb(255, R, G, B);
+            }
+            set
+            {
+                bool transparent = SemiTransparentBit;
+                ushort result = (ushort)(value.R >> 3);
+                result |= (ushort)((value.G >> 3) << 5);
+                result |= (ushort)((value.B >> 3) << 10);
+                Data = result;
+                SemiTransparentBit = transparent;
+            }
+        }
+
+        [XmlIgnore]
+        public System.Windows.Media.Color MediaColor
+        {
+            get
+            {
+                byte R = (byte)((Data & 31) << 3);
+                byte G = (byte)(((Data >> 5) & 31) << 3);
+                byte B = (byte)(((Data >> 10) & 31) << 3);
+                return System.Windows.Media.Color.FromArgb(255, R, G, B);
+            }
+            set
+            {
+                bool transparent = SemiTransparentBit;
+                ushort result = (ushort)(value.R >> 3);
+                result |= (ushort)((value.G >> 3) << 5);
+                result |= (ushort)((value.B >> 3) << 10);
+                Data = result;
+                SemiTransparentBit = transparent;
+            }
+        }
+
+        public CLUTEntry(ushort data)
+        {
+            Data = data;
+        }
+
+        public CLUTEntry(Color color, TIMEncodingSettings settings)
+        {
+            Data = RGB24_To_RGBPSX(color, settings);
+        }
+
+        public CLUTEntry()
+        {
+
         }
 
         private ushort RGB24_To_RGBPSX(Color color, TIMEncodingSettings settings)

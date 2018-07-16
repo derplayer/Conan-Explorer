@@ -80,6 +80,7 @@
     <Compile Include="Conan\Filetypes\XAFile.cs" />
     <Compile Include="Conan\FontCharacter.cs" />
     <Compile Include="Conan\Filetypes\FONTFile.cs" />
+    <Compile Include="Conan\FontSettings.cs" />
     <Compile Include="Conan\FontSymbol.cs" />
     <Compile Include="Conan\HardCodedText.cs" />
     <Compile Include="Conan\Headers\BGHeader.cs" />
@@ -109,6 +110,15 @@
     <Compile Include="Conan\Script\Elements\ScriptSubCommand.cs" />
     <Compile Include="Conan\Script\Elements\ScriptText.cs" />
     <Compile Include="Conan\TaskProgress.cs" />
+    <Compile Include="Controls\CLUTButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\CLUTControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CLUTControl.Designer.cs">
+      <DependentUpon>CLUTControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CompareControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -164,6 +174,12 @@
     <Compile Include="ExtensionMethods\Win32.cs" />
     <Compile Include="Utils\PropertyComparer.cs" />
     <Compile Include="Utils\SortableBindingList.cs" />
+    <Compile Include="Windows\ClutEditorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ClutEditorWindow.Designer.cs">
+      <DependentUpon>ClutEditorWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\DebugBmp2Tim.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,6 +278,9 @@
     <Compile Include="Windows\TIMEncodingWindow.Designer.cs">
       <DependentUpon>TIMEncodingWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\CLUTControl.resx">
+      <DependentUpon>CLUTControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CompareControl.resx">
       <DependentUpon>CompareControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -282,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TIMControl.resx">
       <DependentUpon>TIMControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ClutEditorWindow.resx">
+      <DependentUpon>ClutEditorWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\DebugBmp2Tim.resx">
       <DependentUpon>DebugBmp2Tim.cs</DependentUpon>
@@ -363,7 +385,6 @@
     <None Include="Resources\Icons\folder.ico" />
     <None Include="Resources\Icons\package.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)Tools" "$(ProjectDir)$(OutDir)Tools" /E /I /Y</PostBuildEvent>

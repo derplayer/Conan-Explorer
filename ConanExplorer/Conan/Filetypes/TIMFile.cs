@@ -1,4 +1,5 @@
 ﻿using ConanExplorer.Conan.Headers;
+using ConanExplorer.ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -66,6 +67,14 @@ namespace ConanExplorer.Conan.Filetypes
             BMP2TIM(bitmap, settings);
         }
 
+        public void SaveHeader()
+        {
+            using (BinaryWriter writer = new BinaryWriter(new FileStream(FilePath, FileMode.OpenOrCreate)))
+            {
+                TIMHeader.Write(writer.BaseStream);
+            }
+        }
+
         /// <summary>
         /// Converts the TIM file into a bitmap.
         /// </summary>
@@ -89,7 +98,7 @@ namespace ConanExplorer.Conan.Filetypes
                     {
                         for (x = 0; x < 16; x++)
                         {
-                            PS_RGB rgb = new PS_RGB(TIMHeader.ClutData[x]);
+                            PS_RGB rgb = new PS_RGB(TIMHeader.ClutEntries[x].Data);
                             memoryStream.WriteByte(rgb.B);
                             memoryStream.WriteByte(rgb.G);
                             memoryStream.WriteByte(rgb.R);
@@ -100,7 +109,7 @@ namespace ConanExplorer.Conan.Filetypes
                     {
                         for (x = 0; x < 256; x++)
                         {
-                            PS_RGB rgb = new PS_RGB(TIMHeader.ClutData[x]);
+                            PS_RGB rgb = new PS_RGB(TIMHeader.ClutEntries[x].Data);
                             memoryStream.WriteByte(rgb.B);
                             memoryStream.WriteByte(rgb.G);
                             memoryStream.WriteByte(rgb.R);
@@ -183,7 +192,20 @@ namespace ConanExplorer.Conan.Filetypes
         /// <param name="settings">Encoding settings</param>
         private void BMP2TIM(Bitmap bitmap, TIMEncodingSettings settings)
         {
-            TIMHeader.GenerateClut(bitmap, settings);
+            CLUTEntry[] oldEntries = new CLUTEntry[TIMHeader.ClutEntries.Length];
+            Array.Copy(TIMHeader.ClutEntries, oldEntries, oldEntries.Length);
+            if (!settings.UseOriginalCLUT)
+            {
+                TIMHeader.GenerateClut(bitmap, settings);
+            }
+            if (settings.UseOriginalColor)
+            {
+                TIMHeader.SetOriginalColor(oldEntries);
+            }
+            if (settings.UseOriginalTransparency)
+            {
+                TIMHeader.SetSemiTransparentBits(oldEntries);
+            }
             using (BinaryWriter writer = new BinaryWriter(new FileStream(FilePath, FileMode.OpenOrCreate)))
             {
                 TIMHeader.Write(writer.BaseStream);
@@ -220,7 +242,7 @@ namespace ConanExplorer.Conan.Filetypes
                             {
                                 Color color1 = bitmap.GetPixel(x, y);
                                 Color color2 = bitmap.GetPixel(x + 1, y);
-                                ushort shortbuf = (ushort)((GetColorIndex(bitmap, color2) << 8) | GetColorIndex(bitmap, color1));
+                                ushort shortbuf = (ushort)((GetColorIndex(bitmap, color2, settings.UseOriginalCLUT) << 8) | GetColorIndex(bitmap, color1, settings.UseOriginalCLUT));
                                 writer.Write(shortbuf);
                             }
                         }
@@ -234,7 +256,10 @@ namespace ConanExplorer.Conan.Filetypes
                                 Color color2 = bitmap.GetPixel(x + 1, y);
                                 Color color3 = bitmap.GetPixel(x + 2, y);
                                 Color color4 = bitmap.GetPixel(x + 3, y);
-                                ushort shortbuf = (ushort)((GetColorIndex(bitmap, color4) << 12) | (GetColorIndex(bitmap, color3) << 8) | (GetColorIndex(bitmap, color2) << 4) | GetColorIndex(bitmap, color1));
+                                ushort shortbuf = (ushort)((GetColorIndex(bitmap, color4, settings.UseOriginalCLUT) << 12) |
+                                                            (GetColorIndex(bitmap, color3, settings.UseOriginalCLUT) << 8) |
+                                                            (GetColorIndex(bitmap, color2, settings.UseOriginalCLUT) << 4) |
+                                                            GetColorIndex(bitmap, color1, settings.UseOriginalCLUT));
                                 writer.Write(shortbuf);
                             }
                         }
@@ -243,10 +268,17 @@ namespace ConanExplorer.Conan.Filetypes
             }
         }
 
-        private ushort GetColorIndex(Bitmap bitmap, Color color)
+        private ushort GetColorIndex(Bitmap bitmap, Color color, bool useClut = false)
         {
-            List<Color> palette = bitmap.Palette.Entries.ToList();
-            return (ushort)palette.IndexOf(color);
+            if (useClut)
+            {
+                return (ushort)Graphic.NearestColor(TIMHeader.ClutEntries, color);
+            }
+            else
+            {
+                List<Color> palette = bitmap.Palette.Entries.ToList();
+                return (ushort)palette.IndexOf(color);
+            }
         }
 
     }
@@ -385,7 +417,7 @@ namespace ConanExplorer.Conan.Filetypes
     public class TIMEncodingSettings
     {
         /// <summary>
-        /// True for setting semi transparency bit
+        /// True for setting semi transparency bit [USELESS] should be removed in future
         /// </summary>
         public bool SetSemiTransparencyBit { get; set; }
         /// <summary>
@@ -396,6 +428,18 @@ namespace ConanExplorer.Conan.Filetypes
         /// True for making magic pink (255, 0, 255) transparent
         /// </summary>
         public bool MagicPinkTransparent { get; set; }
+        /// <summary>
+        /// True for using original semi transparent bits for the colors
+        /// </summary>
+        public bool UseOriginalTransparency { get; set; }
+        /// <summary>
+        /// True for trying to use the original color by finding nearest colors
+        /// </summary>
+        public bool UseOriginalColor { get; set; }
+        /// <summary>
+        /// True for leaving the CLUT unchanged
+        /// </summary>
+        public bool UseOriginalCLUT { get; set; }
     }
     
 }

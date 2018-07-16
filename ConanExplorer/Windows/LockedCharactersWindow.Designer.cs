@@ -29,19 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LockedCharactersWindow));
-            this.listView_FontCharacters = new System.Windows.Forms.ListView();
             this.label_LoadingFont = new System.Windows.Forms.Label();
+            this.listView_FontCharacters = new System.Windows.Forms.ListView();
             this.SuspendLayout();
-            // 
-            // listView_FontCharacters
-            // 
-            this.listView_FontCharacters.CheckBoxes = true;
-            this.listView_FontCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView_FontCharacters.Location = new System.Drawing.Point(0, 0);
-            this.listView_FontCharacters.Name = "listView_FontCharacters";
-            this.listView_FontCharacters.Size = new System.Drawing.Size(284, 261);
-            this.listView_FontCharacters.TabIndex = 0;
-            this.listView_FontCharacters.UseCompatibleStateImageBehavior = false;
             // 
             // label_LoadingFont
             // 
@@ -52,6 +42,16 @@
             this.label_LoadingFont.Size = new System.Drawing.Size(78, 13);
             this.label_LoadingFont.TabIndex = 1;
             this.label_LoadingFont.Text = "Loading Font...";
+            // 
+            // listView_FontCharacters
+            // 
+            this.listView_FontCharacters.CheckBoxes = true;
+            this.listView_FontCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView_FontCharacters.Location = new System.Drawing.Point(0, 0);
+            this.listView_FontCharacters.Name = "listView_FontCharacters";
+            this.listView_FontCharacters.Size = new System.Drawing.Size(284, 261);
+            this.listView_FontCharacters.TabIndex = 0;
+            this.listView_FontCharacters.UseCompatibleStateImageBehavior = false;
             // 
             // LockedCharactersWindow
             // 
@@ -71,7 +71,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView_FontCharacters;
         private System.Windows.Forms.Label label_LoadingFont;
+        private System.Windows.Forms.ListView listView_FontCharacters;
     }
 }

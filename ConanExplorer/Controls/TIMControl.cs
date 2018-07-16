@@ -40,15 +40,18 @@ namespace ConanExplorer.Controls
             {
                 TIMEncodingSettings settings = new TIMEncodingSettings();
                 TIMEncodingWindow window = new TIMEncodingWindow();
-                if (window.ShowDialog() == DialogResult.OK) settings = window.Settings;
-
-                using (FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open))
+                if (window.ShowDialog() == DialogResult.OK)
                 {
-                    Bitmap bitmap = new Bitmap(fileStream);
-                    _timFile.SetBitmap(bitmap, settings);
-                    bitmap.Dispose();
+                    settings = window.Settings;
+
+                    using (FileStream fileStream = new FileStream(openFileDialog.FileName, FileMode.Open))
+                    {
+                        Bitmap bitmap = new Bitmap(fileStream);
+                        _timFile.SetBitmap(bitmap, settings);
+                        bitmap.Dispose();
+                    }
+                    pictureBox_Image.Image = _timFile.GetBitmap();
                 }
-                pictureBox_Image.Image = _timFile.GetBitmap();
             }
         }
 
@@ -66,6 +69,19 @@ namespace ConanExplorer.Controls
                 }
             }
             
+        }
+
+        private void button_EditClut_Click(object sender, EventArgs e)
+        {
+            ClutEditorWindow clutEditorWindow = new ClutEditorWindow(_timFile.TIMHeader);
+            clutEditorWindow.ShowDialog();
+
+            if (clutEditorWindow.DialogResult == DialogResult.OK)
+            {
+                _timFile.TIMHeader = clutEditorWindow.Header;
+                _timFile.SaveHeader();
+                pictureBox_Image.Image = _timFile.GetBitmap();
+            }
         }
     }
 }

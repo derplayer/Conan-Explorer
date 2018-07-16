@@ -41,9 +41,10 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.textBox_BPP = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.button_Import = new System.Windows.Forms.Button();
-            this.button_Export = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.button_Export = new System.Windows.Forms.Button();
+            this.button_Import = new System.Windows.Forms.Button();
+            this.button_EditClut = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Image)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -205,6 +206,37 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "BPP:";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.Controls.Add(this.button_Export, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button_Import, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.button_EditClut, 2, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 30);
+            this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // button_Export
+            // 
+            this.button_Export.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_Export.Location = new System.Drawing.Point(100, 3);
+            this.button_Export.Name = "button_Export";
+            this.button_Export.Size = new System.Drawing.Size(91, 24);
+            this.button_Export.TabIndex = 2;
+            this.button_Export.Text = "Export...";
+            this.button_Export.UseVisualStyleBackColor = true;
+            this.button_Export.Click += new System.EventHandler(this.button_Export_Click);
+            // 
             // button_Import
             // 
             this.button_Import.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -212,40 +244,22 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_Import.Location = new System.Drawing.Point(3, 3);
             this.button_Import.Name = "button_Import";
-            this.button_Import.Size = new System.Drawing.Size(141, 24);
+            this.button_Import.Size = new System.Drawing.Size(91, 24);
             this.button_Import.TabIndex = 1;
             this.button_Import.Text = "Import...";
             this.button_Import.UseVisualStyleBackColor = true;
             this.button_Import.Click += new System.EventHandler(this.button_Import_Click);
             // 
-            // button_Export
+            // button_EditClut
             // 
-            this.button_Export.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Export.Location = new System.Drawing.Point(150, 3);
-            this.button_Export.Name = "button_Export";
-            this.button_Export.Size = new System.Drawing.Size(141, 24);
-            this.button_Export.TabIndex = 2;
-            this.button_Export.Text = "Export...";
-            this.button_Export.UseVisualStyleBackColor = true;
-            this.button_Export.Click += new System.EventHandler(this.button_Export_Click);
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.button_Export, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button_Import, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 30);
-            this.tableLayoutPanel1.TabIndex = 3;
+            this.button_EditClut.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button_EditClut.Location = new System.Drawing.Point(197, 3);
+            this.button_EditClut.Name = "button_EditClut";
+            this.button_EditClut.Size = new System.Drawing.Size(94, 24);
+            this.button_EditClut.TabIndex = 3;
+            this.button_EditClut.Text = "Edit CLUT...";
+            this.button_EditClut.UseVisualStyleBackColor = true;
+            this.button_EditClut.Click += new System.EventHandler(this.button_EditClut_Click);
             // 
             // TIMControl
             // 
@@ -291,5 +305,6 @@
         private System.Windows.Forms.Button button_Export;
         private System.Windows.Forms.Button button_Import;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Button button_EditClut;
     }
 }

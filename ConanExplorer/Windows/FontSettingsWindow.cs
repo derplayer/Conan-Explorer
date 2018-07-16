@@ -86,12 +86,34 @@ namespace ConanExplorer.Windows
             }
             else
             {
-                _scriptFile = new ScriptFile();
-                UpdateAllowedSymbols();
-                HashSet<string> dictionary = _scriptFile.CreateDictionary(new string[] { textBox_PreviewText.Text });
-                _scriptFile.GenerateFont(dictionary, font);
+                List<Bitmap> previewBitmap = new List<Bitmap>();
+                foreach (string line in textBox_PreviewText.Lines)
+                {
+                    for (int i = 0; i < line.Length; i += 2)
+                    {
+                        FontCharacter fontCharacter;
+                        char firstChar = line[i];
+                        char secondChar = ' ';
+                        if (i + 1 < line.Length)
+                        {
+                            secondChar = line[i + 1];
+                        }
+                        
+                        if (!_scriptFile.AllowedSplittedSymbols.Contains(firstChar))
+                        {
+                            firstChar = ' ';
+                        }
 
-                //_scriptFile.GeneratedFont
+                        if (!_scriptFile.AllowedSplittedSymbols.Contains(secondChar))
+                        {
+                            secondChar = ' ';
+                        }
+
+                        fontCharacter = new FontCharacter(new FontSymbol(firstChar, secondChar), font);
+                        previewBitmap.Add(fontCharacter.GetBitmap());
+                    }
+                }
+                pictureBox_Preview.Image = Graphic.CombineBitmaps(previewBitmap, 16);
             }
             
         }
@@ -117,12 +139,6 @@ namespace ConanExplorer.Windows
             _scriptFile.AllowedSplittedSymbols = splittedSymbols;
         }
 
-
-        private void button_UpdatePreview_Click(object sender, EventArgs e)
-        {
-            UpdatePreview();
-        }
-
         private void comboBox_Font_SelectedIndexChanged(object sender, EventArgs e)
         {
             _scriptFile.FontName = comboBox_Font.Text;
@@ -141,10 +157,38 @@ namespace ConanExplorer.Windows
         private void button_FontDialog_Click(object sender, EventArgs e)
         {
             FontDialog fontDialog = new FontDialog();
-            fontDialog.ShowDialog();
+            if (fontDialog.ShowDialog() != DialogResult.Cancel)
+            {
+                SelectFont(fontDialog.Font.Name);
+                numericUpDown_FontSize.Value = (decimal)fontDialog.Font.Size;
+            }
+        }
 
-            SelectFont(fontDialog.Font.Name);
-            numericUpDown_FontSize.Value = (decimal)fontDialog.Font.Size;
+        private void comboBox_Presets_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBox_Presets.SelectedIndex)
+            {
+                case 0:
+                    _scriptFile.FontSettings = FontSettings.ASCII();
+                    break;
+                case 1:
+                    _scriptFile.FontSettings = FontSettings.Latin1();
+                    break;
+                default:
+                    _scriptFile.FontSettings = FontSettings.ASCII();
+                    break;
+            }
+            SelectFont(_scriptFile.FontName);
+            numericUpDown_FontSize.Value = _scriptFile.FontSize;
+            textBox_AllowedSymbols.Text = new String(_scriptFile.AllowedSymbols.ToArray());
+            textBox_AllowedSplittedSymbols.Text = new String(_scriptFile.AllowedSplittedSymbols.ToArray());
+
+            UpdatePreview();
+        }
+
+        private void textBox_PreviewText_TextChanged(object sender, EventArgs e)
+        {
+            UpdatePreview();
         }
     }
 }

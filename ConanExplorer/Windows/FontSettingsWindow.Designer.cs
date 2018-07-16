@@ -36,14 +36,15 @@
             this.pictureBox_Preview = new System.Windows.Forms.PictureBox();
             this.label_Preview = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button_FontDialog = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.label_AllowedSplittedSymbols = new System.Windows.Forms.Label();
             this.textBox_AllowedSplittedSymbols = new System.Windows.Forms.TextBox();
             this.numericUpDown_FontSize = new System.Windows.Forms.NumericUpDown();
             this.label_PreviewText = new System.Windows.Forms.Label();
             this.textBox_PreviewText = new System.Windows.Forms.TextBox();
-            this.button_UpdatePreview = new System.Windows.Forms.Button();
-            this.button_FontDialog = new System.Windows.Forms.Button();
+            this.comboBox_Presets = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -74,7 +75,7 @@
             this.textBox_AllowedSymbols.Location = new System.Drawing.Point(3, 22);
             this.textBox_AllowedSymbols.Multiline = true;
             this.textBox_AllowedSymbols.Name = "textBox_AllowedSymbols";
-            this.textBox_AllowedSymbols.Size = new System.Drawing.Size(274, 162);
+            this.textBox_AllowedSymbols.Size = new System.Drawing.Size(274, 146);
             this.textBox_AllowedSymbols.TabIndex = 1;
             // 
             // comboBox_Font
@@ -105,16 +106,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox_Preview.BackColor = System.Drawing.SystemColors.ControlDark;
             this.pictureBox_Preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox_Preview.Location = new System.Drawing.Point(3, 67);
+            this.pictureBox_Preview.Location = new System.Drawing.Point(3, 79);
             this.pictureBox_Preview.Name = "pictureBox_Preview";
-            this.pictureBox_Preview.Size = new System.Drawing.Size(339, 353);
+            this.pictureBox_Preview.Size = new System.Drawing.Size(339, 310);
             this.pictureBox_Preview.TabIndex = 4;
             this.pictureBox_Preview.TabStop = false;
             // 
             // label_Preview
             // 
             this.label_Preview.AutoSize = true;
-            this.label_Preview.Location = new System.Drawing.Point(3, 51);
+            this.label_Preview.Location = new System.Drawing.Point(3, 62);
             this.label_Preview.Name = "label_Preview";
             this.label_Preview.Size = new System.Drawing.Size(48, 13);
             this.label_Preview.TabIndex = 5;
@@ -125,7 +126,7 @@
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(12, 12);
+            this.splitContainer1.Location = new System.Drawing.Point(12, 43);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -140,12 +141,22 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.label_PreviewText);
             this.splitContainer1.Panel2.Controls.Add(this.textBox_PreviewText);
-            this.splitContainer1.Panel2.Controls.Add(this.button_UpdatePreview);
             this.splitContainer1.Panel2.Controls.Add(this.label_Preview);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox_Preview);
-            this.splitContainer1.Size = new System.Drawing.Size(635, 426);
+            this.splitContainer1.Size = new System.Drawing.Size(635, 395);
             this.splitContainer1.SplitterDistance = 286;
             this.splitContainer1.TabIndex = 7;
+            // 
+            // button_FontDialog
+            // 
+            this.button_FontDialog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_FontDialog.Location = new System.Drawing.Point(242, 15);
+            this.button_FontDialog.Name = "button_FontDialog";
+            this.button_FontDialog.Size = new System.Drawing.Size(38, 23);
+            this.button_FontDialog.TabIndex = 8;
+            this.button_FontDialog.Text = "...";
+            this.button_FontDialog.UseVisualStyleBackColor = true;
+            this.button_FontDialog.Click += new System.EventHandler(this.button_FontDialog_Click);
             // 
             // splitContainer2
             // 
@@ -165,8 +176,8 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.label_AllowedSplittedSymbols);
             this.splitContainer2.Panel2.Controls.Add(this.textBox_AllowedSplittedSymbols);
-            this.splitContainer2.Size = new System.Drawing.Size(280, 378);
-            this.splitContainer2.SplitterDistance = 187;
+            this.splitContainer2.Size = new System.Drawing.Size(280, 347);
+            this.splitContainer2.SplitterDistance = 171;
             this.splitContainer2.TabIndex = 7;
             // 
             // label_AllowedSplittedSymbols
@@ -186,7 +197,7 @@
             this.textBox_AllowedSplittedSymbols.Location = new System.Drawing.Point(3, 22);
             this.textBox_AllowedSplittedSymbols.Multiline = true;
             this.textBox_AllowedSplittedSymbols.Name = "textBox_AllowedSplittedSymbols";
-            this.textBox_AllowedSplittedSymbols.Size = new System.Drawing.Size(274, 162);
+            this.textBox_AllowedSplittedSymbols.Size = new System.Drawing.Size(274, 147);
             this.textBox_AllowedSplittedSymbols.TabIndex = 5;
             this.textBox_AllowedSplittedSymbols.TextChanged += new System.EventHandler(this.textBox_AllowedSplittedSymbols_TextChanged);
             // 
@@ -228,36 +239,43 @@
             this.textBox_PreviewText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_PreviewText.Location = new System.Drawing.Point(6, 16);
+            this.textBox_PreviewText.Multiline = true;
             this.textBox_PreviewText.Name = "textBox_PreviewText";
-            this.textBox_PreviewText.Size = new System.Drawing.Size(226, 20);
+            this.textBox_PreviewText.Size = new System.Drawing.Size(336, 43);
             this.textBox_PreviewText.TabIndex = 7;
+            this.textBox_PreviewText.TextChanged += new System.EventHandler(this.textBox_PreviewText_TextChanged);
             // 
-            // button_UpdatePreview
+            // comboBox_Presets
             // 
-            this.button_UpdatePreview.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_UpdatePreview.Location = new System.Drawing.Point(238, 15);
-            this.button_UpdatePreview.Name = "button_UpdatePreview";
-            this.button_UpdatePreview.Size = new System.Drawing.Size(104, 23);
-            this.button_UpdatePreview.TabIndex = 6;
-            this.button_UpdatePreview.Text = "Update Preview";
-            this.button_UpdatePreview.UseVisualStyleBackColor = true;
-            this.button_UpdatePreview.Click += new System.EventHandler(this.button_UpdatePreview_Click);
+            this.comboBox_Presets.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_Presets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_Presets.FormattingEnabled = true;
+            this.comboBox_Presets.Items.AddRange(new object[] {
+            "ASCII",
+            "Latin1"});
+            this.comboBox_Presets.Location = new System.Drawing.Point(61, 12);
+            this.comboBox_Presets.Name = "comboBox_Presets";
+            this.comboBox_Presets.Size = new System.Drawing.Size(586, 21);
+            this.comboBox_Presets.TabIndex = 8;
+            this.comboBox_Presets.SelectedIndexChanged += new System.EventHandler(this.comboBox_Presets_SelectedIndexChanged);
             // 
-            // button_FontDialog
+            // label1
             // 
-            this.button_FontDialog.Location = new System.Drawing.Point(242, 15);
-            this.button_FontDialog.Name = "button_FontDialog";
-            this.button_FontDialog.Size = new System.Drawing.Size(38, 23);
-            this.button_FontDialog.TabIndex = 8;
-            this.button_FontDialog.Text = "...";
-            this.button_FontDialog.UseVisualStyleBackColor = true;
-            this.button_FontDialog.Click += new System.EventHandler(this.button_FontDialog_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Preset:";
             // 
             // FontSettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(659, 450);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBox_Presets);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(600, 450);
@@ -278,6 +296,7 @@
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_FontSize)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -290,7 +309,6 @@
         private System.Windows.Forms.PictureBox pictureBox_Preview;
         private System.Windows.Forms.Label label_Preview;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button button_UpdatePreview;
         private System.Windows.Forms.NumericUpDown numericUpDown_FontSize;
         private System.Windows.Forms.Label label_AllowedSplittedSymbols;
         private System.Windows.Forms.TextBox textBox_AllowedSplittedSymbols;
@@ -298,5 +316,7 @@
         private System.Windows.Forms.Label label_PreviewText;
         private System.Windows.Forms.TextBox textBox_PreviewText;
         private System.Windows.Forms.Button button_FontDialog;
+        private System.Windows.Forms.ComboBox comboBox_Presets;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -583,9 +583,5 @@ namespace ConanExplorer.Windows
             MessageBox.Show("TODO", @"¯\_(ツ)_/¯");
         }
 
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
     }
 }

@@ -20,11 +20,51 @@ namespace ConanExplorer.Conan
     /// </summary>
     public class ScriptFile
     {
-        public List<char> AllowedSymbols { get; set; } = new List<char>();
-        public List<char> AllowedSplittedSymbols { get; set; } = new List<char>();
-        public string FontName { get; set; }
-        public int FontSize { get; set; } = 2;
-        [XmlIgnore]
+        public FontSettings FontSettings { get; set; } = new FontSettings();
+        public List<char> AllowedSymbols
+        {
+            get
+            {
+                return FontSettings.AllowedSymbols;
+            }
+            set
+            {
+                FontSettings.AllowedSymbols = value;
+            }
+        }
+        public List<char> AllowedSplittedSymbols
+        {
+            get
+            {
+                return FontSettings.AllowedSplittedSymbols;
+            }
+            set
+            {
+                FontSettings.AllowedSplittedSymbols = value;
+            }
+        }
+        public string FontName
+        {
+            get
+            {
+                return FontSettings.FontName;
+            }
+            set
+            {
+                FontSettings.FontName = value;
+            }
+        }
+        public int FontSize
+        {
+            get
+            {
+                return FontSettings.FontSize;
+            }
+            set
+            {
+                FontSettings.FontSize = value;
+            }
+        }
         public Font Font => new Font(FontName, FontSize);
         public List<FontCharacter> GeneratedFont { get; set; } = new List<FontCharacter>(3304);
         public List<ScriptDocument> Scripts { get; set; } = new List<ScriptDocument>();

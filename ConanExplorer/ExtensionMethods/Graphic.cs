@@ -1,4 +1,5 @@
 ﻿using ConanExplorer.Conan;
+using ConanExplorer.Conan.Headers;
 using ConanExplorer.Conan.Script;
 using ConanExplorer.Conan.Script.Elements;
 using ConanExplorer.Properties;
@@ -22,6 +23,32 @@ namespace ConanExplorer.ExtensionMethods
     static class Graphic
     {
         public static Bitmap WindowBitmap = (Bitmap)Resources.ResourceManager.GetObject("WINDOW");
+
+        public static int NearestColor(CLUTEntry[] entries, Color color)
+        {
+            int nearest = -1;
+            int difference = 765;
+            for (int i = 0; i < entries.Length; i++)
+            {
+                CLUTEntry entry = entries[i];
+                int diff = ColorDifference(entry.Color, color);
+                if (diff < difference)
+                {
+                    nearest = i;
+                    difference = diff;
+                }
+            }
+            return nearest;
+        }
+
+        public static int ColorDifference(Color col1, Color col2)
+        {
+            int diffR = Math.Abs(col1.R - col2.R);
+            int diffG = Math.Abs(col1.G - col2.G);
+            int diffB = Math.Abs(col1.B - col2.B);
+
+            return diffR + diffG + diffB;
+        }
 
         public static Color[] FontColors = new Color[]
             {

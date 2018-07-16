@@ -32,9 +32,9 @@
             this.button_Search = new System.Windows.Forms.Button();
             this.textBox_Search = new System.Windows.Forms.TextBox();
             this.dataGridView_Result = new System.Windows.Forms.DataGridView();
-            this.Script = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Parameters = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnScript = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnParameters = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Result)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,39 +67,39 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView_Result.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_Result.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Script,
-            this.Name,
-            this.Parameters});
+            this.ColumnScript,
+            this.ColumnName,
+            this.ColumnParameters});
             this.dataGridView_Result.Location = new System.Drawing.Point(12, 38);
             this.dataGridView_Result.Name = "dataGridView_Result";
             this.dataGridView_Result.Size = new System.Drawing.Size(559, 400);
             this.dataGridView_Result.TabIndex = 3;
             // 
-            // Script
+            // ColumnScript
             // 
-            this.Script.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Script.DataPropertyName = "Script";
-            this.Script.HeaderText = "Script";
-            this.Script.Name = "Script";
-            this.Script.ReadOnly = true;
-            this.Script.Width = 59;
+            this.ColumnScript.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColumnScript.DataPropertyName = "Script";
+            this.ColumnScript.HeaderText = "Script";
+            this.ColumnScript.Name = "ColumnScript";
+            this.ColumnScript.ReadOnly = true;
+            this.ColumnScript.Width = 59;
             // 
-            // Name
+            // ColumnName
             // 
-            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Name.DataPropertyName = "Name";
-            this.Name.HeaderText = "Name";
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
-            this.Name.Width = 60;
+            this.ColumnName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ColumnName.DataPropertyName = "Name";
+            this.ColumnName.HeaderText = "Name";
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.ReadOnly = true;
+            this.ColumnName.Width = 60;
             // 
-            // Parameters
+            // ColumnParameters
             // 
-            this.Parameters.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Parameters.DataPropertyName = "Parameters";
-            this.Parameters.HeaderText = "Parameters";
-            this.Parameters.Name = "Parameters";
-            this.Parameters.ReadOnly = true;
+            this.ColumnParameters.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColumnParameters.DataPropertyName = "Parameters";
+            this.ColumnParameters.HeaderText = "Parameters";
+            this.ColumnParameters.Name = "ColumnParameters";
+            this.ColumnParameters.ReadOnly = true;
             // 
             // SearchCommandWindow
             // 
@@ -110,6 +110,7 @@
             this.Controls.Add(this.textBox_Search);
             this.Controls.Add(this.button_Search);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "SearchCommandWindow";
             this.Text = "Search Command";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Result)).EndInit();
             this.ResumeLayout(false);
@@ -121,8 +122,8 @@
         private System.Windows.Forms.Button button_Search;
         private System.Windows.Forms.TextBox textBox_Search;
         private System.Windows.Forms.DataGridView dataGridView_Result;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Script;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Parameters;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnScript;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnParameters;
     }
 }

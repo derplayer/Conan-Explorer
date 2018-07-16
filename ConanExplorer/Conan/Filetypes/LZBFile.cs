@@ -186,8 +186,11 @@ namespace ConanExplorer.Conan.Filetypes
                         }
                         else
                         {
-                            writer.Write(buffer, ++i, 1);
-                            circularBuffer.AddData(new byte[] { buffer[i] });
+                            if (i < buffer.Length - 1)
+                            {
+                                writer.Write(buffer, ++i, 1);
+                                circularBuffer.AddData(new byte[] { buffer[i] });
+                            }
                         }
                         if (writer.BaseStream.Length >= LZSSHeader.UncompressedSize) { break; }
                     }
