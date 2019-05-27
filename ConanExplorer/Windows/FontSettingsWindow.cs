@@ -174,6 +174,9 @@ namespace ConanExplorer.Windows
                 case 1:
                     _scriptFile.FontSettings = FontSettings.Latin1();
                     break;
+                case 2:
+                    _scriptFile.FontSettings = FontSettings.DE();
+                    break;
                 default:
                     _scriptFile.FontSettings = FontSettings.ASCII();
                     break;

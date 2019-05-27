@@ -20,11 +20,15 @@ namespace ConanExplorer.Conan
     /// </summary>
     public class ScriptFile
     {
+        [XmlIgnore]
         public FontSettings FontSettings { get; set; } = new FontSettings();
+
         public List<char> AllowedSymbols
         {
             get
             {
+                if (FontSettings.AllowedSymbols.Count > 256)
+                    FontSettings = FontSettings.DE(); //dirty bugfix for older broken scripts...
                 return FontSettings.AllowedSymbols;
             }
             set
@@ -32,10 +36,13 @@ namespace ConanExplorer.Conan
                 FontSettings.AllowedSymbols = value;
             }
         }
+
         public List<char> AllowedSplittedSymbols
         {
             get
             {
+                if (FontSettings.AllowedSplittedSymbols.Count > 256)
+                    FontSettings = FontSettings.DE(); //dirty bugfix for older broken scripts...
                 return FontSettings.AllowedSplittedSymbols;
             }
             set
@@ -43,6 +50,7 @@ namespace ConanExplorer.Conan
                 FontSettings.AllowedSplittedSymbols = value;
             }
         }
+
         public string FontName
         {
             get
@@ -54,6 +62,7 @@ namespace ConanExplorer.Conan
                 FontSettings.FontName = value;
             }
         }
+
         public int FontSize
         {
             get
@@ -69,6 +78,8 @@ namespace ConanExplorer.Conan
         public List<FontCharacter> GeneratedFont { get; set; } = new List<FontCharacter>(3304);
         public List<ScriptDocument> Scripts { get; set; } = new List<ScriptDocument>();
         public List<HardCodedText> HardCodedTexts { get; set; } = new List<HardCodedText>();
+
+        [XmlIgnore]
         public List<FontCharacter> LockedCharacters { get; set; } = new List<FontCharacter>()
         {
             new FontCharacter(new byte[32], 16513, ""),

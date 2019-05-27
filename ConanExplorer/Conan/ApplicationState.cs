@@ -28,9 +28,12 @@ namespace ConanExplorer.Conan
                 return Path.GetDirectoryName(_projectFile.ProjectFilePath);
             }
         }
-
+        
         private const string _xebraExecutable = "Tools\\xebra\\xebra.exe";
         private const string _xebraExecutablePath = "Tools\\xebra\\";
+
+        // TODO: http://drhell.web.fc2.com/ps1/xebra190322a.zip
+        // Upgrade xebra  & migrate the emulator settings (incompatible with new version)
         private const string _xebraDownload = "http://drhell.web.fc2.com/ps1/xebra170711.zip";
         private readonly string _zipTempPath = Path.GetTempPath() + "xebra.zip";
         private Process _xebraProcess;
