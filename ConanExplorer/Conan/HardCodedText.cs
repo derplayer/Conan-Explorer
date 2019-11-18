@@ -32,14 +32,18 @@ namespace ConanExplorer.Conan
             new HardCodedText(0x0000332C, 0x8, "モノラル", "Mono"), //sound - mono
 
             //Saving
-            new HardCodedText(0x00003390, 0x1C, "どこにデータをセーブしますか", "Where do you want to save?"), //where should be saved?
-            new HardCodedText(0x000033A8, 0x4, "新規", "New"), //new
-            new HardCodedText(0x000033BC, 0xE, "セーブ中です。", "Saving in progress"), //saving in progress...
-            new HardCodedText(0x00003338, 0x1A, "セーブ中はメモリーカードを", "While saving on memory card"), //while saving the memory card
-            new HardCodedText(0x0000332C, 0x18, "抜き差ししないで下さい。", "do not unplug it"), //please do not plug in / out.
-
+            new HardCodedText(0x0000346C, 0x1C, "どこにデータをセーブしますか", "Where do you want to save?"), //where should be saved?
+            new HardCodedText(0x000A733C, 0x6, "　新規", "New"), //new
+            new HardCodedText(0x00003544, 0xE, "セーブ中です。", "Saving in progress"), //saving in progress...
+            new HardCodedText(0x00003558, 0x1A, "セーブ中はメモリーカードを", "While saving on memory card"), //while saving the memory card
+            new HardCodedText(0x0000340C, 0x18, "抜き差ししないで下さい。", "do not unplug it"), //please do not plug in / out.
+            new HardCodedText(0x00003574, 0x18, "このデータに上書きしても", "Override the data"),
+            new HardCodedText(0x00003590, 0x14, "よろしいでしょうか？", "Are you sure?"),
+            new HardCodedText(0x000035A8, 0x16, "セーブが終了しました。", "Save complete."),
+            new HardCodedText(0x000035C0, 0x16, "セーブに失敗しました。", "Save failed."),            
+            
             //Ingame
-            new HardCodedText(0x000032FE, 0x6, "拠検証", "Evidences"), //evaluation / search evidence
+            new HardCodedText(0x000032FC, 0xA, "拠検証　", "Evidences"), //evaluation / search evidence
             new HardCodedText(0x00003308, 0xA, "オプション", "Options") //options
 
         };
