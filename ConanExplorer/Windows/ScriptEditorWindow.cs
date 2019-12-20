@@ -1035,11 +1035,11 @@ namespace ConanExplorer.Windows
                 message.ContentAlternative = message.Content; //backup old translation for preview purposes
                 message.Content = tmpContent;
 
-                if (tmpCnt >= 16) //debug limit because google api will lock me out when i make too many requests
-                {
-                    Enabled = true;
-                    break;
-                }
+                //if (tmpCnt >= 16) //debug limit because google api will lock me out when i make too many requests
+                //{
+                //    Enabled = true;
+                //    break;
+                //}
                 tmpCnt++;
 
                 Invoke((MethodInvoker)delegate
