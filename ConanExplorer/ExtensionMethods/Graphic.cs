@@ -306,13 +306,18 @@ namespace ConanExplorer.ExtensionMethods
             }
         }
 
-        public static void DrawSelectionText(Graphics graphics, ScriptFile scriptFile, ScriptMessage message)
+        public static void DrawSelectionText(Graphics graphics, ScriptFile scriptFile, ScriptMessage message, bool alternative = false)
         {
             Color fontColor = Color.FromArgb(255, 255, 255);
             Font font = scriptFile.Font;
             int left = 15;
             int top = 7;
-            string[] lines = ScriptParser.TextToLines(message.Content);
+            string[] lines = null;
+            
+            if(alternative)
+                lines = ScriptParser.TextToLines(message.ContentAlternative);
+            else
+                ScriptParser.TextToLines(message.Content);
 
             bool open = false;
             foreach (string line in lines)

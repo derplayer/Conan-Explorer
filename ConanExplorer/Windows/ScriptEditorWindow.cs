@@ -72,7 +72,7 @@ namespace ConanExplorer.Windows
             _updatingScript = true;
             int messagePos = richTextBox_ScriptMessage.SelectionStart;
             int messageLen = richTextBox_ScriptMessage.SelectionLength;
-            
+
             Win32.LockWindow(this.Handle);
             int scrollPos = Win32.GetScrollPos(richTextBox_ScriptFile.Handle, 1);
             int pos = richTextBox_ScriptFile.SelectionStart;
@@ -102,7 +102,7 @@ namespace ConanExplorer.Windows
                 richTextBox_ScriptMessage.SelectionStart = messagePos;
                 richTextBox_ScriptMessage.SelectionLength = messageLen;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -278,7 +278,7 @@ namespace ConanExplorer.Windows
         public void UpdateScriptMessage()
         {
             if (_changingMessageSelection) return;
-            
+
             IScriptElement element = (IScriptElement)listBox_ScriptMessages.SelectedItem;
             if (element == null) return;
             if (element.GetType() == typeof(ScriptMessage))
@@ -287,7 +287,7 @@ namespace ConanExplorer.Windows
                 message.Content = richTextBox_ScriptMessage.Text.Replace("\n", "\r\n");
                 UpdatePreview(message);
             }
-            
+
             ScriptDocument script = (ScriptDocument)listBox_ScriptFiles.SelectedItem;
             ScriptParser.Parse(script, _elements);
 
@@ -489,9 +489,9 @@ namespace ConanExplorer.Windows
             {
                 return;
             }
-            
+
             bool fontFound = false;
-            if(ScriptFile.FontName == "Quarlow")
+            if (ScriptFile.FontName == "Quarlow")
             {
                 //Check for Quarlow Default Font in system
                 InstalledFontCollection fontsCollection = new InstalledFontCollection();
@@ -521,7 +521,7 @@ namespace ConanExplorer.Windows
                             string zipTempPath = Path.GetTempPath() + "Quarlow.zip";
 
                             //Delete old try if there
-                            if(Directory.Exists(tempPathForZip))
+                            if (Directory.Exists(tempPathForZip))
                                 Directory.Delete(tempPathForZip, true);
 
                             using (var client = new WebClient())
@@ -530,7 +530,7 @@ namespace ConanExplorer.Windows
                             }
 
                             System.IO.Compression.ZipFile.ExtractToDirectory(zipTempPath, tempPathForZip);
-                            Process.Start("C:\\Windows\\System32\\fontview.exe" , tempPathForZip + "Quarlow.ttf");
+                            Process.Start("C:\\Windows\\System32\\fontview.exe", tempPathForZip + "Quarlow.ttf");
 
                             Application.Exit();
                         }
@@ -916,42 +916,144 @@ namespace ConanExplorer.Windows
         private async void translateToEnglishToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var translator = new GoogleTranslator();
+            Enabled = false;
 
             Language from = Language.German;
             //Language to = GoogleTranslator.GetLanguageByName("Japanese");
             Language to = Language.English;
+            int tmpCnt = 0;
 
-            _timerMessageApply.Enabled = false;
-            ScriptMessage message = (ScriptMessage)listBox_ScriptMessages.SelectedItem;
-            if (message == null) return;
-            //richTextBox_ScriptMessage.Text = message.Content;
-            ///UpdatePreview(message);
-
-            List<string> dialogs = new List<string>();
-            foreach (var dialog in message.ContentTextArray)
+            foreach (var scriptMsg in listBox_ScriptMessages.Items)
             {
-                if (dialog != "" || dialog != string.Empty)
+                _timerMessageApply.Enabled = false;
+                ScriptMessage message = (ScriptMessage)scriptMsg;
+                if (message == null) return;
+                //richTextBox_ScriptMessage.Text = message.Content;
+                ///UpdatePreview(message);
+
+                List<string> dialogs = new List<string>();
+                foreach (var dialog in message.ContentTextArray)
                 {
-                    string cleanInput = dialog.Replace("\r", " ").Replace("\n", string.Empty);
-                    //cleanInput = cleanInput.Substring(cleanInput.IndexOf(':') + 1);
-                    TranslationResult result = await translator.TranslateLiteAsync(cleanInput, from, to);
-                    dialogs.Add(result.MergedTranslation + "\r\n\r\n");
+                    if (dialog != "" || dialog != string.Empty)
+                    {
+                        string cleanInput = dialog.Replace("\r", " ").Replace("\n", string.Empty);
+                        //cleanInput = cleanInput.Substring(cleanInput.IndexOf(':') + 1);
+                        TranslationResult result = await translator.TranslateLiteAsync(cleanInput, from, to);
+                        dialogs.Add(result.MergedTranslation);
+                    }
                 }
+
+                Regex x = new Regex(@"(\%COL\([0-9]+\)\:([a-zA-Z]+)\%COL\([0-9]+\)\:)([\s\S]*?(?=\%KW\:))");
+                Regex y = new Regex(@"(\%COL\([0-9]+\)\:)([\s\S]*?(?=\%KW\:))");
+                string tmpContent = message.Content;
+                MatchCollection matches = x.Matches(tmpContent);
+                int messageRegexGroup = 3;
+
+                //try alterantive regex when no match
+                if (matches.Count <= 0) {
+                    matches = y.Matches(tmpContent);
+                    messageRegexGroup = 2;
+                }
+
+                int dialogCharLimitRow = 22;
+                int actualRow = 1;
+
+                int matchIterator = 0;
+                foreach (Match ItemMatch in matches)
+                {
+                    var splitDialog = dialogs[matchIterator].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    Console.WriteLine("NameLength: " + ItemMatch.Groups[2].Length);
+                    dialogCharLimitRow -= ItemMatch.Groups[2].Length;
+
+                    if (ItemMatch.Groups[2].Length % 2 != 1 && ItemMatch.Groups[2].Length != 0) {
+                        stringBuilder.Append(" ");
+                        dialogCharLimitRow -= 1;
+                    }
+
+                    foreach (var word in splitDialog)
+                    {
+                        if (word.Length > 22)
+                        {
+                            MessageBox.Show("Validation failed! The word " + word + " is TOO LONG! Parsing stopped!", "Word is too long for the game engine!");
+                            break;
+                        }
+
+                        if ((word.Length + 1) >= dialogCharLimitRow)
+                        {
+                            actualRow += 1;
+                            if (actualRow >= 6)
+                            {
+                                //Optional TODO: Append the correct name!
+                                //TODO: clear up this copypaste festival someday
+                                stringBuilder.Append("%KW:%CLR:%COL(5):" + ItemMatch.Groups[2].Value + ":%COL(1):");
+                                actualRow = 1;
+                                dialogCharLimitRow = 22 - ItemMatch.Groups[2].Length;
+
+                                if (ItemMatch.Groups[2].Length % 2 != 1 && ItemMatch.Groups[2].Length != 0)
+                                {
+                                    stringBuilder.Append(" ");
+                                    dialogCharLimitRow -= 1;
+                                }
+
+                            }
+
+                            stringBuilder.Append("%LF:"); //NEW LINE
+                            stringBuilder.Append(word);
+                            stringBuilder.Append(" ");
+                            dialogCharLimitRow = 22 - (word.Length + 1);
+                        }
+                        else
+                        {
+                            stringBuilder.Append(word); //write out word
+                            stringBuilder.Append(" ");
+                            dialogCharLimitRow -= (word.Length + 1); // minus empty space
+                        }
+                    }
+
+                    tmpContent = tmpContent.Replace(ItemMatch.Groups[messageRegexGroup].Value, stringBuilder.ToString());
+                    stringBuilder.Clear();
+                    actualRow = 1;
+                    matchIterator++;
+
+                }
+
+                //(\%COL\([0-9]+\)\:([a-zA-Z]+)\%COL\([0-9]+\)\:)([\s\S]*?(?=\%KW\:))
+                //match count is 0..x
+                // group2 = Message name (for length parser), group 3: complette text string until kill window command
+
+                //if no match use
+                //(\%COL\([0-9]+\)\:)([\s\S]*?(?=\%KW\:))
+                //match count is 0..x
+                // group2 = complette text string until kill window command
+                // regex for messages without name in it
+
+                //if no match then skip message but make at least a console.log
+
+                //message.ContentAlternative = tmpContent;
+                message.ContentAlternative = message.Content; //backup old translation for preview purposes
+                message.Content = tmpContent;
+
+                if (tmpCnt >= 16) //debug limit because google api will lock me out when i make too many requests
+                {
+                    Enabled = true;
+                    break;
+                }
+                tmpCnt++;
+
+                Invoke((MethodInvoker)delegate
+                {
+                    progressBar_Progress.Value = (int)((double)tmpCnt / listBox_ScriptMessages.Items.Count * 100);
+                });
             }
+            MessageBox.Show("Selected chapter was translated!", "API Translation");
 
-            //The result is separated by the suggestions and the '\n' symbols
-            //string[] resultSeparated = result.FragmentedTranslation;
-
-            //You can get all text using MergedTranslation property
-            //string resultMerged = result.MergedTranslation;
-
-            //There is also original text transcription
-            //string transcription = result.TranslatedTextTranscription; // Kon'nichiwa! Ogenkidesuka?
-
-            if(dialogs.Count > 0)
-                MessageBox.Show(String.Join(String.Empty, dialogs.ToArray()), "API Test");
-            else
-                MessageBox.Show("Error in message parser...", "API Test");
+            Invoke((MethodInvoker)delegate
+            {
+                progressBar_Progress.Value = 0;
+                Enabled = true;
+            });
         }
     }
 }

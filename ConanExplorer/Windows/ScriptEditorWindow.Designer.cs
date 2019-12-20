@@ -69,14 +69,15 @@ namespace ConanExplorer.Windows
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem_ViewScript = new System.Windows.Forms.ToolStripMenuItem();
             this.searchCommandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.translateToEnglishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_Debug = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_GenerateScript = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_Row = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.pictureBox_MessagePreviewAlt = new System.Windows.Forms.PictureBox();
             this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
             this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
-            this.translateToEnglishToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -98,6 +99,7 @@ namespace ConanExplorer.Windows
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreview)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreviewAlt)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox_ScriptFiles
@@ -107,7 +109,7 @@ namespace ConanExplorer.Windows
             this.listBox_ScriptFiles.IntegralHeight = false;
             this.listBox_ScriptFiles.Location = new System.Drawing.Point(0, 0);
             this.listBox_ScriptFiles.Name = "listBox_ScriptFiles";
-            this.listBox_ScriptFiles.Size = new System.Drawing.Size(170, 269);
+            this.listBox_ScriptFiles.Size = new System.Drawing.Size(188, 269);
             this.listBox_ScriptFiles.TabIndex = 2;
             this.listBox_ScriptFiles.SelectedIndexChanged += new System.EventHandler(this.listBox_ScriptFiles_SelectedIndexChanged);
             this.listBox_ScriptFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_ScriptFiles_MouseDown);
@@ -130,8 +132,8 @@ namespace ConanExplorer.Windows
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.splitContainer1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer1.Size = new System.Drawing.Size(950, 585);
-            this.splitContainer1.SplitterDistance = 170;
+            this.splitContainer1.Size = new System.Drawing.Size(1054, 585);
+            this.splitContainer1.SplitterDistance = 188;
             this.splitContainer1.TabIndex = 6;
             // 
             // splitContainer2
@@ -148,7 +150,7 @@ namespace ConanExplorer.Windows
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.listBox_ScriptMessages);
-            this.splitContainer2.Size = new System.Drawing.Size(170, 585);
+            this.splitContainer2.Size = new System.Drawing.Size(188, 585);
             this.splitContainer2.SplitterDistance = 269;
             this.splitContainer2.TabIndex = 3;
             // 
@@ -160,7 +162,7 @@ namespace ConanExplorer.Windows
             this.listBox_ScriptMessages.IntegralHeight = false;
             this.listBox_ScriptMessages.Location = new System.Drawing.Point(0, 0);
             this.listBox_ScriptMessages.Name = "listBox_ScriptMessages";
-            this.listBox_ScriptMessages.Size = new System.Drawing.Size(170, 312);
+            this.listBox_ScriptMessages.Size = new System.Drawing.Size(188, 312);
             this.listBox_ScriptMessages.TabIndex = 0;
             this.listBox_ScriptMessages.SelectedIndexChanged += new System.EventHandler(this.listBox_ScriptMessages_SelectedIndexChanged);
             this.listBox_ScriptMessages.DoubleClick += new System.EventHandler(this.listBox_ScriptMessages_DoubleClick);
@@ -179,8 +181,8 @@ namespace ConanExplorer.Windows
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(776, 585);
-            this.splitContainer3.SplitterDistance = 397;
+            this.splitContainer3.Size = new System.Drawing.Size(862, 585);
+            this.splitContainer3.SplitterDistance = 440;
             this.splitContainer3.TabIndex = 1;
             // 
             // searchPanel
@@ -194,7 +196,7 @@ namespace ConanExplorer.Windows
             this.searchPanel.Controls.Add(this.button_SearchDown);
             this.searchPanel.Location = new System.Drawing.Point(2, 523);
             this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Size = new System.Drawing.Size(377, 60);
+            this.searchPanel.Size = new System.Drawing.Size(420, 60);
             this.searchPanel.TabIndex = 3;
             this.searchPanel.Visible = false;
             // 
@@ -202,7 +204,7 @@ namespace ConanExplorer.Windows
             // 
             this.button_SearchUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_SearchUp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_SearchUp.Location = new System.Drawing.Point(291, 33);
+            this.button_SearchUp.Location = new System.Drawing.Point(334, 33);
             this.button_SearchUp.Name = "button_SearchUp";
             this.button_SearchUp.Size = new System.Drawing.Size(82, 22);
             this.button_SearchUp.TabIndex = 5;
@@ -227,7 +229,7 @@ namespace ConanExplorer.Windows
             this.textBox_Search.Location = new System.Drawing.Point(5, 6);
             this.textBox_Search.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_Search.Name = "textBox_Search";
-            this.textBox_Search.Size = new System.Drawing.Size(279, 20);
+            this.textBox_Search.Size = new System.Drawing.Size(322, 20);
             this.textBox_Search.TabIndex = 1;
             this.textBox_Search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_Search_KeyDown);
             // 
@@ -235,7 +237,7 @@ namespace ConanExplorer.Windows
             // 
             this.button_SearchDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button_SearchDown.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_SearchDown.Location = new System.Drawing.Point(291, 5);
+            this.button_SearchDown.Location = new System.Drawing.Point(334, 5);
             this.button_SearchDown.Name = "button_SearchDown";
             this.button_SearchDown.Size = new System.Drawing.Size(82, 22);
             this.button_SearchDown.TabIndex = 2;
@@ -260,7 +262,7 @@ namespace ConanExplorer.Windows
             // 
             this.splitContainer4.Panel2.Controls.Add(this.richTextBox_ScriptMessage);
             this.splitContainer4.Panel2.Controls.Add(this.button_Apply);
-            this.splitContainer4.Size = new System.Drawing.Size(375, 585);
+            this.splitContainer4.Size = new System.Drawing.Size(418, 585);
             this.splitContainer4.SplitterDistance = 256;
             this.splitContainer4.TabIndex = 1;
             // 
@@ -271,10 +273,11 @@ namespace ConanExplorer.Windows
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_Preview.AutoScroll = true;
             this.panel_Preview.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel_Preview.Controls.Add(this.pictureBox_MessagePreviewAlt);
             this.panel_Preview.Controls.Add(this.pictureBox_MessagePreview);
             this.panel_Preview.Location = new System.Drawing.Point(3, 30);
             this.panel_Preview.Name = "panel_Preview";
-            this.panel_Preview.Size = new System.Drawing.Size(369, 223);
+            this.panel_Preview.Size = new System.Drawing.Size(412, 223);
             this.panel_Preview.TabIndex = 3;
             // 
             // pictureBox_MessagePreview
@@ -282,7 +285,7 @@ namespace ConanExplorer.Windows
             this.pictureBox_MessagePreview.BackColor = System.Drawing.SystemColors.ControlDark;
             this.pictureBox_MessagePreview.Location = new System.Drawing.Point(0, 0);
             this.pictureBox_MessagePreview.Name = "pictureBox_MessagePreview";
-            this.pictureBox_MessagePreview.Size = new System.Drawing.Size(280, 95);
+            this.pictureBox_MessagePreview.Size = new System.Drawing.Size(200, 95);
             this.pictureBox_MessagePreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox_MessagePreview.TabIndex = 0;
             this.pictureBox_MessagePreview.TabStop = false;
@@ -297,7 +300,7 @@ namespace ConanExplorer.Windows
             "Red",
             "Green",
             "Yellow"});
-            this.comboBox_PreviewColor.Location = new System.Drawing.Point(274, 3);
+            this.comboBox_PreviewColor.Location = new System.Drawing.Point(317, 3);
             this.comboBox_PreviewColor.Name = "comboBox_PreviewColor";
             this.comboBox_PreviewColor.Size = new System.Drawing.Size(98, 21);
             this.comboBox_PreviewColor.TabIndex = 2;
@@ -315,7 +318,7 @@ namespace ConanExplorer.Windows
             "Selection Window"});
             this.comboBox_PreviewType.Location = new System.Drawing.Point(3, 3);
             this.comboBox_PreviewType.Name = "comboBox_PreviewType";
-            this.comboBox_PreviewType.Size = new System.Drawing.Size(265, 21);
+            this.comboBox_PreviewType.Size = new System.Drawing.Size(308, 21);
             this.comboBox_PreviewType.TabIndex = 1;
             // 
             // button_Apply
@@ -324,7 +327,7 @@ namespace ConanExplorer.Windows
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_Apply.Location = new System.Drawing.Point(3, 299);
             this.button_Apply.Name = "button_Apply";
-            this.button_Apply.Size = new System.Drawing.Size(369, 23);
+            this.button_Apply.Size = new System.Drawing.Size(412, 23);
             this.button_Apply.TabIndex = 1;
             this.button_Apply.Text = "Apply";
             this.button_Apply.UseVisualStyleBackColor = true;
@@ -337,7 +340,7 @@ namespace ConanExplorer.Windows
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar_Progress.Location = new System.Drawing.Point(12, 627);
             this.progressBar_Progress.Name = "progressBar_Progress";
-            this.progressBar_Progress.Size = new System.Drawing.Size(950, 14);
+            this.progressBar_Progress.Size = new System.Drawing.Size(1054, 14);
             this.progressBar_Progress.TabIndex = 7;
             // 
             // menuStrip1
@@ -349,7 +352,7 @@ namespace ConanExplorer.Windows
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(974, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1078, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip";
             // 
@@ -509,6 +512,13 @@ namespace ConanExplorer.Windows
             this.searchCommandToolStripMenuItem.Text = "Search Command...";
             this.searchCommandToolStripMenuItem.Click += new System.EventHandler(this.searchCommandToolStripMenuItem_Click);
             // 
+            // translateToEnglishToolStripMenuItem
+            // 
+            this.translateToEnglishToolStripMenuItem.Name = "translateToEnglishToolStripMenuItem";
+            this.translateToEnglishToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.translateToEnglishToolStripMenuItem.Text = "Translate to English";
+            this.translateToEnglishToolStripMenuItem.Click += new System.EventHandler(this.translateToEnglishToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem_Debug
             // 
             this.toolStripMenuItem_Debug.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -531,7 +541,7 @@ namespace ConanExplorer.Windows
             this.toolStripStatusLabel_Row});
             this.statusStrip1.Location = new System.Drawing.Point(0, 648);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(974, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1078, 22);
             this.statusStrip1.TabIndex = 10;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -539,6 +549,16 @@ namespace ConanExplorer.Windows
             // 
             this.toolStripStatusLabel_Row.Name = "toolStripStatusLabel_Row";
             this.toolStripStatusLabel_Row.Size = new System.Drawing.Size(0, 17);
+            // 
+            // pictureBox_MessagePreviewAlt
+            // 
+            this.pictureBox_MessagePreviewAlt.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pictureBox_MessagePreviewAlt.Location = new System.Drawing.Point(206, 0);
+            this.pictureBox_MessagePreviewAlt.Name = "pictureBox_MessagePreviewAlt";
+            this.pictureBox_MessagePreviewAlt.Size = new System.Drawing.Size(200, 95);
+            this.pictureBox_MessagePreviewAlt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox_MessagePreviewAlt.TabIndex = 1;
+            this.pictureBox_MessagePreviewAlt.TabStop = false;
             // 
             // richTextBox_ScriptFile
             // 
@@ -549,7 +569,7 @@ namespace ConanExplorer.Windows
             this.richTextBox_ScriptFile.Location = new System.Drawing.Point(0, 0);
             this.richTextBox_ScriptFile.Name = "richTextBox_ScriptFile";
             this.richTextBox_ScriptFile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(397, 585);
+            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(440, 585);
             this.richTextBox_ScriptFile.TabIndex = 0;
             this.richTextBox_ScriptFile.Text = "";
             this.richTextBox_ScriptFile.WordWrap = false;
@@ -565,24 +585,17 @@ namespace ConanExplorer.Windows
             this.richTextBox_ScriptMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBox_ScriptMessage.Location = new System.Drawing.Point(3, 3);
             this.richTextBox_ScriptMessage.Name = "richTextBox_ScriptMessage";
-            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(369, 319);
+            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(412, 319);
             this.richTextBox_ScriptMessage.TabIndex = 0;
             this.richTextBox_ScriptMessage.Text = "";
             this.richTextBox_ScriptMessage.TextChanged += new System.EventHandler(this.richTextBox_ScriptMessage_TextChanged);
             this.richTextBox_ScriptMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptMessage_KeyDown);
             // 
-            // translateToEnglishToolStripMenuItem
-            // 
-            this.translateToEnglishToolStripMenuItem.Name = "translateToEnglishToolStripMenuItem";
-            this.translateToEnglishToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.translateToEnglishToolStripMenuItem.Text = "Translate to English";
-            this.translateToEnglishToolStripMenuItem.Click += new System.EventHandler(this.translateToEnglishToolStripMenuItem_Click);
-            // 
             // ScriptEditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(974, 670);
+            this.ClientSize = new System.Drawing.Size(1078, 670);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.progressBar_Progress);
             this.Controls.Add(this.splitContainer1);
@@ -617,6 +630,7 @@ namespace ConanExplorer.Windows
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreviewAlt)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -670,5 +684,6 @@ namespace ConanExplorer.Windows
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_SaveNormal;
         private System.Windows.Forms.ToolStripMenuItem searchCommandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem translateToEnglishToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox_MessagePreviewAlt;
     }
 }

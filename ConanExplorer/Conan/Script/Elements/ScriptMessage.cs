@@ -18,6 +18,7 @@ namespace ConanExplorer.Conan.Script.Elements
         private static Encoding _shiftJis = Encoding.GetEncoding("shift_jis");
 
         private string _content;
+        private string _contentAlternative;
 
         public override string Text
         {
@@ -53,6 +54,16 @@ namespace ConanExplorer.Conan.Script.Elements
             set
             {
                 _content = value;
+                OnContentChanged();
+            }
+        }
+
+        public string ContentAlternative
+        {
+            get { return _contentAlternative; }
+            set
+            {
+                _contentAlternative = value;
                 OnContentChanged();
             }
         }
@@ -111,7 +122,15 @@ namespace ConanExplorer.Conan.Script.Elements
             {
                 try
                 {
-                    string cleanContent = _regexSubCommand.Replace(Content, "");
+                    //TODO Remove names, that are between %COL tags
+
+                    //%COL(5):Conan%COL(1):
+
+                    Regex x = new Regex(@"\%COL(\w*)(?:\((\d.*|\w*)\))?\:");
+                    string tmpContent = Content;
+                    tmpContent = x.Replace(Content, string.Empty);
+
+                    string cleanContent = _regexSubCommand.Replace(tmpContent, "");
                     return cleanContent.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None);
                 }
                 catch (Exception e)
