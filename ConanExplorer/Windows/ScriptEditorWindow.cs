@@ -21,6 +21,7 @@ using ConanExplorer.ExtensionMethods;
 using System.Drawing.Text;
 using System.Net;
 using System.Diagnostics;
+using GoogleTranslateFreeApi;
 
 namespace ConanExplorer.Windows
 {
@@ -910,6 +911,47 @@ namespace ConanExplorer.Windows
         private void _searchCommandWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
             _searchCommandWindow = null;
+        }
+
+        private async void translateToEnglishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var translator = new GoogleTranslator();
+
+            Language from = Language.German;
+            //Language to = GoogleTranslator.GetLanguageByName("Japanese");
+            Language to = Language.English;
+
+            _timerMessageApply.Enabled = false;
+            ScriptMessage message = (ScriptMessage)listBox_ScriptMessages.SelectedItem;
+            if (message == null) return;
+            //richTextBox_ScriptMessage.Text = message.Content;
+            ///UpdatePreview(message);
+
+            List<string> dialogs = new List<string>();
+            foreach (var dialog in message.ContentTextArray)
+            {
+                if (dialog != "" || dialog != string.Empty)
+                {
+                    string cleanInput = dialog.Replace("\r", " ").Replace("\n", string.Empty);
+                    //cleanInput = cleanInput.Substring(cleanInput.IndexOf(':') + 1);
+                    TranslationResult result = await translator.TranslateLiteAsync(cleanInput, from, to);
+                    dialogs.Add(result.MergedTranslation + "\r\n\r\n");
+                }
+            }
+
+            //The result is separated by the suggestions and the '\n' symbols
+            //string[] resultSeparated = result.FragmentedTranslation;
+
+            //You can get all text using MergedTranslation property
+            //string resultMerged = result.MergedTranslation;
+
+            //There is also original text transcription
+            //string transcription = result.TranslatedTextTranscription; // Kon'nichiwa! Ogenkidesuka?
+
+            if(dialogs.Count > 0)
+                MessageBox.Show(String.Join(String.Empty, dialogs.ToArray()), "API Test");
+            else
+                MessageBox.Show("Error in message parser...", "API Test");
         }
     }
 }

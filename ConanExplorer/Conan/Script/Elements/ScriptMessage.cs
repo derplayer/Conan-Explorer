@@ -105,6 +105,23 @@ namespace ConanExplorer.Conan.Script.Elements
             }
         }
 
+        public string[] ContentTextArray
+        {
+            get
+            {
+                try
+                {
+                    string cleanContent = _regexSubCommand.Replace(Content, "");
+                    return cleanContent.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None);
+                }
+                catch (Exception e)
+                {
+                    return new string[] { }; //empty so that the loop skips it
+                }
+
+            }
+        }
+
         public MatchCollection Matches
         {
             get
