@@ -119,9 +119,10 @@ namespace ConanExplorer.Conan.Filetypes
             uint startOffset = IndexFolder.Files[0].Offset * 0x800;
             foreach (FileDictionaryFile fileEntry in IndexFolder.Files)
             {
-                byte[] file = new byte[fileEntry.Length * 0x800];
+                uint length = fileEntry.Length * 0x800 - (0x800 - fileEntry.SectorOverhead * 4);
                 uint offset = fileEntry.Offset * 0x800 - startOffset;
-                Array.Copy(buffer, offset, file, 0, fileEntry.Length * 0x800);
+                byte[] file = new byte[length];
+                Array.Copy(buffer, offset, file, 0, length);
 
                 string outputPath = Path.Combine(UnpackedFolder, Path.GetFileName(fileEntry.FullPath));
                 Directory.CreateDirectory(UnpackedFolder);
