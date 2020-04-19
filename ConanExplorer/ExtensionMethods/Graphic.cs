@@ -317,64 +317,66 @@ namespace ConanExplorer.ExtensionMethods
             if(alternative)
                 lines = ScriptParser.TextToLines(message.ContentAlternative);
             else
-                ScriptParser.TextToLines(message.Content);
+                lines = ScriptParser.TextToLines(message.Content);
 
             bool open = false;
-            foreach (string line in lines)
-            {
-                if (line.StartsWith("%SEL:"))
+            if(lines != null) {
+                foreach (string line in lines)
                 {
-                    open = true;
-                    continue;
-                }
-
-                if (line.StartsWith("%END:"))
-                {
-                    open = false;
-                    continue;
-                }
-
-                if (open)
-                {
-                    string[] splitted = line.Split(',');
-                    if (splitted.Length < 3) continue;
-
-                    string displayText = splitted[2];
-
-                    for (int i = 0; i < displayText.Length; i++)
+                    if (line.StartsWith("%SEL:"))
                     {
-                        char character = displayText[i];
+                        open = true;
+                        continue;
+                    }
 
-                        if (left >= 223 || top >= 159) continue;
-                        if (scriptFile.IsValidChar(character))
+                    if (line.StartsWith("%END:"))
+                    {
+                        open = false;
+                        continue;
+                    }
+
+                    if (open)
+                    {
+                        string[] splitted = line.Split(',');
+                        if (splitted.Length < 3) continue;
+
+                        string displayText = splitted[2];
+
+                        for (int i = 0; i < displayText.Length; i++)
                         {
-                            i++;
-                            if (i == displayText.Length)
+                            char character = displayText[i];
+
+                            if (left >= 223 || top >= 159) continue;
+                            if (scriptFile.IsValidChar(character))
                             {
-                                FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
-                                Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                                graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                                left += 16;
-                            }
-                            else if (scriptFile.IsValidChar(displayText[i]))
-                            {
-                                FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character, displayText[i]), font);
-                                Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                                graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                                left += 16;
-                            }
-                            else
-                            {
-                                FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
-                                Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                                graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                                left += 16;
+                                i++;
+                                if (i == displayText.Length)
+                                {
+                                    FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
+                                    Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
+                                    graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
+                                    left += 16;
+                                }
+                                else if (scriptFile.IsValidChar(displayText[i]))
+                                {
+                                    FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character, displayText[i]), font);
+                                    Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
+                                    graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
+                                    left += 16;
+                                }
+                                else
+                                {
+                                    FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
+                                    Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
+                                    graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
+                                    left += 16;
+                                }
                             }
                         }
                     }
+                    top += 16;
+                    left = 15;
                 }
-                top += 16;
-                left = 15;
             }
         }
 
