@@ -91,12 +91,11 @@ namespace ConanExplorer.Conan.Filetypes
                         byte[] buffer = reader.ReadBytes((int)fileInfo.Length);
                         writer.Write(buffer, 0, (int)fileInfo.Length);
 
-                        //TODO: @Phil - WAT, WTF? - Kills the LBA Disc Table
-                        //long rest = 2048 - writer.BaseStream.Length % 2048;
-                        //for (int i = 0; i < rest; i++)
-                        //{
-                        //    writer.Write('\0');
-                        //}
+                        long rest = 2048 - writer.BaseStream.Length % 2048;
+                        for (int i = 0; i < rest; i++)
+                        {
+                            writer.Write('\0');
+                        }
                     }
                 }
             }
