@@ -214,13 +214,6 @@ namespace ConanExplorer.Conan.Filetypes
             {
                 writer.Write(LZSSHeader.GetBytes(), 0, 16);
                 writer.Write(buffer, 0, buffer.Length);
-
-                long rest = 2048 - writer.BaseStream.Length % 2048;
-                if (rest > 0)
-                {
-                    byte[] emptyBytes = new byte[rest];
-                    writer.Write(emptyBytes, 0, (int)rest);
-                }
             }
         }
 
@@ -305,12 +298,6 @@ namespace ConanExplorer.Conan.Filetypes
                 if (flagpos != -1)
                 {
                     writer.Write(chunk, 0, chunkLength);
-                }
-                long rest = 2048 - writer.BaseStream.Length % 2048;
-                if (rest > 0)
-                {
-                    byte[] emptyBytes = new byte[rest];
-                    writer.Write(emptyBytes, 0, (int)rest);
                 }
             }
         }

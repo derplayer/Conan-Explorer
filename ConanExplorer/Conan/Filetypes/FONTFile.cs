@@ -122,13 +122,6 @@ namespace ConanExplorer.Conan.Filetypes
                     writer.Seek(6608 + i*32, SeekOrigin.Begin);
                     writer.Write(fontCharacter.Data);
                 }
-
-                long rest = 2048 - writer.BaseStream.Length % 2048;
-                if (rest > 0)
-                {
-                    byte[] emptyBytes = new byte[rest];
-                    writer.Write(emptyBytes, 0, (int)rest);
-                }
             }
 
             if (!keepMetadata) return true;
