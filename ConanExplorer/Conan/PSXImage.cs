@@ -167,32 +167,14 @@ namespace ConanExplorer.Conan
                     string fileName = RippedDirectory + "\\" + file.Folder + "\\" + file.FullPath;
                     FileInfo fileInfo = new FileInfo(fileName);
 
-                    //TODO: @Phil - The rest padding killed the game before (Especially at FLAG.TXT) Refactor?
-                    if (fileInfo.Length % 2048 != 0)
-                    {
-                        if (MessageBox.Show(String.Format("The file \"{0}\" does not have the correct size.\n Do you want to add zero padding?", fileInfo.FullName), "Incorrect Size!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
-                        {
-                            long rest = 2048 - fileInfo.Length % 2048;
-                            using (BinaryWriter writer = new BinaryWriter(new FileStream(fileName, FileMode.Append, FileAccess.Write)))
-                            {
-                                for (int i = 0; i < rest; i++)
-                                {
-                                    writer.Write('\0');
-                                }
-                            }
-                            fileInfo = new FileInfo(fileName);
-                        }
-                        else
-                        {
-                            MessageBox.Show("The build process was cancelled!", "Build process cancelled!");
-                            return;
-                        }
-                        return;
-                    }
-
                     file.Offset = counter;
                     file.Length = (uint)fileInfo.Length / 2048;
-                    //file.SectorOverhead = (uint)Math.Ceiling((2048 - GetPaddingCount(fileInfo)) / 4f);
+                    uint modLength = (uint)fileInfo.Length % 2048;
+                    if (modLength != 0)
+                    {
+                        file.Length++;
+                    }
+                    file.SectorOverhead = modLength / 4;
 
                     counter += file.Length;
                 }
@@ -381,27 +363,5 @@ namespace ConanExplorer.Conan
             return ImageName;
         }
 
-        /// <summary>
-        /// Gets the padding count in a lazy way
-        /// </summary>
-        /// <param name="fileInfo">The file information</param>
-        /// <returns>Padding count</returns>
-        private int GetPaddingCount(FileInfo fileInfo)
-        {
-            using (FileStream fs = fileInfo.OpenRead())
-            {
-                byte[] buffer = new byte[2048];
-                fs.Seek(-2048, SeekOrigin.End);
-                fs.Read(buffer, 0, 2048);
-                for (int i = 2047; i > 0; i--)
-                {
-                    if (buffer[i] != 0)
-                    {
-                        return 2048 - i;
-                    }
-                }
-            }
-            return 0;
-        }
     }
 }
