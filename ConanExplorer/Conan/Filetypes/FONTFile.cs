@@ -16,7 +16,7 @@ namespace ConanExplorer.Conan.Filetypes
     /// </summary>
     public class FONTFile : BaseFile
     {
-        private readonly int _originalSize = 0x1B800;
+        private readonly int _originalSize = 0x1b690;
 
         private readonly int _indexLength = 0x19CC;
         private readonly int _startOffset = 0x19D0;
