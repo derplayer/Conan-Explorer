@@ -69,16 +69,6 @@ namespace ConanExplorer.Conan.Filetypes
                         writer.Write(reader.ReadBytes((int)reader.BaseStream.Length));
                     }
                 }
-
-                int rest = (int)writer.BaseStream.Length % 2048;
-                if (rest != 0)
-                {
-                    int padding = 2048 - rest;
-                    for (int i = 0; i < padding; i++)
-                    {
-                        writer.Write('\0');
-                    }
-                }
             }
         }
 
