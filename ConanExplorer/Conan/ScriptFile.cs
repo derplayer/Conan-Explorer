@@ -135,7 +135,10 @@ namespace ConanExplorer.Conan
             }
             foreach (HardCodedText text in HardCodedTexts)
             {
-                stringBuilder.AppendLine(text.NewString);
+                if (text.NewString == null)
+                    stringBuilder.AppendLine(text.Translation);
+                else
+                    stringBuilder.AppendLine(text.NewString);
             }
 
             HashSet<string> dictionary = CreateDictionary(ScriptParser.TextToLines(stringBuilder.ToString()));
@@ -224,6 +227,7 @@ namespace ConanExplorer.Conan
                 ScriptParser.Parse(script, elements);
                 if (save) script.WriteToOriginalFile();
             }
+
             foreach (HardCodedText text in HardCodedTexts)
             {
                 text.Format(this);

@@ -192,7 +192,7 @@ namespace ConanExplorer.Conan
 
                     file.Offset = counter;
                     file.Length = (uint)fileInfo.Length / 2048;
-                    file.SectorOverhead = (uint)Math.Ceiling((2048 - GetPaddingCount(fileInfo)) / 4f);
+                    //file.SectorOverhead = (uint)Math.Ceiling((2048 - GetPaddingCount(fileInfo)) / 4f);
 
                     counter += file.Length;
                 }
