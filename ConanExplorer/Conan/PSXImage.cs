@@ -23,6 +23,11 @@ namespace ConanExplorer.Conan
         private const int DictionaryOffset = 0x77F10;
         private const int DictionaryLength = 0x7F68;
 
+        /// <summary>
+        /// Ignoring memory optimization will have a high risk of causing files inside the PKN to be corrupt when the size changes.
+        /// </summary>
+        public bool IgnoreMemoryOptimization = false;
+
         public string ImageName { get; set; }
 
         public string RelativeImageCuePath { get; set; }
@@ -174,8 +179,11 @@ namespace ConanExplorer.Conan
                     {
                         file.Length++;
                     }
-                    file.SectorOverhead = modLength / 4;
-
+                    if (!IgnoreMemoryOptimization)
+                    {
+                        file.SectorOverhead = modLength / 4;
+                    }
+                    
                     counter += file.Length;
                 }
                 else
