@@ -27,6 +27,10 @@ namespace ConanExplorer.Conan
         /// Ignoring memory optimization will have a high risk of causing files inside the PKN to be corrupt when the size changes.
         /// </summary>
         public bool IgnoreMemoryOptimization = false;
+        /// <summary>
+        /// Disabling memory optimization will have a high risk in insufficient memory causing memory to be overwritten and corrupted.
+        /// </summary>
+        public bool DisableMemoryOptimization = false;
 
         public string ImageName { get; set; }
 
@@ -181,7 +185,7 @@ namespace ConanExplorer.Conan
                     }
                     if (!IgnoreMemoryOptimization)
                     {
-                        file.SectorOverhead = modLength / 4;
+                        file.SectorOverhead = DisableMemoryOptimization ? 0 : modLength / 4;
                     }
                     
                     counter += file.Length;
