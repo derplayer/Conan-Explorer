@@ -20,9 +20,9 @@ namespace ConanExplorer.Conan.Script.Elements
             {
                 if (_linebreak)
                 {
-                    return String.Format("#MESSAGE:{0}\r\n{1}\r\n", Parameters[0], Content);
+                    return String.Format("#{0}:{1}\r\n{2}\r\n", Name, Parameters[0], Content);
                 }
-                return String.Format("#MESSAGE:{0}\r\n{1}", Parameters[0], Content);
+                return String.Format("#{0}:{1}\r\n{2}", Name, Parameters[0], Content);
             }
         }
 

@@ -212,7 +212,9 @@ namespace ConanExplorer.Windows
             for (int i = 0; i < ScriptFile.Scripts.Count; i++)
             {
                 ScriptDocument scriptFile = ScriptFile.Scripts[i];
-                //if (scriptFile.Name == "FLAG.TXT") continue; //dirty hotfix (will destory the game...) TODO: Refactor in future...
+
+                //Don't touch this file! - Softlocks the engine, and we dont need to modify gamelogic to that degree
+                if (scriptFile.Name == "FLAG.TXT") continue;
 
                 scriptFile.WriteToOriginalFile();
                 if (scriptFile.BaseFile.GetType() == typeof(LZBFile))
