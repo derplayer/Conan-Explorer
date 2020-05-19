@@ -45,6 +45,10 @@ namespace ConanExplorer.Conan.Script
             {
                 stringBuilder.Append(element.Text);
             }
+
+            //Security context padding (fixes EOF execution crashes)
+            stringBuilder.AppendLine("----------------------------------------");
+            stringBuilder.AppendLine("----------------------------------------");
             script.TextBuffer = stringBuilder.ToString();
         }
 

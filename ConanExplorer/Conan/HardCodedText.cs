@@ -44,7 +44,56 @@ namespace ConanExplorer.Conan
             
             //Ingame
             new HardCodedText(0x000032FC, 0xA, "拠検証　", "Evidences"), //evaluation / search evidence
-            new HardCodedText(0x00003308, 0xA, "オプション", "Options") //options
+            new HardCodedText(0x00003308, 0xA, "オプション", "Options"), //options
+
+            //Other
+            //11612   10  鍾乳洞通路   Höhlengang
+            //11624   10  隠し通路    versteckt Passage
+            //11636   10  秘密の部屋   Zimmer des Schreckens
+            //11648   10  体育倉庫    Sportlager
+
+            //GMAP1A
+             new HardCodedText(11660,10,"体育館横　","neben der Turnhalle"),
+             new HardCodedText(11672,10,"体育館入口","Gymnasium Eingang"),
+             new HardCodedText(11684,10,"体育館　　","Turnhalle"),
+             new HardCodedText(11696,10,"廊下　　　","Gang"),
+             new HardCodedText(11708,10,"事務室　　","Sekretariat"),
+             new HardCodedText(11720,10,"化学実験室","Chemielabor"),
+             new HardCodedText(11732,10,"保健室　　","Krankenzimmer"),
+             new HardCodedText(11744,10,"生徒会室　","Schülervertretung"),
+             new HardCodedText(11756,10,"文芸部室　","Literaturklub"),
+             new HardCodedText(11768,10,"音楽室　　","Musikzimmer"),
+             new HardCodedText(11780,10,"図書室　　","Bibliothek"),
+             new HardCodedText(11792,10,"学校正門前","Schultor"),
+             new HardCodedText(11804,10,"麗子の部屋","Reikos Zimmer"),
+             new HardCodedText(11816,10,"涼子の部屋","Ryokos Zimmer"),
+             new HardCodedText(11828,10,"真弓の部屋","Mayumis Zimmer"),
+             new HardCodedText(11840,10,"２Ｆ廊下　","1.OG: Flur"),
+             new HardCodedText(11852,10,"早紀の部屋","Sakis Zimmer"),
+             new HardCodedText(11864,10,"裕美の部屋","Hiromis Zimmer"),
+             new HardCodedText(11876,10,"里紗の部屋","Risas Zimmer"),
+             new HardCodedText(11888,10,"食堂　　　","Speisesaal"),
+             new HardCodedText(11900,10,"１Ｆ廊下　","EG: Flur"),
+
+            //GMAP1B
+            new HardCodedText(14728,10,"体育館横　","neben der Turnhalle"),
+            new HardCodedText(14740,10,"体育館　　","Turnhalle"),
+            new HardCodedText(14752,10,"文芸部室　","Literaturklub"),
+            new HardCodedText(14764,10,"保健室　　","Krankenzimmer"),
+            new HardCodedText(14776,10,"生徒会室　","Schülervertretung"),
+            new HardCodedText(14788,10,"事務室　　","Sekretariat"),
+            new HardCodedText(14800,10,"図書室　　","Bibliothek"),
+            new HardCodedText(14812,10,"化学実験室","Chemielabor"),
+            new HardCodedText(14824,10,"音楽室　　","Musikzimmer"),
+            new HardCodedText(14872,10,"食堂　　　","Speisesaal"),
+            new HardCodedText(14884,10,"真弓の部屋","Mayumis Zimmer"),
+            new HardCodedText(14896,10,"涼子の部屋","Ryokos Zimmer"),
+            new HardCodedText(14908,10,"麗子の部屋","Reikos Zimmer"),
+            new HardCodedText(14920,10,"２Ｆ廊下　","1.OG: Flur"),
+            new HardCodedText(14932,10,"裕美の部屋","Hiromis Zimmer"),
+            new HardCodedText(14944,10,"里紗の部屋","Risas Zimmer"),
+            new HardCodedText(14956,10,"早紀の部屋","Sakis Zimmer"),
+            new HardCodedText(14968,10,"１Ｆ廊下　","EG: Flur"),
 
         };
 

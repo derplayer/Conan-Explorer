@@ -863,8 +863,15 @@ namespace ConanExplorer.Windows
 
         private void toolStripMenuItem_HardcodedText_Click(object sender, EventArgs e)
         {
-            HardcodedTextWindow hardcodedTestWindow = new HardcodedTextWindow(ScriptFile);
-            hardcodedTestWindow.ShowDialog();
+            try
+            {
+                HardcodedTextWindow hardcodedTestWindow = new HardcodedTextWindow(ScriptFile);
+                hardcodedTestWindow.ShowDialog();
+            }
+            catch (Exception f)
+            {
+                return;
+            }
         }
 
         private void toolStripMenuItem_LockedCharacters_Click(object sender, EventArgs e)

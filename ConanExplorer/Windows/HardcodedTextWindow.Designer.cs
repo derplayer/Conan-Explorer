@@ -31,14 +31,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HardcodedTextWindow));
             this.listBox_HardcodedTexts = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button_DefNewStr = new System.Windows.Forms.Button();
+            this.button_RemoveSel = new System.Windows.Forms.Button();
+            this.button_LoadBlob = new System.Windows.Forms.Button();
+            this.textBox_Translation = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.textBox_NewString = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox_CurrentString = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_OriginalString = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox_Translation = new System.Windows.Forms.TextBox();
+            this.button_Reset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -72,6 +76,10 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.button_Reset);
+            this.splitContainer1.Panel2.Controls.Add(this.button_DefNewStr);
+            this.splitContainer1.Panel2.Controls.Add(this.button_RemoveSel);
+            this.splitContainer1.Panel2.Controls.Add(this.button_LoadBlob);
             this.splitContainer1.Panel2.Controls.Add(this.textBox_Translation);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.textBox_NewString);
@@ -86,6 +94,54 @@
             this.splitContainer1.Size = new System.Drawing.Size(710, 237);
             this.splitContainer1.SplitterDistance = 390;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // button_DefNewStr
+            // 
+            this.button_DefNewStr.Location = new System.Drawing.Point(148, 176);
+            this.button_DefNewStr.Name = "button_DefNewStr";
+            this.button_DefNewStr.Size = new System.Drawing.Size(110, 23);
+            this.button_DefNewStr.TabIndex = 10;
+            this.button_DefNewStr.Text = "Default New String";
+            this.button_DefNewStr.UseVisualStyleBackColor = true;
+            this.button_DefNewStr.Click += new System.EventHandler(this.button_DefNewStr_Click);
+            // 
+            // button_RemoveSel
+            // 
+            this.button_RemoveSel.Enabled = false;
+            this.button_RemoveSel.Location = new System.Drawing.Point(26, 176);
+            this.button_RemoveSel.Name = "button_RemoveSel";
+            this.button_RemoveSel.Size = new System.Drawing.Size(116, 23);
+            this.button_RemoveSel.TabIndex = 9;
+            this.button_RemoveSel.Text = "Remove selected";
+            this.button_RemoveSel.UseVisualStyleBackColor = true;
+            this.button_RemoveSel.Click += new System.EventHandler(this.button_RemoveSel_Click);
+            // 
+            // button_LoadBlob
+            // 
+            this.button_LoadBlob.Location = new System.Drawing.Point(26, 205);
+            this.button_LoadBlob.Name = "button_LoadBlob";
+            this.button_LoadBlob.Size = new System.Drawing.Size(262, 23);
+            this.button_LoadBlob.TabIndex = 8;
+            this.button_LoadBlob.Text = "Parse Binary";
+            this.button_LoadBlob.UseVisualStyleBackColor = true;
+            this.button_LoadBlob.Click += new System.EventHandler(this.button_LoadBlob_Click);
+            // 
+            // textBox_Translation
+            // 
+            this.textBox_Translation.Location = new System.Drawing.Point(25, 70);
+            this.textBox_Translation.Name = "textBox_Translation";
+            this.textBox_Translation.ReadOnly = true;
+            this.textBox_Translation.Size = new System.Drawing.Size(263, 20);
+            this.textBox_Translation.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(23, 54);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Translation:";
             // 
             // textBox_NewString
             // 
@@ -138,22 +194,15 @@
             this.textBox_OriginalString.Size = new System.Drawing.Size(263, 20);
             this.textBox_OriginalString.TabIndex = 0;
             // 
-            // label4
+            // button_Reset
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(23, 54);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(62, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Translation:";
-            // 
-            // textBox_Translation
-            // 
-            this.textBox_Translation.Location = new System.Drawing.Point(25, 70);
-            this.textBox_Translation.Name = "textBox_Translation";
-            this.textBox_Translation.ReadOnly = true;
-            this.textBox_Translation.Size = new System.Drawing.Size(263, 20);
-            this.textBox_Translation.TabIndex = 7;
+            this.button_Reset.Location = new System.Drawing.Point(256, 176);
+            this.button_Reset.Name = "button_Reset";
+            this.button_Reset.Size = new System.Drawing.Size(32, 23);
+            this.button_Reset.TabIndex = 11;
+            this.button_Reset.Text = "(R)";
+            this.button_Reset.UseVisualStyleBackColor = true;
+            this.button_Reset.Click += new System.EventHandler(this.button_Reset_Click);
             // 
             // HardcodedTextWindow
             // 
@@ -186,5 +235,9 @@
         private System.Windows.Forms.TextBox textBox_OriginalString;
         private System.Windows.Forms.TextBox textBox_Translation;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button_RemoveSel;
+        private System.Windows.Forms.Button button_LoadBlob;
+        private System.Windows.Forms.Button button_DefNewStr;
+        private System.Windows.Forms.Button button_Reset;
     }
 }
