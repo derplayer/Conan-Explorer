@@ -30,6 +30,9 @@ namespace ConanExplorer.Windows
 
         private void InitializeList()
         {
+            //Parse data from resources
+            ImportCSVToSJIS(Properties.Resources.SLPS_016);
+
             foreach (HardCodedText text in HardCodedText.Texts)
             {
                 HardCodedText foundText = _scriptFile.HardCodedTexts.FirstOrDefault(t => t.Offset == text.Offset);
@@ -54,7 +57,11 @@ namespace ConanExplorer.Windows
                 textBox_OriginalString.Text = text.OriginalString;
                 textBox_NewString.Text = text.NewString;
                 textBox_NewString.MaxLength = text.Length;
-                textBox_CurrentString.Text = text.CurrentString;
+
+                if(ApplicationState.Instance.ProjectFile == null)
+                    textBox_CurrentString.Text = "PROJECT BINARY IS NOT LOADED!";
+                else
+                    textBox_CurrentString.Text = text.CurrentString;
                 textBox_Translation.Text = text.Translation;
             }
         }
@@ -208,6 +215,40 @@ namespace ConanExplorer.Windows
             }
 
             file.Close();
+        }
+
+        public void ImportCSVToSJIS(string content)
+        {
+            HardCodedText.Texts = new List<HardCodedText>();
+            List<string> lines = content.Split(
+                new[] { "\r\n", "\r", "\n" },
+                StringSplitOptions.None
+            ).ToList();
+
+            lines.RemoveAt(0); //remove header
+            foreach (var line in lines)
+            {
+                try
+                {
+                    string[] fields = line.Split(';');
+                    //Ignore empty lines or other stuff that can happen
+                    if(fields.Count() >= 4) { 
+                        var hardctxt = new HardCodedText
+                        {
+                            Offset = Convert.ToInt32(fields[0]),
+                            Length = Convert.ToInt32(fields[1]),
+                            OriginalString = fields[2],
+                            Translation = fields[3], //[4] for english
+                        };
+                        HardCodedText.Texts.Add(hardctxt);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Something is wrong with a Hardcoded String: " + e.ToString());
+                }
+            }
+
         }
 
         private void button_DefNewStr_Click(object sender, EventArgs e)

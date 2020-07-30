@@ -41,11 +41,14 @@ namespace ConanExplorer.Windows
             this.checkBox_SearchGlobal = new System.Windows.Forms.CheckBox();
             this.textBox_Search = new System.Windows.Forms.TextBox();
             this.button_SearchDown = new System.Windows.Forms.Button();
+            this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.panel_Preview = new System.Windows.Forms.Panel();
+            this.pictureBox_MessagePreviewAlt = new System.Windows.Forms.PictureBox();
             this.pictureBox_MessagePreview = new System.Windows.Forms.PictureBox();
             this.comboBox_PreviewColor = new System.Windows.Forms.ComboBox();
             this.comboBox_PreviewType = new System.Windows.Forms.ComboBox();
+            this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
             this.button_Apply = new System.Windows.Forms.Button();
             this.progressBar_Progress = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -75,9 +78,7 @@ namespace ConanExplorer.Windows
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_Row = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.pictureBox_MessagePreviewAlt = new System.Windows.Forms.PictureBox();
-            this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
-            this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
+            this.resetHardcodedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -96,10 +97,10 @@ namespace ConanExplorer.Windows
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
             this.panel_Preview.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreviewAlt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreview)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreviewAlt)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox_ScriptFiles
@@ -245,6 +246,23 @@ namespace ConanExplorer.Windows
             this.button_SearchDown.UseVisualStyleBackColor = true;
             this.button_SearchDown.Click += new System.EventHandler(this.button_SearchDown_Click);
             // 
+            // richTextBox_ScriptFile
+            // 
+            this.richTextBox_ScriptFile.DetectUrls = false;
+            this.richTextBox_ScriptFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox_ScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_ScriptFile.HideSelection = false;
+            this.richTextBox_ScriptFile.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox_ScriptFile.Name = "richTextBox_ScriptFile";
+            this.richTextBox_ScriptFile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(440, 585);
+            this.richTextBox_ScriptFile.TabIndex = 0;
+            this.richTextBox_ScriptFile.Text = "";
+            this.richTextBox_ScriptFile.WordWrap = false;
+            this.richTextBox_ScriptFile.SelectionChanged += new System.EventHandler(this.richTextBox_ScriptFile_SelectionChanged);
+            this.richTextBox_ScriptFile.TextChanged += new System.EventHandler(this.richTextBox_ScriptFile_TextChanged);
+            this.richTextBox_ScriptFile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptFile_KeyDown);
+            // 
             // splitContainer4
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -279,6 +297,16 @@ namespace ConanExplorer.Windows
             this.panel_Preview.Name = "panel_Preview";
             this.panel_Preview.Size = new System.Drawing.Size(412, 223);
             this.panel_Preview.TabIndex = 3;
+            // 
+            // pictureBox_MessagePreviewAlt
+            // 
+            this.pictureBox_MessagePreviewAlt.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pictureBox_MessagePreviewAlt.Location = new System.Drawing.Point(206, 0);
+            this.pictureBox_MessagePreviewAlt.Name = "pictureBox_MessagePreviewAlt";
+            this.pictureBox_MessagePreviewAlt.Size = new System.Drawing.Size(200, 95);
+            this.pictureBox_MessagePreviewAlt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox_MessagePreviewAlt.TabIndex = 1;
+            this.pictureBox_MessagePreviewAlt.TabStop = false;
             // 
             // pictureBox_MessagePreview
             // 
@@ -320,6 +348,20 @@ namespace ConanExplorer.Windows
             this.comboBox_PreviewType.Name = "comboBox_PreviewType";
             this.comboBox_PreviewType.Size = new System.Drawing.Size(308, 21);
             this.comboBox_PreviewType.TabIndex = 1;
+            // 
+            // richTextBox_ScriptMessage
+            // 
+            this.richTextBox_ScriptMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox_ScriptMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_ScriptMessage.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox_ScriptMessage.Name = "richTextBox_ScriptMessage";
+            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(412, 319);
+            this.richTextBox_ScriptMessage.TabIndex = 0;
+            this.richTextBox_ScriptMessage.Text = "";
+            this.richTextBox_ScriptMessage.TextChanged += new System.EventHandler(this.richTextBox_ScriptMessage_TextChanged);
+            this.richTextBox_ScriptMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptMessage_KeyDown);
             // 
             // button_Apply
             // 
@@ -436,6 +478,7 @@ namespace ConanExplorer.Windows
             this.toolStripMenuItem_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem_FontSettings,
             this.toolStripMenuItem_HardcodedText,
+            this.resetHardcodedTextToolStripMenuItem,
             this.toolStripMenuItem_LockedCharacters,
             this.toolStripMenuItem2,
             this.toolStripMenuItem_Format,
@@ -452,7 +495,7 @@ namespace ConanExplorer.Windows
             // 
             this.toolStripMenuItem_FontSettings.Enabled = false;
             this.toolStripMenuItem_FontSettings.Name = "toolStripMenuItem_FontSettings";
-            this.toolStripMenuItem_FontSettings.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_FontSettings.Size = new System.Drawing.Size(197, 22);
             this.toolStripMenuItem_FontSettings.Text = "Font Settings...";
             this.toolStripMenuItem_FontSettings.Click += new System.EventHandler(this.toolStripMenuItem_FontSettings_Click);
             // 
@@ -460,7 +503,7 @@ namespace ConanExplorer.Windows
             // 
             this.toolStripMenuItem_HardcodedText.Enabled = false;
             this.toolStripMenuItem_HardcodedText.Name = "toolStripMenuItem_HardcodedText";
-            this.toolStripMenuItem_HardcodedText.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_HardcodedText.Size = new System.Drawing.Size(197, 22);
             this.toolStripMenuItem_HardcodedText.Text = "Hardcoded Text...";
             this.toolStripMenuItem_HardcodedText.Click += new System.EventHandler(this.toolStripMenuItem_HardcodedText_Click);
             // 
@@ -468,20 +511,20 @@ namespace ConanExplorer.Windows
             // 
             this.toolStripMenuItem_LockedCharacters.Enabled = false;
             this.toolStripMenuItem_LockedCharacters.Name = "toolStripMenuItem_LockedCharacters";
-            this.toolStripMenuItem_LockedCharacters.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_LockedCharacters.Size = new System.Drawing.Size(197, 22);
             this.toolStripMenuItem_LockedCharacters.Text = "Locked Characters...";
             this.toolStripMenuItem_LockedCharacters.Click += new System.EventHandler(this.toolStripMenuItem_LockedCharacters_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(194, 6);
             // 
             // toolStripMenuItem_Format
             // 
             this.toolStripMenuItem_Format.Enabled = false;
             this.toolStripMenuItem_Format.Name = "toolStripMenuItem_Format";
-            this.toolStripMenuItem_Format.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_Format.Size = new System.Drawing.Size(197, 22);
             this.toolStripMenuItem_Format.Text = "Format";
             this.toolStripMenuItem_Format.Click += new System.EventHandler(this.toolStripMenuItem_Format_Click);
             // 
@@ -489,33 +532,33 @@ namespace ConanExplorer.Windows
             // 
             this.toolStripMenuItem_DeFormat.Enabled = false;
             this.toolStripMenuItem_DeFormat.Name = "toolStripMenuItem_DeFormat";
-            this.toolStripMenuItem_DeFormat.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_DeFormat.Size = new System.Drawing.Size(197, 22);
             this.toolStripMenuItem_DeFormat.Text = "De-Format";
             this.toolStripMenuItem_DeFormat.Click += new System.EventHandler(this.toolStripMenuItem_DeFormat_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(194, 6);
             // 
             // toolStripMenuItem_ViewScript
             // 
             this.toolStripMenuItem_ViewScript.Name = "toolStripMenuItem_ViewScript";
-            this.toolStripMenuItem_ViewScript.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_ViewScript.Size = new System.Drawing.Size(197, 22);
             this.toolStripMenuItem_ViewScript.Text = "View Script...";
             this.toolStripMenuItem_ViewScript.Click += new System.EventHandler(this.toolStripMenuItem_ViewScript_Click);
             // 
             // searchCommandToolStripMenuItem
             // 
             this.searchCommandToolStripMenuItem.Name = "searchCommandToolStripMenuItem";
-            this.searchCommandToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.searchCommandToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.searchCommandToolStripMenuItem.Text = "Search Command...";
             this.searchCommandToolStripMenuItem.Click += new System.EventHandler(this.searchCommandToolStripMenuItem_Click);
             // 
             // translateToEnglishToolStripMenuItem
             // 
             this.translateToEnglishToolStripMenuItem.Name = "translateToEnglishToolStripMenuItem";
-            this.translateToEnglishToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.translateToEnglishToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.translateToEnglishToolStripMenuItem.Text = "Translate to English";
             this.translateToEnglishToolStripMenuItem.Click += new System.EventHandler(this.translateToEnglishToolStripMenuItem_Click);
             // 
@@ -550,46 +593,12 @@ namespace ConanExplorer.Windows
             this.toolStripStatusLabel_Row.Name = "toolStripStatusLabel_Row";
             this.toolStripStatusLabel_Row.Size = new System.Drawing.Size(0, 17);
             // 
-            // pictureBox_MessagePreviewAlt
+            // resetHardcodedTextToolStripMenuItem
             // 
-            this.pictureBox_MessagePreviewAlt.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pictureBox_MessagePreviewAlt.Location = new System.Drawing.Point(206, 0);
-            this.pictureBox_MessagePreviewAlt.Name = "pictureBox_MessagePreviewAlt";
-            this.pictureBox_MessagePreviewAlt.Size = new System.Drawing.Size(200, 95);
-            this.pictureBox_MessagePreviewAlt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox_MessagePreviewAlt.TabIndex = 1;
-            this.pictureBox_MessagePreviewAlt.TabStop = false;
-            // 
-            // richTextBox_ScriptFile
-            // 
-            this.richTextBox_ScriptFile.DetectUrls = false;
-            this.richTextBox_ScriptFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_ScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox_ScriptFile.HideSelection = false;
-            this.richTextBox_ScriptFile.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox_ScriptFile.Name = "richTextBox_ScriptFile";
-            this.richTextBox_ScriptFile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(440, 585);
-            this.richTextBox_ScriptFile.TabIndex = 0;
-            this.richTextBox_ScriptFile.Text = "";
-            this.richTextBox_ScriptFile.WordWrap = false;
-            this.richTextBox_ScriptFile.SelectionChanged += new System.EventHandler(this.richTextBox_ScriptFile_SelectionChanged);
-            this.richTextBox_ScriptFile.TextChanged += new System.EventHandler(this.richTextBox_ScriptFile_TextChanged);
-            this.richTextBox_ScriptFile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptFile_KeyDown);
-            // 
-            // richTextBox_ScriptMessage
-            // 
-            this.richTextBox_ScriptMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox_ScriptMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox_ScriptMessage.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox_ScriptMessage.Name = "richTextBox_ScriptMessage";
-            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(412, 319);
-            this.richTextBox_ScriptMessage.TabIndex = 0;
-            this.richTextBox_ScriptMessage.Text = "";
-            this.richTextBox_ScriptMessage.TextChanged += new System.EventHandler(this.richTextBox_ScriptMessage_TextChanged);
-            this.richTextBox_ScriptMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptMessage_KeyDown);
+            this.resetHardcodedTextToolStripMenuItem.Name = "resetHardcodedTextToolStripMenuItem";
+            this.resetHardcodedTextToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.resetHardcodedTextToolStripMenuItem.Text = "Reset Hardcoded Text...";
+            this.resetHardcodedTextToolStripMenuItem.Click += new System.EventHandler(this.resetHardcodedTextToolStripMenuItem_Click);
             // 
             // ScriptEditorWindow
             // 
@@ -625,12 +634,12 @@ namespace ConanExplorer.Windows
             this.splitContainer4.ResumeLayout(false);
             this.panel_Preview.ResumeLayout(false);
             this.panel_Preview.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreviewAlt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreview)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_MessagePreviewAlt)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -685,5 +694,6 @@ namespace ConanExplorer.Windows
         private System.Windows.Forms.ToolStripMenuItem searchCommandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem translateToEnglishToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox_MessagePreviewAlt;
+        private System.Windows.Forms.ToolStripMenuItem resetHardcodedTextToolStripMenuItem;
     }
 }

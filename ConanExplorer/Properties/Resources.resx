@@ -127,4 +127,7 @@
   <data name="wordlist_long" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wordlist_long.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="SLPS_016" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SLPS_016.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

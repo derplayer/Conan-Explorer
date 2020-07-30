@@ -1064,5 +1064,12 @@ namespace ConanExplorer.Windows
                 Enabled = true;
             });
         }
+
+        private void resetHardcodedTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScriptFile.HardCodedTexts = new List<HardCodedText>();
+            MessageBox.Show("Hardcoded Texts were reseted and are now empty in project file!\n" +
+                "Please reopen the Hardcoded Text Window to reinitialize the default settings!");
+        }
     }
 }
