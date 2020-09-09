@@ -73,7 +73,22 @@ namespace ConanExplorer.Conan
             for (int i = 0; i < NewString.Length; i++)
             {
                 bool pair = false;
+                bool sjisForceskip = false;
                 string neededSymbol = NewString[i].ToString();
+
+                //sjis 2-byte symbol passthrough
+                foreach (var lchar in script.LockedCharacters)
+                {
+                    if (neededSymbol == lchar.Symbol)
+                    {
+                        stringBuilder.Append(lchar.Symbol);
+                        sjisForceskip = true;
+                        break;
+                    }
+                }
+
+                if (sjisForceskip) continue;
+
                 if (i + 1 < NewString.Length)
                 {
                     if (script.IsValidChar(NewString[i + 1]))
@@ -112,6 +127,7 @@ namespace ConanExplorer.Conan
                     }
                 }
             }
+
             CurrentString = stringBuilder.ToString();
         }
 

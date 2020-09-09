@@ -22,6 +22,8 @@ using System.Drawing.Text;
 using System.Net;
 using System.Diagnostics;
 using GoogleTranslateFreeApi;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace ConanExplorer.Windows
 {
@@ -485,6 +487,17 @@ namespace ConanExplorer.Windows
                 using (StreamReader reader = new StreamReader(openFileDialog.FileName))
                 {
                     ScriptFile = (ScriptFile)serializer.Deserialize(reader);
+
+                    //Default hacky fallback for Lockcharacters
+                    if(ScriptFile.LockedCharacters == null || ScriptFile.LockedCharacters.Count <= 5)
+                    {
+                        var data = JsonConvert.DeserializeObject<List<FontCharacter>>(Resources.DefaultLockedCharacters);
+                        ScriptFile.LockedCharacters = new List<FontCharacter>();
+                        foreach (var character in data)
+                        {
+                            ScriptFile.LockedCharacters.Add(new FontCharacter(new byte[32], character.Index, ""));
+                        }
+                    }
                 }
             }
             else

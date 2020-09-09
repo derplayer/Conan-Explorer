@@ -61,6 +61,34 @@ namespace ConanExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///      {
+        ///        &quot;Data&quot;: &quot;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=&quot;,
+        ///        &quot;Index&quot;: &quot;16513&quot;,
+        ///        &quot;Symbol&quot;: &quot;　&quot;
+        ///      },
+        ///      {
+        ///        &quot;Data&quot;: &quot;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAYAAwABAA=&quot;,
+        ///        &quot;Index&quot;: &quot;16769&quot;,
+        ///        &quot;Symbol&quot;: &quot;、&quot;
+        ///      },
+        ///      {
+        ///        &quot;Data&quot;: &quot;AAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAIgAiACIAHAA=&quot;,
+        ///        &quot;Index&quot;: &quot;17025&quot;,
+        ///        &quot;Symbol&quot;: &quot;。&quot;
+        ///      },
+        ///      {
+        ///        &quot;Data&quot;: &quot;AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAcAAwABAAIAA=&quot;,
+        ///        &quot;Index&quot;: &quot;17281&quot;,
+        ///       [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DefaultLockedCharacters {
+            get {
+                return ResourceManager.GetString("DefaultLockedCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap font1 {
