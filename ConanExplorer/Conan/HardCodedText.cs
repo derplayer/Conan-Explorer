@@ -62,7 +62,13 @@ namespace ConanExplorer.Conan
 
         public void Format(ScriptFile script, bool ignoreMissing = true)
         {
-            if (NewString == null) return; //skip if value was not edited
+            //use fixed translation string when no newstring
+            if (NewString == null) NewString = Translation; 
+
+            //truncate when too long (just in case)
+            if(NewString.Count() > Length)
+                NewString = string.Concat(NewString.Take(Length));
+
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < NewString.Length; i++)
             {

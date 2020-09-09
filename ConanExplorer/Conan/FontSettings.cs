@@ -37,7 +37,7 @@ namespace ConanExplorer.Conan
         public static FontSettings DE()
         {
             FontSettings settings = new FontSettings();
-            settings.AllowedSplittedSymbols = ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZöäüÖÄÜß.,-':!?()1234567890").ToList();
+            settings.AllowedSplittedSymbols = ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZöäüÖÄÜß\"&.,-':!?()1234567890").ToList();
             settings.FontName = "Quarlow";
             settings.FontSize = 12;
             return settings;

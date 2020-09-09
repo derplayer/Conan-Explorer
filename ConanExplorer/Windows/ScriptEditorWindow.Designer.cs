@@ -41,14 +41,12 @@ namespace ConanExplorer.Windows
             this.checkBox_SearchGlobal = new System.Windows.Forms.CheckBox();
             this.textBox_Search = new System.Windows.Forms.TextBox();
             this.button_SearchDown = new System.Windows.Forms.Button();
-            this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.panel_Preview = new System.Windows.Forms.Panel();
             this.pictureBox_MessagePreviewAlt = new System.Windows.Forms.PictureBox();
             this.pictureBox_MessagePreview = new System.Windows.Forms.PictureBox();
             this.comboBox_PreviewColor = new System.Windows.Forms.ComboBox();
             this.comboBox_PreviewType = new System.Windows.Forms.ComboBox();
-            this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
             this.button_Apply = new System.Windows.Forms.Button();
             this.progressBar_Progress = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -79,6 +77,8 @@ namespace ConanExplorer.Windows
             this.toolStripStatusLabel_Row = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.resetHardcodedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
+            this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -246,23 +246,6 @@ namespace ConanExplorer.Windows
             this.button_SearchDown.UseVisualStyleBackColor = true;
             this.button_SearchDown.Click += new System.EventHandler(this.button_SearchDown_Click);
             // 
-            // richTextBox_ScriptFile
-            // 
-            this.richTextBox_ScriptFile.DetectUrls = false;
-            this.richTextBox_ScriptFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox_ScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox_ScriptFile.HideSelection = false;
-            this.richTextBox_ScriptFile.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox_ScriptFile.Name = "richTextBox_ScriptFile";
-            this.richTextBox_ScriptFile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(440, 585);
-            this.richTextBox_ScriptFile.TabIndex = 0;
-            this.richTextBox_ScriptFile.Text = "";
-            this.richTextBox_ScriptFile.WordWrap = false;
-            this.richTextBox_ScriptFile.SelectionChanged += new System.EventHandler(this.richTextBox_ScriptFile_SelectionChanged);
-            this.richTextBox_ScriptFile.TextChanged += new System.EventHandler(this.richTextBox_ScriptFile_TextChanged);
-            this.richTextBox_ScriptFile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptFile_KeyDown);
-            // 
             // splitContainer4
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -348,20 +331,6 @@ namespace ConanExplorer.Windows
             this.comboBox_PreviewType.Name = "comboBox_PreviewType";
             this.comboBox_PreviewType.Size = new System.Drawing.Size(308, 21);
             this.comboBox_PreviewType.TabIndex = 1;
-            // 
-            // richTextBox_ScriptMessage
-            // 
-            this.richTextBox_ScriptMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox_ScriptMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox_ScriptMessage.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox_ScriptMessage.Name = "richTextBox_ScriptMessage";
-            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(412, 319);
-            this.richTextBox_ScriptMessage.TabIndex = 0;
-            this.richTextBox_ScriptMessage.Text = "";
-            this.richTextBox_ScriptMessage.TextChanged += new System.EventHandler(this.richTextBox_ScriptMessage_TextChanged);
-            this.richTextBox_ScriptMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptMessage_KeyDown);
             // 
             // button_Apply
             // 
@@ -574,7 +543,7 @@ namespace ConanExplorer.Windows
             // toolStripMenuItem_GenerateScript
             // 
             this.toolStripMenuItem_GenerateScript.Name = "toolStripMenuItem_GenerateScript";
-            this.toolStripMenuItem_GenerateScript.Size = new System.Drawing.Size(163, 22);
+            this.toolStripMenuItem_GenerateScript.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItem_GenerateScript.Text = "Generate Script...";
             this.toolStripMenuItem_GenerateScript.Click += new System.EventHandler(this.toolStripMenuItem_GenerateScript_Click);
             // 
@@ -599,6 +568,37 @@ namespace ConanExplorer.Windows
             this.resetHardcodedTextToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.resetHardcodedTextToolStripMenuItem.Text = "Reset Hardcoded Text...";
             this.resetHardcodedTextToolStripMenuItem.Click += new System.EventHandler(this.resetHardcodedTextToolStripMenuItem_Click);
+            // 
+            // richTextBox_ScriptFile
+            // 
+            this.richTextBox_ScriptFile.DetectUrls = false;
+            this.richTextBox_ScriptFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox_ScriptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_ScriptFile.HideSelection = false;
+            this.richTextBox_ScriptFile.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox_ScriptFile.Name = "richTextBox_ScriptFile";
+            this.richTextBox_ScriptFile.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.richTextBox_ScriptFile.Size = new System.Drawing.Size(440, 585);
+            this.richTextBox_ScriptFile.TabIndex = 0;
+            this.richTextBox_ScriptFile.Text = "";
+            this.richTextBox_ScriptFile.WordWrap = false;
+            this.richTextBox_ScriptFile.SelectionChanged += new System.EventHandler(this.richTextBox_ScriptFile_SelectionChanged);
+            this.richTextBox_ScriptFile.TextChanged += new System.EventHandler(this.richTextBox_ScriptFile_TextChanged);
+            this.richTextBox_ScriptFile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptFile_KeyDown);
+            // 
+            // richTextBox_ScriptMessage
+            // 
+            this.richTextBox_ScriptMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox_ScriptMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox_ScriptMessage.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox_ScriptMessage.Name = "richTextBox_ScriptMessage";
+            this.richTextBox_ScriptMessage.Size = new System.Drawing.Size(412, 319);
+            this.richTextBox_ScriptMessage.TabIndex = 0;
+            this.richTextBox_ScriptMessage.Text = "";
+            this.richTextBox_ScriptMessage.TextChanged += new System.EventHandler(this.richTextBox_ScriptMessage_TextChanged);
+            this.richTextBox_ScriptMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextBox_ScriptMessage_KeyDown);
             // 
             // ScriptEditorWindow
             // 
