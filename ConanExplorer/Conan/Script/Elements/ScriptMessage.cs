@@ -196,6 +196,7 @@ namespace ConanExplorer.Conan.Script.Elements
                         {
                             bool pair = false;
                             string neededSymbol = displayText[i].ToString();
+
                             if (i + 1 < displayText.Length)
                             {
                                 if (script.IsValidChar(displayText[i + 1]))
@@ -319,7 +320,22 @@ namespace ConanExplorer.Conan.Script.Elements
                     }
 
                     bool pair = false;
+                    bool sjisForceskip = false;
                     string neededSymbol = Content[i].ToString();
+
+                    //sjis 2-byte symbol passthrough
+                    foreach (var lchar in script.LockedCharacters)
+                    {
+                        if (neededSymbol == lchar.Symbol)
+                        {
+                            stringBuilder.Append(lchar.Symbol);
+                            sjisForceskip = true;
+                            break;
+                        }
+                    }
+
+                    if (sjisForceskip) continue;
+
                     if (i + 1 < Content.Length)
                     {
                         if (script.IsValidChar(Content[i + 1]))

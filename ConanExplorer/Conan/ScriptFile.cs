@@ -101,6 +101,15 @@ namespace ConanExplorer.Conan
             return false;
         }
 
+        public bool IsLockedChar(char character)
+        {
+            foreach (var c in LockedCharacters)
+            {
+                if (c.Symbol[0] == character) return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Generates the font characters for the current script file.
         /// </summary>

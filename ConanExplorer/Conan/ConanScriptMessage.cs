@@ -97,6 +97,7 @@ namespace ConanExplorer.Conan
                         bool pair = false;
                         bool found = false;
                         string neededSymbol = line[i].ToString();
+
                         if (i + 1 < line.Length)
                         {
                             if (scriptFile.IsValidChar(line[i + 1]))
