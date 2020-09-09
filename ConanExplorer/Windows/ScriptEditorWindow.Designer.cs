@@ -63,6 +63,7 @@ namespace ConanExplorer.Windows
             this.toolStripMenuItem_Tools = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_FontSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_HardcodedText = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetHardcodedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_LockedCharacters = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem_Format = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +77,6 @@ namespace ConanExplorer.Windows
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel_Row = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.resetHardcodedTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.richTextBox_ScriptFile = new ConanExplorer.Controls.FixedRichTextBox();
             this.richTextBox_ScriptMessage = new ConanExplorer.Controls.FixedRichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -476,6 +476,13 @@ namespace ConanExplorer.Windows
             this.toolStripMenuItem_HardcodedText.Text = "Hardcoded Text...";
             this.toolStripMenuItem_HardcodedText.Click += new System.EventHandler(this.toolStripMenuItem_HardcodedText_Click);
             // 
+            // resetHardcodedTextToolStripMenuItem
+            // 
+            this.resetHardcodedTextToolStripMenuItem.Name = "resetHardcodedTextToolStripMenuItem";
+            this.resetHardcodedTextToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.resetHardcodedTextToolStripMenuItem.Text = "Reset Hardcoded Text...";
+            this.resetHardcodedTextToolStripMenuItem.Click += new System.EventHandler(this.resetHardcodedTextToolStripMenuItem_Click);
+            // 
             // toolStripMenuItem_LockedCharacters
             // 
             this.toolStripMenuItem_LockedCharacters.Enabled = false;
@@ -543,7 +550,7 @@ namespace ConanExplorer.Windows
             // toolStripMenuItem_GenerateScript
             // 
             this.toolStripMenuItem_GenerateScript.Name = "toolStripMenuItem_GenerateScript";
-            this.toolStripMenuItem_GenerateScript.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem_GenerateScript.Size = new System.Drawing.Size(163, 22);
             this.toolStripMenuItem_GenerateScript.Text = "Generate Script...";
             this.toolStripMenuItem_GenerateScript.Click += new System.EventHandler(this.toolStripMenuItem_GenerateScript_Click);
             // 
@@ -561,13 +568,6 @@ namespace ConanExplorer.Windows
             // 
             this.toolStripStatusLabel_Row.Name = "toolStripStatusLabel_Row";
             this.toolStripStatusLabel_Row.Size = new System.Drawing.Size(0, 17);
-            // 
-            // resetHardcodedTextToolStripMenuItem
-            // 
-            this.resetHardcodedTextToolStripMenuItem.Name = "resetHardcodedTextToolStripMenuItem";
-            this.resetHardcodedTextToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.resetHardcodedTextToolStripMenuItem.Text = "Reset Hardcoded Text...";
-            this.resetHardcodedTextToolStripMenuItem.Click += new System.EventHandler(this.resetHardcodedTextToolStripMenuItem_Click);
             // 
             // richTextBox_ScriptFile
             // 

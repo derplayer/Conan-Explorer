@@ -274,17 +274,18 @@ namespace ConanExplorer.ExtensionMethods
                 char character = message.Content[i];
                 Font font = scriptFile.Font;
                 if (left >= 191) continue;
-                if (scriptFile.IsValidChar(character) || scriptFile.IsLockedChar(character))
+                if (scriptFile.IsValidChar(character))
                 {
                     i++;
-                    if (scriptFile.IsLockedChar(character))
-                    {
-                        FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character, character), font); //not accurate engine rendering
-                        Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
-                        graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
-                        left += 16;
-                    }
-                    else if (i == message.Content.Length)
+                    //if (scriptFile.IsLockedChar(character))
+                    //{
+                    //    FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character, character), font); //not accurate engine rendering
+                    //    Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);
+                    //    graphics.DrawImage(bitmap, new Rectangle(left, top, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel);
+                    //    left += 16;
+                    //}
+                    //else 
+                    if (i == message.Content.Length)
                     {
                         FontCharacter fontCharacter = new FontCharacter(new FontSymbol(character), font);
                         Bitmap bitmap = fontCharacter.GetBitmapTransparent(fontColor);

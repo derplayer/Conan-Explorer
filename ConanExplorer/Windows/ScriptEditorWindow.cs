@@ -612,6 +612,31 @@ namespace ConanExplorer.Windows
                 return;
             }
 
+            //Apply EOF Bugfix for PSX engine
+            foreach (var script in ScriptFile.Scripts)
+            {
+                //Don't touch those file! - (can) Softlock the engine, and we dont need to modify gamelogic to that degree
+                if (script.Name == "FLAG.TXT") continue;
+                if (script.Name == "GMAP1.LZB") continue;
+                if (script.Name == "GMAP2.LZB") continue;
+                if (script.Name == "GMAP3.LZB") continue;
+                if (script.Name == "GMAP1.TXT") continue;
+                if (script.Name == "GMAP2.TXT") continue;
+                if (script.Name == "GMAP3.TXT") continue;
+
+                int eofcheck = 0;
+                for (int i = script.TextBuffer.Length - 40; i < script.TextBuffer.Length; i++)
+                {
+                    if (script.TextBuffer[i] == '-') eofcheck++;
+                }
+
+                if (eofcheck < 30)
+                {
+                    script.TextBuffer += "\r\n" + "----------------------------------------";
+                    script.TextBuffer += "\r\n" + "----------------------------------------";
+                }
+            }
+
             XmlSerializer serializer = new XmlSerializer(typeof(ScriptFile));
             using (StreamWriter writer = new StreamWriter(_actualEditorScript))
             {

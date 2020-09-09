@@ -98,6 +98,10 @@ namespace ConanExplorer.Conan
             {
                 if (c == character) return true;
             }
+            foreach (var c in LockedCharacters)
+            {
+                if (c.Symbol[0] == character) return true;
+            }
             return false;
         }
 
