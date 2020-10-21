@@ -114,6 +114,16 @@ namespace ConanExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] START_DEBUG {
+            get {
+                object obj = ResourceManager.GetObject("START_DEBUG", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap WINDOW {

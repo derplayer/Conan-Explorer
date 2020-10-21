@@ -56,6 +56,7 @@ namespace ConanExplorer.Windows
             this.toolStripMenuItem_Save = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem_MultiCompress = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem_MultiCompressDebug = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_CompressAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem_DecompressAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
@@ -375,6 +376,7 @@ namespace ConanExplorer.Windows
             this.toolStripMenuItem_Save,
             this.toolStripMenuItem1,
             this.toolStripMenuItem_MultiCompress,
+            this.toolStripMenuItem_MultiCompressDebug,
             this.toolStripMenuItem_CompressAll,
             this.toolStripMenuItem_DecompressAll,
             this.toolStripMenuItem4,
@@ -386,59 +388,66 @@ namespace ConanExplorer.Windows
             // toolStripMenuItem_Open
             // 
             this.toolStripMenuItem_Open.Name = "toolStripMenuItem_Open";
-            this.toolStripMenuItem_Open.Size = new System.Drawing.Size(244, 22);
+            this.toolStripMenuItem_Open.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem_Open.Text = "Open...";
             this.toolStripMenuItem_Open.Click += new System.EventHandler(this.toolStripMenuItem_Open_Click);
             // 
             // toolStripMenuItem_SaveNormal
             // 
             this.toolStripMenuItem_SaveNormal.Name = "toolStripMenuItem_SaveNormal";
-            this.toolStripMenuItem_SaveNormal.Size = new System.Drawing.Size(244, 22);
+            this.toolStripMenuItem_SaveNormal.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem_SaveNormal.Text = "Save";
             this.toolStripMenuItem_SaveNormal.Click += new System.EventHandler(this.toolStripMenuItem_SaveNormal_Click);
             // 
             // toolStripMenuItem_Save
             // 
             this.toolStripMenuItem_Save.Name = "toolStripMenuItem_Save";
-            this.toolStripMenuItem_Save.Size = new System.Drawing.Size(244, 22);
+            this.toolStripMenuItem_Save.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem_Save.Text = "Save as...";
             this.toolStripMenuItem_Save.Click += new System.EventHandler(this.toolStripMenuItem_Save_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(241, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(287, 6);
             // 
             // toolStripMenuItem_MultiCompress
             // 
             this.toolStripMenuItem_MultiCompress.Name = "toolStripMenuItem_MultiCompress";
-            this.toolStripMenuItem_MultiCompress.Size = new System.Drawing.Size(244, 22);
+            this.toolStripMenuItem_MultiCompress.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem_MultiCompress.Text = "Save -> Format -> Compress All";
             this.toolStripMenuItem_MultiCompress.Click += new System.EventHandler(this.toolStripMenuItem_MultiCompress_Click);
+            // 
+            // toolStripMenuItem_MultiCompressDebug
+            // 
+            this.toolStripMenuItem_MultiCompressDebug.Name = "toolStripMenuItem_MultiCompressDebug";
+            this.toolStripMenuItem_MultiCompressDebug.Size = new System.Drawing.Size(290, 22);
+            this.toolStripMenuItem_MultiCompressDebug.Text = "Save (Debug) -> Format -> Compress All";
+            this.toolStripMenuItem_MultiCompressDebug.Click += new System.EventHandler(this.toolStripMenuItem_MultiCompressDebug_Click);
             // 
             // toolStripMenuItem_CompressAll
             // 
             this.toolStripMenuItem_CompressAll.Name = "toolStripMenuItem_CompressAll";
-            this.toolStripMenuItem_CompressAll.Size = new System.Drawing.Size(244, 22);
+            this.toolStripMenuItem_CompressAll.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem_CompressAll.Text = "Compress All";
             this.toolStripMenuItem_CompressAll.Click += new System.EventHandler(this.toolStripMenuItem_CompressAll_Click);
             // 
             // toolStripMenuItem_DecompressAll
             // 
             this.toolStripMenuItem_DecompressAll.Name = "toolStripMenuItem_DecompressAll";
-            this.toolStripMenuItem_DecompressAll.Size = new System.Drawing.Size(244, 22);
+            this.toolStripMenuItem_DecompressAll.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem_DecompressAll.Text = "Decompress All";
             this.toolStripMenuItem_DecompressAll.Click += new System.EventHandler(this.toolStripMenuItem_DecompressAll_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(241, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(287, 6);
             // 
             // toolStripMenuItem_Clear
             // 
             this.toolStripMenuItem_Clear.Name = "toolStripMenuItem_Clear";
-            this.toolStripMenuItem_Clear.Size = new System.Drawing.Size(244, 22);
+            this.toolStripMenuItem_Clear.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem_Clear.Text = "Clear";
             this.toolStripMenuItem_Clear.Click += new System.EventHandler(this.toolStripMenuItem_Clear_Click);
             // 
@@ -689,11 +698,12 @@ namespace ConanExplorer.Windows
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_Clear;
         private System.Windows.Forms.Button button_SearchUp;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_MultiCompress;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_MultiCompressDebug;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_SaveNormal;
         private System.Windows.Forms.ToolStripMenuItem searchCommandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem translateToEnglishToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox_MessagePreviewAlt;
         private System.Windows.Forms.ToolStripMenuItem resetHardcodedTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem_MultiCompress;
     }
 }

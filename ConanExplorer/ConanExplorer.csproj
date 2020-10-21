@@ -395,6 +395,7 @@
     <Resource Include="Resources\WINDOW.bmp" />
     <None Include="Resources\Font\font1.bmp" />
     <None Include="Resources\SLPS_016.csv" />
+    <None Include="Resources\START_DEBUG.LZB" />
     <None Include="Resources\wordlist_long.txt" />
     <None Include="Resources\Icons\folder.ico" />
     <None Include="Resources\Icons\package.ico" />

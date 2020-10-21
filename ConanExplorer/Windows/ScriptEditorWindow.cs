@@ -406,6 +406,7 @@ namespace ConanExplorer.Windows
                 toolStripMenuItem_SaveNormal.Enabled = true;
                 toolStripMenuItem_CompressAll.Enabled = true;
                 toolStripMenuItem_MultiCompress.Enabled = true;
+                toolStripMenuItem_MultiCompressDebug.Enabled = true;
 
                 toolStripMenuItem_LockedCharacters.Enabled = true;
                 toolStripMenuItem_HardcodedText.Enabled = true;
@@ -421,6 +422,7 @@ namespace ConanExplorer.Windows
             toolStripMenuItem_SaveNormal.Enabled = false;
             toolStripMenuItem_CompressAll.Enabled = false;
             toolStripMenuItem_MultiCompress.Enabled = false;
+            toolStripMenuItem_MultiCompressDebug.Enabled = false;
 
             toolStripMenuItem_LockedCharacters.Enabled = false;
             toolStripMenuItem_HardcodedText.Enabled = false;
@@ -586,7 +588,7 @@ namespace ConanExplorer.Windows
             SaveData();
         }
 
-        private void SaveData(bool mode = false)
+        private void SaveData(bool mode = false, bool debug = false)
         {
             if (ScriptFile.Scripts.Count == 0)
             {
@@ -612,6 +614,11 @@ namespace ConanExplorer.Windows
                 return;
             }
 
+            if (debug)
+            {
+                _actualEditorScript = _actualEditorScript.Replace(".ces", "_DBG.ces");
+            }
+
             //Apply EOF Bugfix for PSX engine
             foreach (var script in ScriptFile.Scripts)
             {
@@ -623,6 +630,13 @@ namespace ConanExplorer.Windows
                 if (script.Name == "GMAP1.TXT") continue;
                 if (script.Name == "GMAP2.TXT") continue;
                 if (script.Name == "GMAP3.TXT") continue;
+
+                //Replace start routine with a debug one
+                if (script.Name == "START.LZB" && debug == true)
+                {
+
+                    script.TextBuffer = Encoding.UTF8.GetString(Resources.START_DEBUG);
+                }
 
                 int eofcheck = 0;
                 for (int i = script.TextBuffer.Length - 40; i < script.TextBuffer.Length; i++)
@@ -947,6 +961,13 @@ namespace ConanExplorer.Windows
         private void toolStripMenuItem_MultiCompress_Click(object sender, EventArgs e)
         {
             SaveData();
+            Format();
+            CompressAllThread();
+        }
+
+        private void toolStripMenuItem_MultiCompressDebug_Click(object sender, EventArgs e)
+        {
+            SaveData(false, true);
             Format();
             CompressAllThread();
         }
