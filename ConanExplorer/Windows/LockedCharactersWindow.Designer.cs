@@ -47,11 +47,14 @@
             // 
             this.listView_FontCharacters.CheckBoxes = true;
             this.listView_FontCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView_FontCharacters.Enabled = false;
+            this.listView_FontCharacters.HideSelection = false;
             this.listView_FontCharacters.Location = new System.Drawing.Point(0, 0);
             this.listView_FontCharacters.Name = "listView_FontCharacters";
             this.listView_FontCharacters.Size = new System.Drawing.Size(284, 261);
             this.listView_FontCharacters.TabIndex = 0;
             this.listView_FontCharacters.UseCompatibleStateImageBehavior = false;
+            this.listView_FontCharacters.Click += new System.EventHandler(this.listView_FontCharacters_Click);
             // 
             // LockedCharactersWindow
             // 

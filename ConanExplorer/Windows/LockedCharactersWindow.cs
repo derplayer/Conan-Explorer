@@ -39,6 +39,7 @@ namespace ConanExplorer.Windows
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             label_LoadingFont.Visible = false;
+            listView_FontCharacters.Enabled = true;
         }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -94,6 +95,22 @@ namespace ConanExplorer.Windows
                     FontCharacter fontCharacter = _fontFile.Characters.FirstOrDefault(c => c.IndexString == lvi.Text);
                     if (fontCharacter == null) continue;
                     _scriptFile.LockedCharacters.Add(fontCharacter);
+                }
+            }
+        }
+
+        private void listView_FontCharacters_Click(object sender, EventArgs e)
+        {
+            //if not disabled then...
+            if(listView_FontCharacters.Enabled == true) {
+                string selectedCharId = listView_FontCharacters.SelectedItems[0].Text;
+                foreach (var element in _scriptFile.LockedCharacters)
+                {
+                    if(element.IndexString == selectedCharId)
+                    {
+                        Clipboard.SetText(element.Symbol, TextDataFormat.UnicodeText);
+                        break;
+                    }
                 }
             }
         }

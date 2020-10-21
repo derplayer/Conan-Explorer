@@ -100,7 +100,17 @@ namespace ConanExplorer.Conan
             }
             foreach (var c in LockedCharacters)
             {
-                if (c.Symbol[0] == character) return true;
+                try
+                {
+                    if (c.Symbol[0] == character) return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("The project file has missing locked chars initialisation! " +
+                        "Please open the tab for it first (Tools), and resave project!");
+                    throw;
+                }
+                
             }
             return false;
         }
