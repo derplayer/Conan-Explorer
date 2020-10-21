@@ -240,6 +240,11 @@ namespace ConanExplorer.Windows
                             OriginalString = fields[2],
                             Translation = fields[3], //[4] for english
                         };
+
+                        //String blacklist (breaks game engine)
+                        //14368; 14; 孤島の宝物事件; Schatzinsel; ; Speicherstand: Inhalt;
+                        //14384; 14; 同級生殺人事件; Mädchenschule; ; Speicherstand: Inhalt;
+                        if (hardctxt.Offset == 14368 || hardctxt.Offset == 14384) continue;
                         HardCodedText.Texts.Add(hardctxt);
                     }
                 }
