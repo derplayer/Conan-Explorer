@@ -331,7 +331,7 @@ namespace ConanExplorer.Conan.Headers
                 if (bitmap.PixelFormat != PixelFormat.Format8bppIndexed)
                     throw new ArgumentException("The given bitmap has the wrong pixel format! Needed is 8 BPP", "bitmap");
 
-                for (int i = 0; i < 256; i++)
+                for (int i = 0; i < 255; i++)
                 {
                     ClutEntries[i] = new CLUTEntry(bitmap.Palette.Entries[i], settings);
                 }
