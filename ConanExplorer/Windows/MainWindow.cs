@@ -194,6 +194,17 @@ namespace ConanExplorer.Windows
                 toolStripStatusLabel1.Text = "Error! Emulator not found...";
         }
 
+        private void runOriginalImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(ApplicationState.Instance.ProjectFile.ProjectFilePath)) return;
+            bool emulatorStatus = ApplicationState.Instance.RunEmulator(true);
+
+            if (emulatorStatus)
+                toolStripStatusLabel1.Text = "Emulator running!";
+            else
+                toolStripStatusLabel1.Text = "Error! Emulator not found...";
+        }
+
         private void stopModifiedImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(ApplicationState.Instance.ProjectFile.ProjectFilePath)) return;
@@ -582,6 +593,5 @@ namespace ConanExplorer.Windows
         {
             MessageBox.Show("TODO", @"¯\_(ツ)_/¯");
         }
-
     }
 }

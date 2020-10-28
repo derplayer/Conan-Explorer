@@ -67,6 +67,7 @@
             this.dynamicControl = new ConanExplorer.Controls.DynamicControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.runOriginalImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -77,7 +78,6 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -181,6 +181,7 @@
             // 
             this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.runModifiedImageToolStripMenuItem,
+            this.runOriginalImageToolStripMenuItem,
             this.stopModifiedImageToolStripMenuItem,
             this.toolStripMenuItem3,
             this.buildModifiedImageToolStripMenuItem,
@@ -205,7 +206,7 @@
             this.stopModifiedImageToolStripMenuItem.Enabled = false;
             this.stopModifiedImageToolStripMenuItem.Name = "stopModifiedImageToolStripMenuItem";
             this.stopModifiedImageToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.stopModifiedImageToolStripMenuItem.Text = "Stop Modified Image";
+            this.stopModifiedImageToolStripMenuItem.Text = "Stop Image";
             this.stopModifiedImageToolStripMenuItem.Click += new System.EventHandler(this.stopModifiedImageToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
@@ -258,53 +259,53 @@
             this.settingsToolStripMenuItem,
             this.debugToolStripMenuItem1});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.debugToolStripMenuItem.Text = "Tools";
             // 
             // fileIndexViewerToolStripMenuItem
             // 
             this.fileIndexViewerToolStripMenuItem.Name = "fileIndexViewerToolStripMenuItem";
-            this.fileIndexViewerToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.fileIndexViewerToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.fileIndexViewerToolStripMenuItem.Text = "File Index Viewer...";
             this.fileIndexViewerToolStripMenuItem.Click += new System.EventHandler(this.fileIndexViewerToolStripMenuItem_Click);
             // 
             // fontEditorToolStripMenuItem
             // 
             this.fontEditorToolStripMenuItem.Name = "fontEditorToolStripMenuItem";
-            this.fontEditorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.fontEditorToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.fontEditorToolStripMenuItem.Text = "Font Editor... [DEPRECATED]";
             this.fontEditorToolStripMenuItem.Click += new System.EventHandler(this.fontEditorToolStripMenuItem_Click);
             // 
             // scriptEditorToolStripMenuItem
             // 
             this.scriptEditorToolStripMenuItem.Name = "scriptEditorToolStripMenuItem";
-            this.scriptEditorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.scriptEditorToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.scriptEditorToolStripMenuItem.Text = "Script Editor...";
             this.scriptEditorToolStripMenuItem.Click += new System.EventHandler(this.scriptEditorToolStripMenuItem_Click);
             // 
             // lZBDeCompressorToolStripMenuItem
             // 
             this.lZBDeCompressorToolStripMenuItem.Name = "lZBDeCompressorToolStripMenuItem";
-            this.lZBDeCompressorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.lZBDeCompressorToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.lZBDeCompressorToolStripMenuItem.Text = "LZB De/Compressor...";
             this.lZBDeCompressorToolStripMenuItem.Click += new System.EventHandler(this.lZBDeCompressorToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(219, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(218, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.settingsToolStripMenuItem.Text = "Settings...";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // debugToolStripMenuItem1
             // 
             this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
-            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(222, 22);
+            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(221, 22);
             this.debugToolStripMenuItem1.Text = "_Debug";
             this.debugToolStripMenuItem1.Click += new System.EventHandler(this.debugToolStripMenuItem1_Click);
             // 
@@ -393,10 +394,24 @@
             this.dynamicControl.Size = new System.Drawing.Size(473, 381);
             this.dynamicControl.TabIndex = 0;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 539);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.TabIndex = 0;
+            // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // runOriginalImageToolStripMenuItem
+            // 
+            this.runOriginalImageToolStripMenuItem.Name = "runOriginalImageToolStripMenuItem";
+            this.runOriginalImageToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.runOriginalImageToolStripMenuItem.Text = "Run Original Image";
+            this.runOriginalImageToolStripMenuItem.Click += new System.EventHandler(this.runOriginalImageToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -423,8 +438,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -469,6 +482,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem packSelectedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unpackSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runOriginalImageToolStripMenuItem;
     }
 }
 

@@ -217,12 +217,6 @@ namespace ConanExplorer.Windows
 
                 //Don't touch those file! - (can) Softlock the engine, and we dont need to modify gamelogic to that degree
                 if (scriptFile.Name == "FLAG.TXT") continue;
-                if (scriptFile.Name == "GMAP1.LZB") continue;
-                if (scriptFile.Name == "GMAP2.LZB") continue;
-                if (scriptFile.Name == "GMAP3.LZB") continue;
-                if (scriptFile.Name == "GMAP1.TXT") continue;
-                if (scriptFile.Name == "GMAP2.TXT") continue;
-                if (scriptFile.Name == "GMAP3.TXT") continue;
 
                 scriptFile.WriteToOriginalFile();
                 if (scriptFile.BaseFile.GetType() == typeof(LZBFile))

@@ -132,7 +132,7 @@ namespace ConanExplorer.Conan
             return true;
         }
 
-        public bool RunEmulator()
+        public bool RunEmulator(bool forceOriginalImage = false)
         {
             //Check for xebra instance to download from the internet if not there
             if (File.Exists(_xebraExecutable) == false)
@@ -157,10 +157,13 @@ namespace ConanExplorer.Conan
                     return false;
             }
             //Run xebra emlator instance with game cue/bin path as parameter
+            string imgPath = ProjectFile.ModifiedImage.ImageBinPath;
+            if (forceOriginalImage) imgPath = ProjectFile.OriginalImage.ImageBinPath;
+
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = _xebraExecutable,
-                Arguments = String.Format("\"{0}\"", ProjectFile.ModifiedImage.ImageBinPath)
+                Arguments = String.Format("\"{0}\"", imgPath)
             };
             _xebraProcess = new Process { StartInfo = info };
             _xebraProcess.EnableRaisingEvents = true;
