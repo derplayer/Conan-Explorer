@@ -106,6 +106,11 @@ namespace ConanExplorer.Conan.Script
                     continue;
                 }
 
+                //fixing weird html special tags in script for gamelogic ScriptCommands
+                if (line.Contains(">")) line = line.Replace(">", "&gt;");
+                if (line.Contains("<")) line = line.Replace("<", "&lt;");
+                // "==" is ok as it is!
+
                 Match matchCommand = _regexCommand.Match(line);
                 if (matchCommand.Success)
                 {
