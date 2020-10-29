@@ -42,8 +42,7 @@ namespace ConanExplorer.Windows
 
         private void button3_Click(object sender, EventArgs e)
         {
-
-                
+            var test = new XAFile(textBox1.Text);
         }
     }
 }

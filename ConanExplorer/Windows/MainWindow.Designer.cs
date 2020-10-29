@@ -44,6 +44,7 @@
             this.unpackSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runModifiedImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runOriginalImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopModifiedImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.buildModifiedImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,6 @@
             this.dynamicControl = new ConanExplorer.Controls.DynamicControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.runOriginalImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -201,6 +201,13 @@
             this.runModifiedImageToolStripMenuItem.Text = "Run Modified Image";
             this.runModifiedImageToolStripMenuItem.Click += new System.EventHandler(this.runModifiedImageToolStripMenuItem_Click);
             // 
+            // runOriginalImageToolStripMenuItem
+            // 
+            this.runOriginalImageToolStripMenuItem.Name = "runOriginalImageToolStripMenuItem";
+            this.runOriginalImageToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.runOriginalImageToolStripMenuItem.Text = "Run Original Image";
+            this.runOriginalImageToolStripMenuItem.Click += new System.EventHandler(this.runOriginalImageToolStripMenuItem_Click);
+            // 
             // stopModifiedImageToolStripMenuItem
             // 
             this.stopModifiedImageToolStripMenuItem.Enabled = false;
@@ -306,7 +313,7 @@
             // 
             this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
             this.debugToolStripMenuItem1.Size = new System.Drawing.Size(221, 22);
-            this.debugToolStripMenuItem1.Text = "_Debug";
+            this.debugToolStripMenuItem1.Text = "Debug XA";
             this.debugToolStripMenuItem1.Click += new System.EventHandler(this.debugToolStripMenuItem1_Click);
             // 
             // splitContainer1
@@ -405,13 +412,6 @@
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
-            // 
-            // runOriginalImageToolStripMenuItem
-            // 
-            this.runOriginalImageToolStripMenuItem.Name = "runOriginalImageToolStripMenuItem";
-            this.runOriginalImageToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.runOriginalImageToolStripMenuItem.Text = "Run Original Image";
-            this.runOriginalImageToolStripMenuItem.Click += new System.EventHandler(this.runOriginalImageToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
