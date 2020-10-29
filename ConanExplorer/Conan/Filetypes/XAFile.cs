@@ -1,4 +1,5 @@
-﻿using System;
+﻿using jpsxdec.adpcm;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -14,19 +15,25 @@ namespace ConanExplorer.Conan.Filetypes
         private static short[] negativeXaAdpcmTable = new short[] { 0, 0, -52, -55, -60 };
 
         public XAFile() { }
-        public XAFile(string filePath) : base(filePath)
+        public XAFile(string filePath, bool dummyTest) : base(filePath)
         {
+            int iSector = 0;
+
             using (BinaryReader reader = new BinaryReader(new FileStream(filePath, FileMode.Open)))
             {
                 using (BinaryWriter bw = new BinaryWriter(File.Open(filePath + ".bin", FileMode.Create)))
                 {
+                    //test
+                    //var baseStreamWrapper = new ikvm.io.InputStreamWrapper(reader.BaseStream);
+                    //java.io.OutputStream baseStreamWrapperOut = new java.io.FileOutputStream(filePath + ".raw");
+
                     if (reader.BaseStream.Length == 0) return;
                     int numberOfsu_s = 4;
                     List<byte> decoded = new List<byte>();
+                    var test = new XaAdpcmDecoder(4, false, 100);
 
                     byte[] UnusedForADPCM;
                     byte[] ECC; //Error code correction is in conan there!
-
                     bool stopLoop = false;
 
                     while (true)
@@ -39,8 +46,113 @@ namespace ConanExplorer.Conan.Filetypes
                         if (header.EOF == true)
                             stopLoop = true;
 
-                        //This needs to be done 18 times (2304 bytes)
+                        //This needs to be done 18 times (2304 bytes)                        
+                        for (int sg = 0; sg < 18; sg++)
+                        {
+                            var soundGroup = new ADPCMSoundGroup();
+                            soundGroup.Load(reader);    //conan has no sync block?
+                            sgs.Add(soundGroup);
+                        }
 
+                        //Read leftover
+                        UnusedForADPCM = reader.ReadBytes(20);
+                        ECC = reader.ReadBytes(4);
+
+                        reader.BaseStream.Seek(-2336, SeekOrigin.Current);
+                        byte[] xaSector = reader.ReadBytes(2336);
+
+                        short dstLeft = 0, oldLeft = 0, olderLeft = 0, dstRight = 1, oldRight = 0, olderRight = 0;
+
+                        //deode hier
+                        java.io.InputStream inStream = new java.io.ByteArrayInputStream(xaSector);
+                        java.io.ByteArrayOutputStream outStream = new java.io.ByteArrayOutputStream();
+                        test.decode(inStream, outStream, iSector);
+
+                        var tmpArr = outStream.toByteArray();
+                        foreach (var data in tmpArr)
+                        {
+                            decoded.Add(data);
+                        }
+
+                        iSector++;
+                        //List<short> l = new List<short>();
+                        //List<short> r = new List<short>();
+
+                        //foreach (var sg in sgs)
+                        //{
+                        //    for (byte b = 0; b < 4; b++) //4bits adpcm
+                        //    {
+                        //        if (header.AudioMode == AudioType.Stereo)
+                        //        {
+                        //            l.AddRange(DecodeBlock(sg.ADPCMSoundUnits, sg.SoundParameters, b, 1, dstLeft, ref oldLeft, ref olderLeft));
+                        //            r.AddRange(DecodeBlock(sg.ADPCMSoundUnits, sg.SoundParameters, b, 0, dstRight, ref oldRight, ref olderRight));
+                        //        }
+                        //        else
+                        //        {
+                        //            l.AddRange(DecodeBlock(sg.ADPCMSoundUnits, sg.SoundParameters, b, 1, dstLeft, ref oldLeft, ref olderLeft));
+                        //            l.AddRange(DecodeBlock(sg.ADPCMSoundUnits, sg.SoundParameters, b, 0, dstRight, ref oldRight, ref olderRight));
+                        //        }
+                        //    }
+                        //}
+
+                        //hacky decode output
+                        //TODO: resample to 44100 for easier edit
+                        //if (header.AudioMode == AudioType.Stereo)
+                        //{
+                        //    for (int sample = 0; sample < l.Count; sample++)
+                        //    {
+                        //        decoded.Add((byte)(l[sample]));
+                        //        decoded.Add((byte)(l[sample] >> 8));
+                        //        decoded.Add((byte)(r[sample]));
+                        //        decoded.Add((byte)(r[sample] >> 8));
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    for (int sample = 0; sample < l.Count; sample++)
+                        //    {
+                        //        byte tmpNum = (byte)((short)((l[sample] & 15) << 12));
+                        //        decoded.Add(tmpNum);
+                        //        tmpNum = (byte)((short)((l[sample] & 240) << 8));
+                        //        decoded.Add(tmpNum);
+                        //    }
+                        //}
+
+                        if (stopLoop) break;
+                    }
+
+                    foreach (var data in decoded)
+                    {
+                        bw.Write(data);
+                    }
+                }
+            }
+        }
+        public XAFile(string filePath) : base(filePath)
+        {
+            using (BinaryReader reader = new BinaryReader(new FileStream(filePath, FileMode.Open)))
+            {
+                using (BinaryWriter bw = new BinaryWriter(File.Open(filePath + ".bin", FileMode.Create)))
+                {
+                    if (reader.BaseStream.Length == 0) return;
+                    int numberOfsu_s = 4;
+                    List<byte> decoded = new List<byte>();
+
+                    byte[] UnusedForADPCM;
+                    byte[] ECC; //Error code correction is in conan there!
+                    bool stopLoop = false;
+
+                    while (true)
+                    {
+                        //2336 is per sector, sync value is padding?
+                        var header = new ADPCMSubHeader();
+                        header.Load(reader);
+                        var sgs = new List<ADPCMSoundGroup>();
+
+                        if (header.EOF == true)
+                            stopLoop = true;
+
+                        //This needs to be done 18 times (2304 bytes)                        
                         for (int sg = 0; sg < 18; sg++)
                         {
                             var soundGroup = new ADPCMSoundGroup();
@@ -59,7 +171,7 @@ namespace ConanExplorer.Conan.Filetypes
 
                         foreach (var sg in sgs)
                         {
-                            for (byte b = 0; b < 4; b++)
+                            for (byte b = 0; b < 4; b++) //4bits adpcm
                             {
                                 if (header.AudioMode == AudioType.Stereo)
                                 {
@@ -80,15 +192,20 @@ namespace ConanExplorer.Conan.Filetypes
                         {
                             for (int sample = 0; sample < l.Count; sample++)
                             {
-                                decoded.Add((byte)l[sample]);
-                                decoded.Add((byte)r[sample]);
+                                decoded.Add((byte)(l[sample]));
+                                decoded.Add((byte)(l[sample] >> 8));
+                                decoded.Add((byte)(r[sample]));
+                                decoded.Add((byte)(r[sample] >> 8));
                             }
                         }
                         else
                         {
                             for (int sample = 0; sample < l.Count; sample++)
                             {
-                                decoded.Add((byte)l[sample]);
+                                byte tmpNum = (byte)((short)((l[sample] & 15) << 12));
+                                decoded.Add(tmpNum);
+                                tmpNum = (byte)((short)((l[sample] & 240) << 8));
+                                decoded.Add(tmpNum);
                             }
                         }
 
