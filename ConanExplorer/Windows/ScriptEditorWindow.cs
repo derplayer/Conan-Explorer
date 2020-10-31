@@ -218,6 +218,9 @@ namespace ConanExplorer.Windows
                 //Don't touch those file! - (can) Softlock the engine, and we dont need to modify gamelogic to that degree
                 if (scriptFile.Name == "FLAG.TXT") continue;
 
+                //Enforce correct end of file as done by other conan files (prevents softlock on EOF)
+                scriptFile.TextBuffer += "\r\n\r\n";
+
                 scriptFile.WriteToOriginalFile();
                 if (scriptFile.BaseFile.GetType() == typeof(LZBFile))
                 {
@@ -625,6 +628,7 @@ namespace ConanExplorer.Windows
                     script.TextBuffer = Encoding.UTF8.GetString(Resources.START_DEBUG);
                 }
 
+                //EOF fix
                 int eofcheck = 0;
                 for (int i = script.TextBuffer.Length - 40; i < script.TextBuffer.Length; i++)
                 {
@@ -633,8 +637,8 @@ namespace ConanExplorer.Windows
 
                 if (eofcheck < 30)
                 {
-                    script.TextBuffer += "\r\n" + "----------------------------------------";
-                    script.TextBuffer += "\r\n" + "----------------------------------------";
+                    script.TextBuffer += "\n" + "----------------------------------------";
+                    script.TextBuffer += "\n" + "----------------------------------------";
                 }
             }
 
