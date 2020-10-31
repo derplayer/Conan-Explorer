@@ -75,6 +75,7 @@ namespace ConanExplorer.Conan.Script
             {
                 bool eof = (i == lines.Length - 1);
                 string line = lines[i];
+
                 if (String.IsNullOrEmpty(line))
                 {
                     isGmap = false;
@@ -86,8 +87,8 @@ namespace ConanExplorer.Conan.Script
                 }
 
                 //fixing weird html special tags in script for gamelogic ScriptCommands
-                if (line.Contains(">")) line = line.Replace(">", "&gt;");
-                if (line.Contains("<")) line = line.Replace("<", "&lt;");
+                if (line.Contains("&gt;")) line = line.Replace("&gt;", ">");
+                if (line.Contains("&lt;")) line = line.Replace("&lt;", "<");
                 // "==" is ok as it is!
 
                 if (isMessage)
@@ -152,6 +153,18 @@ namespace ConanExplorer.Conan.Script
                     result.Add(new ScriptText(line, !eof));
                 }
             }
+
+            //Script cleanup
+            for (int i = result.Count - 1; i >= 0; i--)
+            {
+                //remove all japanese dev comments (free ups ps1 ram, mitigates crashes...)
+                if (result[i].Text.StartsWith(".")) result.RemoveAt(i);
+
+                //remove all double empty lines in script that appeared after comment remove
+                if (i >= 1)
+                    if (result[i].Text == "\r\n" && result[i - 1].Text == "\r\n") result.RemoveAt(i);
+            }
+
             return result;
         }
     }

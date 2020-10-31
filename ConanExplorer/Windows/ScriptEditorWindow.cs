@@ -219,7 +219,7 @@ namespace ConanExplorer.Windows
                 if (scriptFile.Name == "FLAG.TXT") continue;
 
                 //Enforce correct end of file as done by other conan files (prevents softlock on EOF)
-                scriptFile.TextBuffer += "\r\n\r\n";
+                scriptFile.TextBuffer += "\r\n\r\n\r\n\r\n";
 
                 scriptFile.WriteToOriginalFile();
                 if (scriptFile.BaseFile.GetType() == typeof(LZBFile))
@@ -494,7 +494,7 @@ namespace ConanExplorer.Windows
                     ScriptFile = (ScriptFile)serializer.Deserialize(reader);
 
                     //Default hacky fallback for Lockcharacters
-                    if(ScriptFile.LockedCharacters == null || ScriptFile.LockedCharacters.Count <= 5)
+                    if (ScriptFile.LockedCharacters == null || ScriptFile.LockedCharacters.Count <= 5)
                     {
                         var data = JsonConvert.DeserializeObject<List<FontCharacter>>(Resources.DefaultLockedCharacters);
                         ScriptFile.LockedCharacters = new List<FontCharacter>();
@@ -630,15 +630,15 @@ namespace ConanExplorer.Windows
 
                 //EOF fix
                 int eofcheck = 0;
-                for (int i = script.TextBuffer.Length - 40; i < script.TextBuffer.Length; i++)
+                for (int i = script.TextBuffer.Length - 30; i < script.TextBuffer.Length; i++)
                 {
                     if (script.TextBuffer[i] == '-') eofcheck++;
                 }
 
-                if (eofcheck < 30)
+                if (eofcheck < 10)
                 {
-                    script.TextBuffer += "\n" + "----------------------------------------";
-                    script.TextBuffer += "\n" + "----------------------------------------";
+                    script.TextBuffer += "\n" + "----------";
+                    script.TextBuffer += "\n" + "----------";
                 }
             }
 
