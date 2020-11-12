@@ -118,9 +118,9 @@ Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spie
 6448;20;孤島の宝物事件・予告;Schatzinsel: PV     ;;Bonus-Ecke: Videos;
 6472;20;同級生殺人事件・予告;Mädchenschule: PV   ;;Bonus-Ecke: Videos;
 6496;20;バンダイ・ロゴ　　　;Bandai-Logo         ;Bandai Logo;Bonus-Ecke: Videos;
-6568;8;　一本橋;  Flüsse;  Stream;Bonus-Ecke: Minispiele;
+6568;8;　一本橋;  Brücke;  Abyss;Bonus-Ecke: Minispiele;
 6580;10;　鬼ごっこ;  Räuber  ;  Bandits;Bonus-Ecke: Minispiele;
-6592;8;　石跳び;  Brücke;  Abyss;Bonus-Ecke: Minispiele;
+6592;8;　石跳び;  Flüsse;  Stream;Bonus-Ecke: Minispiele;
 6616;10;コナン　　;Conan     ;Conan;Bonus-Ecke: Charaktere;
 6628;10;蘭　　　　;Ran       ;Ran;Bonus-Ecke: Charaktere;
 6640;10;小五郎　　;Kogoro    ;Kogoro;Bonus-Ecke: Charaktere;
@@ -327,7 +327,7 @@ Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spie
 14260;14;壊れています。;beschädigt.   ;corrupted.    ;Memory Card: Dateifehler;
 14276;24;このデータに書き込んでも;Ergebnis in diese Datei ;Save your result to this;Memory Card: Speichern;↑ 306
 14304;26;クリアデータを上書きしても;Ergebnisse über-          ;Overwrite results in this ;Memory Card: Speichern;↑ 306
-14332;18;にセーブしました。;wurde gespeichert.;;Memory Card: Speichern;
+14332;18;にセーブしました。; gespeichert.     ; saved.           ;Memory Card: Speichern;
 14352;14;名探偵コナン　;Detektiv Conan;;Speicherstand: Inhalt;
 14368;14;孤島の宝物事件;Schatzinsel   ;;Speicherstand: Inhalt;
 14384;14;同級生殺人事件;Mädchenschule ;;Speicherstand: Inhalt;
@@ -429,7 +429,7 @@ Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spie
 18984;22;　　　　　　　　　　　;                      ;                      ;;
 19008;22;それではがんばって。　;Viel Erfolg!          ;;Minispiel: Trinkwasser;
 19032;22;レッツ・トライ！　　　;Probiere herum!       ;;Minispiel: Trinkwasser;
-21184;22;ドロボウの親分子分がウ;Der Räuberboss und    ;;Minispiel: Räuber;
+21184;22;ドロボウの親分子分がウ;Der Räuberboss        ;;Minispiel: Räuber;
 21208;22;ロウロしています。ヤツ;und sein Handlanger   ;;Minispiel: Räuber;
 21232;22;らにつかまったらゲーム;lauern in dieser Höhle;;Minispiel: Räuber;
 21256;22;オーバーです。　　　　;auf euch.             ;;Minispiel: Räuber;
@@ -464,12 +464,12 @@ Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spie
 24160;8;いかぁ？;        ;;Minispiel: Buchstabensalat;
 24172;10;ギブアップ;aufgeben  ;Give up;Minispiel-Menü;
 24184;10;リトライ　;nochmal   ;Try again;Minispiel-Menü;
-24196;22;おんみょうのおうぎは、;Macht, Energie, Har-  ;;Minispiel: Zettelcode;
-24220;28;じょはきゅうなり。すなわち、;monie, Heilung, Intuition,  ;;Minispiel: Zettelcode;
-24252;24;じょのこころは　九の五、;Bewusstsein, Dimension, ;;Minispiel: Zettelcode;
-24280;22;はのこころは　九の二、;Schaffung und Absolut-;;Minispiel: Zettelcode;
-24304;26;きゅうのこころは　九の七、;heit beschwören die neun  ;;Minispiel: Zettelcode;
-24332;14;とこころえよ。;Handgesten.   ;;Minispiel: Zettelcode;
+24196;22;おんみょうのおうぎは、;Die 9 Handgesten rufen;;Minispiel: Zettelcode;
+24220;28;じょはきゅうなり。すなわち、;Stärke, Energie, Harmonie,  ;;Minispiel: Zettelcode;
+24252;24;じょのこころは　九の五、;Heilung, Intuition,     ;;Minispiel: Zettelcode;
+24280;22;はのこころは　九の二、;Erkenntnis, Dimension,;;Minispiel: Zettelcode;
+24304;26;きゅうのこころは　九の七、;Kontrolle und Absolutheit ;;Minispiel: Zettelcode;
+24332;14;とこころえよ。;in dir hervor.;;Minispiel: Zettelcode;
 24384;16;暗号の切れはし１;Code-Zettel 1   ;;Minispiel: Zettelcode;
 24404;16;暗号の切れはし２;Code-Zettel 2   ;;Minispiel: Zettelcode;
 24424;16;暗号の切れはし３;Code-Zettel 3   ;;Minispiel: Zettelcode;
@@ -515,7 +515,7 @@ Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spie
 684776;6;セーブ;sicher;save  ;Menü im Spiel;
 684784;6;ロード;lade  ;load  ;Menü im Spiel;
 684860;6;　新規;  neu ;  new;Menü im Spiel: Speichern;
-684876;6;データ;Datei ;File;Menü im Spiel: Speichern;
+684876;6;データ;Datei ;File  ;Menü im Spiel: Speichern;
 684892;6;１００;100   ;100   ;Bonus-Ecke: Ergebnisse;
 684912;6;女子寮;Wohnh.;Dorm  ;Mädchenschule: Außen-Menü;
 685164;6;つかむ;nehmen;;Aufbau-Minispiele: Gegenstände;
