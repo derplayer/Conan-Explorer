@@ -232,6 +232,26 @@ namespace ConanExplorer.Conan
                 {
                     writer.Write(file.GetBytes());
                 }
+
+                //Apply Assembler patches (write as single hex because of endianess)
+                //Patch 01 - Allow sjis 2+1 more char in GMAP "school" string
+                writer.BaseStream.Seek(0x03D5CB, SeekOrigin.Begin);
+                writer.Write((byte)0x24);
+                writer.Write((byte)0x03);
+                writer.BaseStream.Seek(0x03D5D0, SeekOrigin.Begin);
+                writer.Write((byte)0xA8);
+                writer.Write((byte)0x03);
+
+                //Patch 02 - Allow 3+1 more char in GMAP "" string
+                //TODO: Seems, that the null terminator is still needed? engine shows empty space
+                //move the string pointer to a codecave at the end of exe data segment
+
+                //writer.BaseStream.Seek(0x03D637, SeekOrigin.Begin);
+                //writer.Write((byte)0x24);
+                //writer.Write((byte)0x04);
+                //writer.BaseStream.Seek(0x03D63C, SeekOrigin.Begin);
+                //writer.Write((byte)0xA8);
+                //writer.Write((byte)0x03);
             }
         }
 

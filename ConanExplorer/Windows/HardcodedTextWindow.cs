@@ -256,6 +256,7 @@ namespace ConanExplorer.Windows
 
             //Here are string that are missing in database, because the search skipped everything under 0x4 of length
             HardCodedText.Texts.Add(new HardCodedText(0x000A6E90, 0x4, "はい", "Ja"));
+            HardCodedText.Texts.Add(new HardCodedText(0x000A7368, 0x6, "校舎", "Schule"));
         }
 
         private void button_DefNewStr_Click(object sender, EventArgs e)
