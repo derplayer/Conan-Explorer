@@ -77,6 +77,11 @@ namespace ConanExplorer.Windows
                     lvi.Checked = true;
                 }
 
+                //Blacklist for chars, that crash the game-engine!
+                //88 is safe for the engine, but just to be sure, i moved the font segment (crashes begin at 0x8995+)
+                if (lvi.Text.StartsWith("88") == true) lvi.Checked = true;
+                if (lvi.Text.StartsWith("89") == true) lvi.Checked = true;
+
                 items.Add(lvi);
             }
             Invoke((MethodInvoker)delegate ()
