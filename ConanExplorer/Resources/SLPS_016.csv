@@ -494,6 +494,7 @@ Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spie
 26616;12;最初から　　;zurücksetzen;Reset room;Minispiel-Menü: Felsen-Puzzle;
 26632;12;まだ続ける　;weitermachen;Continue;Minispiel-Menü: Felsen-Puzzle;
 26648;12;あきらめる　;aufgeben    ;Give up;Minispiel-Menü: Felsen-Puzzle;
+683664;4;はい;ja;yes;;
 683672;6;いいえ;nein  ;no    ;;
 683760;6;大笑い;Freude;;Bonus-Ecke: Charaktere;
 683768;6;中笑い;lacht ;laughs;Bonus-Ecke: Charaktere;
@@ -529,3 +530,17 @@ Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spie
 685228;6;たたむ;falten;fold  ;Aufbau-Minispiele: Gegenstände;
 685360;6;ます。;gen.  ;;Minispiele: Fußball;446 ↑
 685436;6;コナン;Conan ;Conan ;Minispiel: Buchstabensalat;
+684904;6;校舎;Schule;School;GMAP Label (asm fix für +1 länge);
+683752;4;悩む;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683776;4;冷笑;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683784;4;激怒;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683800;4;驚き;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683808;4;疲労;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683824;4;微笑;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683832;4;怒り;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683840;4;困惑;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683872;4;疑惑;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683880;4;睡眠;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683896;4;笑い;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683912;4;笑顔;test;;Bonus-Ecke (kann auf 6 gepatched werden?);
+683968;4;不安;test;;Bonus-Ecke (kann auf 6 gepatched werden?);

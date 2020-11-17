@@ -241,10 +241,17 @@ namespace ConanExplorer.Windows
                             Translation = fields[3], //[4] for english
                         };
 
-                        //String blacklist (breaks game engine)
+                        //String blacklist (breaks game engine or looks ugly)
                         //14368; 14; 孤島の宝物事件; Schatzinsel; ; Speicherstand: Inhalt;
                         //14384; 14; 同級生殺人事件; Mädchenschule; ; Speicherstand: Inhalt;
-                        if (hardctxt.Offset == 14368 || hardctxt.Offset == 14384) continue;
+                        if (hardctxt.Offset == 14368 || 
+                            hardctxt.Offset == 14384 ||
+                            hardctxt.Offset == 9736  ||
+                            hardctxt.Offset == 13476 ||
+                            hardctxt.Offset == 18984 ||
+                            hardctxt.Offset == 26248
+                        ) continue;
+
                         HardCodedText.Texts.Add(hardctxt);
                     }
                 }
@@ -253,10 +260,6 @@ namespace ConanExplorer.Windows
                     Debug.WriteLine("Something is wrong with a Hardcoded String: " + e.ToString());
                 }
             }
-
-            //Here are string that are missing in database, because the search skipped everything under 0x4 of length
-            HardCodedText.Texts.Add(new HardCodedText(0x000A6E90, 0x4, "はい", "Ja"));
-            HardCodedText.Texts.Add(new HardCodedText(0x000A7368, 0x6, "校舎", "Schule"));
         }
 
         private void button_DefNewStr_Click(object sender, EventArgs e)

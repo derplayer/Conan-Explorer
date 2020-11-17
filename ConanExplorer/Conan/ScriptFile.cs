@@ -157,11 +157,6 @@ namespace ConanExplorer.Conan
 
             HashSet<string> dictionary = CreateDictionary(ScriptParser.TextToLines(stringBuilder.ToString()));
 
-            //Add some missing combinations by hand (the TextToLines function is a bit buggy, but hapens very rarely)
-            dictionary.Add("WE");
-            dictionary.Add("(L");
-            dictionary.Add("\"O");
-
             //DEBUG OUTPUT START
             Console.WriteLine("Dictionary Size: {0} Symbols", dictionary.Count);
             if (dictionary.Count > 3302)
@@ -292,6 +287,13 @@ namespace ConanExplorer.Conan
                     }
                 }
             }
+
+            //Add some missing combinations by hand (the TextToLines function is a bit buggy, but hapens very rarely)
+            result.Add("WE");
+            result.Add("(L");
+            result.Add("\"O");
+            result.Add("h:");
+
             return result;
         }
 
