@@ -79,8 +79,7 @@ namespace ConanExplorer.Windows
 
                 //Blacklist for chars, that crash the game-engine!
                 //88 is safe for the engine, but just to be sure, i moved the font segment (crashes begin at 0x8995+)
-                if (lvi.Text.StartsWith("88") == true) lvi.Checked = true;
-                if (lvi.Text.StartsWith("89") == true) lvi.Checked = true;
+                if (lvi.Text.StartsWith("899") == true) lvi.Checked = true;     //8995-899F cause crashes?
 
                 items.Add(lvi);
             }
@@ -108,14 +107,21 @@ namespace ConanExplorer.Windows
         {
             //if not disabled then...
             if(listView_FontCharacters.Enabled == true) {
-                string selectedCharId = listView_FontCharacters.SelectedItems[0].Text;
-                foreach (var element in _scriptFile.LockedCharacters)
+                try
                 {
-                    if(element.IndexString == selectedCharId)
+                    string selectedCharId = listView_FontCharacters.SelectedItems[0].Text;
+                    foreach (var element in _scriptFile.LockedCharacters)
                     {
-                        Clipboard.SetText(element.Symbol, TextDataFormat.UnicodeText);
-                        break;
+                        if (element.IndexString == selectedCharId)
+                        {
+                            Clipboard.SetText(element.Symbol, TextDataFormat.UnicodeText);
+                            break;
+                        }
                     }
+                }
+                catch (Exception)
+                {
+                    //Leave clipboard empty
                 }
             }
         }

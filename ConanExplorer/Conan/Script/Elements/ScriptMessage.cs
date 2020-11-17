@@ -367,6 +367,9 @@ namespace ConanExplorer.Conan.Script.Elements
                     }
                     if (!found)
                     {
+                        Console.WriteLine("NeededSymbol not found: " + neededSymbol);
+                        Console.WriteLine(Content);
+                        Console.WriteLine(Environment.NewLine);
                         if (!ignoreMissing)
                         {
                             MessageBox.Show("Couldn't find the needed symbol in the generated font.\nGenerate the font before formating!", "Format Error!");
