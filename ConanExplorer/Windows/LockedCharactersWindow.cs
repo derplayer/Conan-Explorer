@@ -78,8 +78,8 @@ namespace ConanExplorer.Windows
                 }
 
                 //Blacklist for chars, that crash the game-engine!
-                //88 is safe for the engine, but just to be sure, i moved the font segment (crashes begin at 0x8995+)
-                if (lvi.Text.StartsWith("899") == true) lvi.Checked = true;     //8995-899F cause crashes?
+                if (lvi.Text.StartsWith("88D") == true) lvi.Checked = true;     //causes crashes (C111 softlock)
+                if (lvi.Text.StartsWith("899") == true) lvi.Checked = true;     //causes crashes (C141 softlock)
 
                 items.Add(lvi);
             }
