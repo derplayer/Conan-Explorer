@@ -242,7 +242,35 @@ namespace ConanExplorer.Conan
                 writer.Write((byte)0xA8);
                 writer.Write((byte)0x03);
 
-                //Patch 02 - Allow 3+1 more char in GMAP "" string
+                //Patch 02 - Mod save string to way longer (Speichern)
+                //Move pointer a code cave (sony lib printf strings)
+                writer.BaseStream.Seek(0x0375F8, SeekOrigin.Begin);
+                writer.Write(new byte[] { 0x01, 0x80, 0x04, 0x3C, 0xC4, 0x69, 0x84, 0x24 });
+                //nop out the lib printf part
+                writer.BaseStream.Seek(0x6BCB4, SeekOrigin.Begin);
+                writer.Write(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
+
+                //Patch 03 - Move pointer (gmap wohnheim) to a code cave (sony lib license text, 84 chars possible)
+                writer.BaseStream.Seek(0x03D630, SeekOrigin.Begin);
+                writer.Write(new byte[] { 0x0A, 0x80, 0x04, 0x3C, 0x28, 0xE7, 0x84, 0x24 });
+                
+                //Patch 04 - Resize the GMAP Draw area for text (0x70 is the hardware limit for width)
+                //We increase the draw rectangle with for one more char
+                writer.BaseStream.Seek(0xF944, SeekOrigin.Begin);
+                writer.Write((byte)0x30); //0x40->0x30
+                //We overwrite (8001F288 move $a3, $zero) to change the width register back for the other rectangles
+                //Should not crash or cause the game to be unstable, but never say never (should be tested on real hardware later)
+                //alternative for this is the usage of the t2 register (but value is over 0x70, so not tested)
+                writer.BaseStream.Seek(0xF988, SeekOrigin.Begin);
+                writer.Write(new byte[] { 0x40, 0x00, 0x14, 0x24 }); //0x30->0x40
+
+                //Patch 05 - Increase the chars in buffer for GMAP draw area (CPU)
+                writer.BaseStream.Seek(0x03D638, SeekOrigin.Begin);
+                writer.Write((byte)0x05); //0x03->0x05
+
+                ////0x03D630 + 0x09 for new string in sony lib segment
+
+                //Patch 0x - Allow 3+1 more char in GMAP "" string
                 //TODO: Seems, that the null terminator is still needed? engine shows empty space
                 //move the string pointer to a codecave at the end of exe data segment
 

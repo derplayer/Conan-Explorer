@@ -249,7 +249,8 @@ namespace ConanExplorer.Windows
                             hardctxt.Offset == 9736  ||
                             hardctxt.Offset == 13476 ||
                             hardctxt.Offset == 18984 ||
-                            hardctxt.Offset == 26248
+                            hardctxt.Offset == 26248 ||
+                            hardctxt.Offset == 684784 //lade/load
                         ) continue;
 
                         HardCodedText.Texts.Add(hardctxt);
@@ -260,6 +261,12 @@ namespace ConanExplorer.Windows
                     Debug.WriteLine("Something is wrong with a Hardcoded String: " + e.ToString());
                 }
             }
+
+            //Prototype stuff
+            HardCodedText.Texts.Add(new HardCodedText(684784, 6, "ロード", "Laden"));
+            HardCodedText.Texts.Add(new HardCodedText(29124, 11, "This is not SEQ Data.", "Speichern")); //10 chars left
+            HardCodedText.Texts.Add(new HardCodedText(585512, 9, "Library Programs (c) 1993-1997...", "Wohnheim")); //76 chars left
+            
         }
 
         private void button_DefNewStr_Click(object sender, EventArgs e)
