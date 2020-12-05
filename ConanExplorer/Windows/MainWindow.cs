@@ -20,6 +20,7 @@ namespace ConanExplorer.Windows
     public partial class MainWindow : Form
     {
         private ApplicationState _state = ApplicationState.Instance;
+        private EventArgs _selectedEvent = null;
 
         public MainWindow()
         {
@@ -237,7 +238,19 @@ namespace ConanExplorer.Windows
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button != MouseButtons.Right) return;
-            if (e.Node.Tag == null) return;
+
+            if (e.Node.Tag == null)
+            {
+                if (e.Node.Level >= 1)
+                {
+                    treeView1.SelectedNode = e.Node;
+                    ContextMenu cm = new ContextMenu();
+                    _selectedEvent = e;
+                    cm.MenuItems.Add("Open in Explorer", OnClickOpenInExplorer);
+                    cm.Show(treeView1, e.Location);
+                }
+                return;
+            }
             if (e.Node.Tag.GetType() == typeof (PKNFile))
             {
                 treeView1.SelectedNode = e.Node;
@@ -296,14 +309,18 @@ namespace ConanExplorer.Windows
             dynamicControl.Update(null);
         }
 
-
-        private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void OnClickOpenInExplorer(object sender, EventArgs f)
         {
-            if (e.Node.Tag == null) return;
-            if (e.Node.Tag.GetType().IsSubclassOf(typeof(BaseFile)))
+            try
             {
-                BaseFile baseFile = (BaseFile) e.Node.Tag;
-                System.Diagnostics.Process.Start("explorer.exe", string.Format("/select,\"{0}\"", baseFile.FilePath));
+                if (_selectedEvent == null) return;
+                var e = (TreeNodeMouseClickEventArgs)_selectedEvent;
+                string path = Path.GetDirectoryName(_state.ProjectFile.ModifiedImage.ImageBinPath) + "\\" + e.Node.FullPath + "\\";
+                System.Diagnostics.Process.Start("explorer.exe", string.Format("/select,\"{0}\"", path));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Project Folder is burning... " + e.ToString());
             }
         }
 

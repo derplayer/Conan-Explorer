@@ -263,10 +263,11 @@ namespace ConanExplorer.Windows
             }
 
             //Prototype stuff
+            //NOTE: never forget to increase the length +1, so that as null terminator is included (this is only for codecave strings)
+            //Labels that have already allocated extra space and require only a read count increase have always already null term in place
             HardCodedText.Texts.Add(new HardCodedText(684784, 6, "ロード", "Laden"));
             HardCodedText.Texts.Add(new HardCodedText(29124, 11, "This is not SEQ Data.", "Speichern")); //10 chars left
             HardCodedText.Texts.Add(new HardCodedText(585512, 9, "Library Programs (c) 1993-1997...", "Wohnheim")); //76 chars left
-            
         }
 
         private void button_DefNewStr_Click(object sender, EventArgs e)

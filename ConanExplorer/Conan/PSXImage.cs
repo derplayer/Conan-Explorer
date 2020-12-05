@@ -280,6 +280,10 @@ namespace ConanExplorer.Conan
                 //writer.BaseStream.Seek(0x03D63C, SeekOrigin.Begin);
                 //writer.Write((byte)0xA8);
                 //writer.Write((byte)0x03);
+
+                //Patch 0x - dialog color for minigame 3 (totally useless ;)
+                //writer.BaseStream.Seek(0x057AFC, SeekOrigin.Begin);
+                //writer.Write((byte)0xA); //Blue 0x02, Red 0x04, Yellow 0x06
             }
         }
 
