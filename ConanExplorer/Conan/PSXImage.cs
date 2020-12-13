@@ -233,6 +233,8 @@ namespace ConanExplorer.Conan
                     writer.Write(file.GetBytes());
                 }
 
+                int CodeCaveSegment = 585512;
+
                 //Apply Assembler patches (write as single hex because of endianess)
                 //Patch 01 - Allow sjis 2+1 more char in GMAP "school" string
                 writer.BaseStream.Seek(0x03D5CB, SeekOrigin.Begin);
@@ -243,17 +245,17 @@ namespace ConanExplorer.Conan
                 writer.Write((byte)0x03);
 
                 //Patch 02 - Mod save string to way longer (Speichern)
-                //Move pointer a code cave (sony lib printf strings)
+                //Move pointer a code cave ("old seq data" printf strings 1/2)
                 writer.BaseStream.Seek(0x0375F8, SeekOrigin.Begin);
                 writer.Write(new byte[] { 0x01, 0x80, 0x04, 0x3C, 0xC4, 0x69, 0x84, 0x24 });
                 //nop out the lib printf part
                 writer.BaseStream.Seek(0x6BCB4, SeekOrigin.Begin);
                 writer.Write(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
 
-                //Patch 03 - Move pointer (gmap wohnheim) to a code cave (sony lib license text, 84 chars possible)
+                //Patch 03 - Move pointer (gmap wohnheim) to a code cave ("old seq data" printf string 2/2)
                 writer.BaseStream.Seek(0x03D630, SeekOrigin.Begin);
-                writer.Write(new byte[] { 0x0A, 0x80, 0x04, 0x3C, 0x28, 0xE7, 0x84, 0x24 });
-                
+                writer.Write(new byte[] { 0x01, 0x80, 0x04, 0x3C, 0xD0, 0x69, 0x84, 0x24 });
+
                 //Patch 04 - Resize the GMAP Draw area for text (0x70 is the hardware limit for width)
                 //We increase the draw rectangle with for one more char
                 writer.BaseStream.Seek(0xF944, SeekOrigin.Begin);
@@ -268,18 +270,39 @@ namespace ConanExplorer.Conan
                 writer.BaseStream.Seek(0x03D638, SeekOrigin.Begin);
                 writer.Write((byte)0x05); //0x03->0x05
 
-                ////0x03D630 + 0x09 for new string in sony lib segment
+                byte libsegptr = 0x28;
+                //dehnen    - 584152 - orginal hex: A4 6C 0B 80
+                //wasser    - 584156 - orginal hex: C4 3F 01 80
+                //stein     - 584188 - orginal hex: 3C 3F 01 80
+                //aufricht  - 584208 - orginal hex: 9C 6C 0B 80
+                //binden    - 584212 - orginal hex: 94 6C 0B 80
 
-                //Patch 0x - Allow 3+1 more char in GMAP "" string
-                //TODO: Seems, that the null terminator is still needed? engine shows empty space
-                //move the string pointer to a codecave at the end of exe data segment
+                //Patch 06.1 - Move minigame label pointer (dehnen) to a code cave (sony lib header text)
+                writer.BaseStream.Seek(584152, SeekOrigin.Begin);
+                writer.Write(new byte[] { libsegptr, 0xE7, 0x09, 0x80 });
+                libsegptr += 12;
 
-                //writer.BaseStream.Seek(0x03D637, SeekOrigin.Begin);
-                //writer.Write((byte)0x24);
-                //writer.Write((byte)0x04);
-                //writer.BaseStream.Seek(0x03D63C, SeekOrigin.Begin);
-                //writer.Write((byte)0xA8);
-                //writer.Write((byte)0x03);
+                //Patch 06.2 - Move minigame label pointer (wasser) to a code cave (sony lib header text)
+                writer.BaseStream.Seek(584156, SeekOrigin.Begin);
+                writer.Write(new byte[] { libsegptr, 0xE7, 0x09, 0x80 });
+                libsegptr += 22;
+
+                //Patch 06.3 - Move minigame label pointer (stein) to a code cave (sony lib header text)
+                writer.BaseStream.Seek(584188, SeekOrigin.Begin);
+                writer.Write(new byte[] { libsegptr, 0xE7, 0x09, 0x80 });
+                libsegptr += 22;
+
+                //Patch 06.4 - Move minigame label pointer (aufricht) to a code cave (sony lib header text)
+                writer.BaseStream.Seek(584208, SeekOrigin.Begin);
+                writer.Write(new byte[] { libsegptr, 0xE7, 0x09, 0x80 });
+                libsegptr += 12;
+
+                //Patch 06.5 - Move minigame label pointer (aufricht) to a code cave (sony lib header text)
+                writer.BaseStream.Seek(584212, SeekOrigin.Begin);
+                writer.Write(new byte[] { libsegptr, 0xE7, 0x09, 0x80 });
+                libsegptr += 15;
+
+                //----------
 
                 //Patch 0x - dialog color for minigame 3 (totally useless ;)
                 //writer.BaseStream.Seek(0x057AFC, SeekOrigin.Begin);

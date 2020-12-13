@@ -261,13 +261,27 @@ namespace ConanExplorer.Windows
                     Debug.WriteLine("Something is wrong with a Hardcoded String: " + e.ToString());
                 }
             }
+            int CodeCaveSegment = 585512;
 
             //Prototype stuff
-            //NOTE: never forget to increase the length +1, so that as null terminator is included (this is only for codecave strings)
-            //Labels that have already allocated extra space and require only a read count increase have always already null term in place
+            //NOTE: never forget to increase the length, so that as null terminator is included (this is only for codecave strings)
+            //NOTE2: it seems the engine wants sometime the null terminator as 2 byte or it will crash?
+            //Labels that have already allocated extra space and require only a read count increase have always already a double null term in place
             HardCodedText.Texts.Add(new HardCodedText(684784, 6, "ロード", "Laden"));
-            HardCodedText.Texts.Add(new HardCodedText(29124, 11, "This is not SEQ Data.", "Speichern")); //10 chars left
-            HardCodedText.Texts.Add(new HardCodedText(585512, 9, "Library Programs (c) 1993-1997...", "Wohnheim")); //76 chars left
+            HardCodedText.Texts.Add(new HardCodedText(29124, 12, "This is not SEQ Data.", "Speichern"));
+            HardCodedText.Texts.Add(new HardCodedText(29136, 10, "This is not SEQ Data.", "Wohnheim"));
+
+            //85 chars is limit for this codecave
+            HardCodedText.Texts.Add(new HardCodedText(CodeCaveSegment, 12, "Library Program...", "ausbreiten"));
+            CodeCaveSegment += 12;
+            HardCodedText.Texts.Add(new HardCodedText(CodeCaveSegment, 22, "Library Programs...", "mit Wasser benetzen "));
+            CodeCaveSegment += 22;
+            HardCodedText.Texts.Add(new HardCodedText(CodeCaveSegment, 22, "Library Programs...", "mit Stein beschweren"));
+            CodeCaveSegment += 22;
+            HardCodedText.Texts.Add(new HardCodedText(CodeCaveSegment, 12, "Library Programs...", "aufrichten"));
+            CodeCaveSegment += 12;
+            HardCodedText.Texts.Add(new HardCodedText(CodeCaveSegment, 16, "Library Program...", "zusammenknoten"));
+            CodeCaveSegment += 15;
         }
 
         private void button_DefNewStr_Click(object sender, EventArgs e)
