@@ -256,6 +256,14 @@ namespace ConanExplorer.Conan
                 writer.BaseStream.Seek(0x03D630, SeekOrigin.Begin);
                 writer.Write(new byte[] { 0x01, 0x80, 0x04, 0x3C, 0xD0, 0x69, 0x84, 0x24 });
 
+                //Patch 03.1
+                writer.BaseStream.Seek(685204, SeekOrigin.Begin);
+                writer.Write(new byte[] {
+                    0x44, 0x45, 0x52, 0x50, 0x4c, 0x41, 0x59, 0x45,
+                    0x52, 0x20, 0x57, 0x41, 0x53, 0x20, 0x48, 0x45,
+                    0x52, 0x45
+                });
+
                 //Patch 04 - Resize the GMAP Draw area for text (0x70 is the hardware limit for width)
                 //We increase the draw rectangle with for one more char
                 writer.BaseStream.Seek(0xF944, SeekOrigin.Begin);
@@ -300,7 +308,7 @@ namespace ConanExplorer.Conan
                 //Patch 06.5 - Move minigame label pointer (aufricht) to a code cave (sony lib header text)
                 writer.BaseStream.Seek(584212, SeekOrigin.Begin);
                 writer.Write(new byte[] { libsegptr, 0xE7, 0x09, 0x80 });
-                libsegptr += 15;
+                libsegptr += 16;
 
                 //----------
 

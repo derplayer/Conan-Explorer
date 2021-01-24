@@ -281,7 +281,7 @@ namespace ConanExplorer.Windows
             HardCodedText.Texts.Add(new HardCodedText(CodeCaveSegment, 12, "Library Programs...", "aufrichten"));
             CodeCaveSegment += 12;
             HardCodedText.Texts.Add(new HardCodedText(CodeCaveSegment, 16, "Library Program...", "zusammenknoten"));
-            CodeCaveSegment += 15;
+            CodeCaveSegment += 16;
         }
 
         private void button_DefNewStr_Click(object sender, EventArgs e)
