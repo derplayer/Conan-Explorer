@@ -544,6 +544,7 @@ namespace ConanExplorer.Windows
                             if (Directory.Exists(tempPathForZip))
                                 Directory.Delete(tempPathForZip, true);
 
+                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12; // Force TLS 1.2 on old .NET 4.5
                             using (var client = new WebClient())
                             {
                                 client.DownloadFile("http://chapter731.net/downloads/fonts/Quarlow.zip", zipTempPath);
@@ -556,6 +557,7 @@ namespace ConanExplorer.Windows
                         }
                         catch (Exception ex)
                         {
+                            // Timeout, Server dead, TLS 1.3 is forced (in 2030's?)...
                             MessageBox.Show("Download failed...\n\r" + ex);
                         }
 
