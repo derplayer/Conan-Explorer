@@ -148,38 +148,49 @@ namespace ConanExplorer.Conan.Filetypes
 
                 row_round -= y;
 
-                for (y = 0; y < TIMHeader.ImageHeight; y++)
+                try
                 {
-                    tim_row_off = (uint)(TIMHeader.ImageWidth * 2 * (TIMHeader.ImageHeight - 1 - y));
-
-                    reader.BaseStream.Position = TIMHeader.DataOffset + tim_row_off;
-
-                    for (x = 0; x < TIMHeader.ImageWidth; x++)
+                    for (y = 0; y < TIMHeader.ImageHeight; y++)
                     {
-                        ushort c = reader.ReadUInt16();
+                        tim_row_off = (uint)(TIMHeader.ImageWidth * 2 * (TIMHeader.ImageHeight - 1 - y));
+                        reader.BaseStream.Position = TIMHeader.DataOffset + tim_row_off;
 
-                        switch (TIMHeader.BPP)
+                        for (x = 0; x < TIMHeader.ImageWidth; x++)
                         {
-                            case 4:
-                                memoryStream.WriteByte((byte)(((c >> 4) & 0xf) | ((c & 0xf) << 4)));
-                                memoryStream.WriteByte((byte)(((c >> 12) & 0xf) | (((c >> 8) & 0xf) << 4)));
-                                break;
-                            case 8:
-                                memoryStream.Write(BitConverter.GetBytes(c), 0, 2);
-                                break;
-                            case 16:
-                                PS_RGB rgb = new PS_RGB(c);
-                                memoryStream.WriteByte(rgb.B);
-                                memoryStream.WriteByte(rgb.G);
-                                memoryStream.WriteByte(rgb.R);
-                                break;
+
+                            ushort c = reader.ReadUInt16();
+
+
+                            switch (TIMHeader.BPP)
+                            {
+                                case 4:
+                                    memoryStream.WriteByte((byte)(((c >> 4) & 0xf) | ((c & 0xf) << 4)));
+                                    memoryStream.WriteByte((byte)(((c >> 12) & 0xf) | (((c >> 8) & 0xf) << 4)));
+                                    break;
+                                case 8:
+                                    memoryStream.Write(BitConverter.GetBytes(c), 0, 2);
+                                    break;
+                                case 16:
+                                    PS_RGB rgb = new PS_RGB(c);
+                                    memoryStream.WriteByte(rgb.B);
+                                    memoryStream.WriteByte(rgb.G);
+                                    memoryStream.WriteByte(rgb.R);
+                                    break;
+                            }
+                        }
+
+                        for (x = 0; x < row_round; x++)
+                        {
+                            memoryStream.WriteByte(0);
                         }
                     }
-
-                    for (x = 0; x < row_round; x++)
-                    {
-                        memoryStream.WriteByte(0);
-                    }
+                }
+                catch (System.IO.EndOfStreamException)
+                {
+                    //BUG: Sometimes an imported and compressed BMP file has some missing bytes at the end for whatever reason...
+                    //reimport will fix it
+                    MessageBox.Show("The Image file is corrupt! Please reset to original state and try again!");
+                    return new Bitmap(32, 32);
                 }
             }
             return new Bitmap(memoryStream);
@@ -441,5 +452,5 @@ namespace ConanExplorer.Conan.Filetypes
         /// </summary>
         public bool UseOriginalCLUT { get; set; }
     }
-    
+
 }
