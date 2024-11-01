@@ -245,7 +245,7 @@ namespace ConanExplorer.Conan
                 writer.Write((byte)0x03);
 
                 //Patch 02 - Mod save string to way longer (Speichern)
-                //Move pointer a code cave ("old seq data" printf strings 1/2)
+                //Move pointer to a code cave ("old seq data" printf strings 1/2)
                 writer.BaseStream.Seek(0x0375F8, SeekOrigin.Begin);
                 writer.Write(new byte[] { 0x01, 0x80, 0x04, 0x3C, 0xC4, 0x69, 0x84, 0x24 });
                 //nop out the lib printf part

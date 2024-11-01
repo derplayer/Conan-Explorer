@@ -1,6 +1,6 @@
 Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spiel;Zusammenhang
-3204;10;はじめから;neu       ;New Game;Hauptmenü;
-3216;10;つづきから;fortsetzen;Continue;Hauptmenü;
+3204;10;はじめから;Start     ;New Game;Hauptmenü;
+3216;10;つづきから;Fortsetzen;Continue;Hauptmenü;
 3228;18;最初から始めます。;Ein neues Spiel   ;Start a           ;Hauptmenü;
 3248;16;よろしいですか？;starten?        ;new game?       ;Hauptmenü;
 3552;32;メモリーカードのチェック中です。;Memory Card wird gelesen.       ;Reading Memory Card.            ;Hauptmenü;
@@ -512,12 +512,12 @@ Offset;OriginalLength;OriginalString;Translation;Translation_EN;Position im Spie
 683960;6;半泣き;Tränen;tears ;Bonus-Ecke: Charaktere;
 683976;6;大慌て;nervös;;Bonus-Ecke: Charaktere;
 684008;6;です。;      ;      ;Bonus-Ecke: Ergebnisse;200 ↑
-684016;6;１００;100   ;100   ;Bonus-Ecke: Ergebnisse;
+684016;6;１００;100;100;Bonus-Ecke: Ergebnisse;
 684776;6;セーブ;sicher;save  ;Menü im Spiel;
 684784;6;ロード;lade  ;load  ;Menü im Spiel;
 684860;6;　新規;  neu ;  new;Menü im Spiel: Speichern;
 684876;6;データ;Datei ;File  ;Menü im Spiel: Speichern;
-684892;6;１００;100   ;100   ;Bonus-Ecke: Ergebnisse;
+684892;6;１００;100;100;Bonus-Ecke: Ergebnisse;
 684912;6;女子寮;Wohnh.;Dorm  ;Mädchenschule: Außen-Menü;
 685164;6;つかむ;nehmen;;Aufbau-Minispiele: Gegenstände;
 685172;6;乗せる;nutzen;;Aufbau-Minispiele: Gegenstände;
